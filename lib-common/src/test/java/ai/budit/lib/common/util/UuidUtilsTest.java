@@ -1,6 +1,6 @@
 package ai.budit.lib.common.util;
 
-import io.diddda.lib.common.util.UuidUtils;
+import io.origemite.lib.common.util.UuidUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
