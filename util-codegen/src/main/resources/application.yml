@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/a4?serverTimezone=UTC
+    username: root
+    password: '11'
+    driver-class-name: org.mariadb.jdbc.Driver

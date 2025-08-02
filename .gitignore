@@ -35,3 +35,33 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+rebel.xml
+**/src/main/generated
+/jrebel-classpath-*.jar
+/api/docker-compose.yml
+
