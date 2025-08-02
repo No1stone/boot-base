@@ -1,0 +1,8 @@
+security:
+  jwt:
+    token: 새로만들기
+    secret-key: 새로만들기
+    token-type: Bearer
+    header-string: Authorization
+    access-token-expiration: 300000
+    refresh-token-expiration: 1800000
