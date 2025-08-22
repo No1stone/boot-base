@@ -1,0 +1,21 @@
+server:
+  port: 2031
+
+spring:
+  application:
+    name: gw-codeshop
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway, health, info
+
+springdoc:
+  swagger-ui:
+    enabled: true
