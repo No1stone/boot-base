@@ -28,15 +28,13 @@ public class ConfigFilter {
                 .route("route-swagger", r -> r
                         .path("/swagger-ui/**")
                         .uri(apiProvisioning))
-//                .route("route-find-by-recognition-code", r -> r
-//                        .path("/content/codeshop-contents/find-by-recognition-code")
-//                        .filters( f -> f.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
-//                        )
-//                        .uri(gwCodeshop))
-//                .route("route-content", r -> r
-//                        .path("/auth/**")
-//                        .filters( f -> f.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config())))
-//                        .uri(apiProvisioning))
+                .route("authserver", r -> r.path("/auth/**")
+                        .filters(
+                                f   -> f
+                                        .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+                                        .rewritePath("/auth/(?<segment>.*)", "/${segment}")
+                        )
+                        .uri("lb://auth"))
                 .build();
     }
 //                                .rewritePath("/internal/(?<segment>.*)", "/${segment}")
