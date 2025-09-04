@@ -1,6 +1,6 @@
 package com.origemite.gateway;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+//import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //        "io.origemite.lib.webflux",
 }
 )
-@OpenAPIDefinition
+//@OpenAPIDefinition
 public class GatewayApplication {
 
     public static void main(String[] args) {

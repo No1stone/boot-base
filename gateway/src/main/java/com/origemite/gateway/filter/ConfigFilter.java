@@ -11,11 +11,6 @@ public class ConfigFilter {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Value("${gateway.routes.api-provisioning.url}")
-    private String apiProvisioning;
-    @Value("${gateway.routes.gw-codeshop.url}")
-    private String gwCodeshop;
-
     public ConfigFilter(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
@@ -24,11 +19,7 @@ public class ConfigFilter {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-
-                .route("route-swagger", r -> r
-                        .path("/swagger-ui/**")
-                        .uri(apiProvisioning))
-                .route("authserver", r -> r.path("/auth/**")
+                .route("auth", r -> r.path("/auth/**")
                         .filters(
                                 f   -> f
                                         .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))

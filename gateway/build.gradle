@@ -18,7 +18,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.projectreactor:reactor-core'
     // swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.8")
+    //안나왓네
+//    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

@@ -13,13 +13,15 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.origemite.lib.webflux.web.CommonResponse;
 import io.origemite.lib.webflux.web.ResponseType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.jackson.autoconfigure.Jackson2ObjectMapperBuilderCustomizer;
+//import org.springframework.boot.jackson.autoconfigure.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.codec.json.JacksonJsonDecoder;
-import org.springframework.http.codec.json.JacksonJsonEncoder;
+import org.springframework.http.codec.json.Jackson2JsonDecoder;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
+//import org.springframework.http.codec.json.JacksonJsonDecoder;
+//import org.springframework.http.codec.json.JacksonJsonEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -110,6 +112,8 @@ public class AfterAuditConfig implements WebFilter {
                 });
     }
 
+
+/** boot4 용
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
         ObjectMapper mapper = new ObjectMapper();
@@ -119,8 +123,28 @@ public class AfterAuditConfig implements WebFilter {
 
         ExchangeStrategies strategies = ExchangeStrategies.builder()
                 .codecs(configurer -> {
-                    configurer.defaultCodecs().jackson2JsonDecoder(new JacksonJsonDecoder());
-                    configurer.defaultCodecs().jackson2JsonEncoder(new JacksonJsonEncoder());
+                    configurer.defaultCodecs().jackson2JsonDecoder(new Jackson2JsonDecoder());
+                    configurer.defaultCodecs().jackson2JsonEncoder(new Jackson2JsonEncoder());
+                })
+                .build();
+
+        return builder
+                .exchangeStrategies(strategies)
+                .build();
+    }
+**/
+
+    @Bean
+    public WebClient webClient(WebClient.Builder builder) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        ExchangeStrategies strategies = ExchangeStrategies.builder()
+                .codecs(configurer -> {
+                    configurer.defaultCodecs().jackson2JsonDecoder(new Jackson2JsonDecoder());
+                    configurer.defaultCodecs().jackson2JsonEncoder(new Jackson2JsonEncoder());
                 })
                 .build();
 
