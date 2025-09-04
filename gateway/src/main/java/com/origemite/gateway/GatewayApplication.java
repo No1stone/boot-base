@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {
         "com.origemite.gateway",
-        "io.origemite.lib.webflux",
+//        "io.origemite.lib.webflux",
 }
 )
 @OpenAPIDefinition

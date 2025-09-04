@@ -11,13 +11,12 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.origemite.lib.webflux.web.CommonResponse;
 import io.origemite.lib.webflux.web.ResponseType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.jackson.autoconfigure.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.codec.Decoder;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.codec.json.Jackson2JsonDecoder;
-import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -37,6 +36,8 @@ import java.util.List;
 @Slf4j
 public class AfterAuditConfig implements WebFilter {
 
+
+    //스프링 4로 업데이트하면서 jakarta 로 전부 바뀌면서 오브잭트 맵퍼 의존성이 변경됨
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
@@ -114,7 +115,7 @@ public class AfterAuditConfig implements WebFilter {
 
         ExchangeStrategies strategies = ExchangeStrategies.builder()
                 .codecs(configurer -> {
-                    configurer.defaultCodecs().jackson2JsonDecoder(new Jackson2JsonDecoder(mapper));
+                    configurer.defaultCodecs().jackson2JsonDecoder(new Decoder(new Jackson2JsonDecoder(mapper)));
                     configurer.defaultCodecs().jackson2JsonEncoder(new Jackson2JsonEncoder(mapper));
                 })
                 .build();
