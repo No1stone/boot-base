@@ -3,8 +3,10 @@ package io.origemite.lib.webflux.config;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -13,10 +15,11 @@ import io.origemite.lib.webflux.web.ResponseType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.jackson.autoconfigure.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.codec.Decoder;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.codec.json.JacksonJsonDecoder;
+import org.springframework.http.codec.json.JacksonJsonEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,6 +32,7 @@ import reactor.util.context.Context;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -47,7 +51,7 @@ public class AfterAuditConfig implements WebFilter {
         String uuid = exchange.getRequest().getHeaders().getFirst("X-UUID");
         String clientIP = exchange.getRequest().getHeaders().getFirst("X-CLIENT_IP");
         String appVersion = exchange.getRequest().getHeaders().getFirst("X-APP_VERSION");
-        String traceId = exchange.getRequest().getHeaders().getFirst("X-TRACE-ID");
+        String traceId = exchange.getRequest().getHeaders().getFirst("X-B3-TRACE-ID");
         String userAgent = exchange.getRequest().getHeaders().getFirst("X-USER_AGENT");
         String userId = exchange.getRequest().getHeaders().getFirst("X-USER_ID");
         String serviceId = exchange.getRequest().getHeaders().getFirst("X-SERVICE_ID");
@@ -115,8 +119,8 @@ public class AfterAuditConfig implements WebFilter {
 
         ExchangeStrategies strategies = ExchangeStrategies.builder()
                 .codecs(configurer -> {
-                    configurer.defaultCodecs().jackson2JsonDecoder(new Decoder(new Jackson2JsonDecoder(mapper)));
-                    configurer.defaultCodecs().jackson2JsonEncoder(new Jackson2JsonEncoder(mapper));
+                    configurer.defaultCodecs().jackson2JsonDecoder(new JacksonJsonDecoder());
+                    configurer.defaultCodecs().jackson2JsonEncoder(new JacksonJsonEncoder());
                 })
                 .build();
 
@@ -125,15 +129,35 @@ public class AfterAuditConfig implements WebFilter {
                 .build();
     }
 
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
-        return builder -> builder
-                .simpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                .serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .deserializers(new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .mixIn(PageImpl.class, PageImplMixIn.class)
-                ;
 
+//    @Bean
+//    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+//        return JsonMapper.builder()
+//                .defaultDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//                .serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+//                .deserializers(new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+//                .mixIn(PageImpl.class, PageImplMixIn.class)
+//                ;
+//    }
+
+    private static final String DATETIME = "yyyy-MM-dd HH:mm:ss";
+    @Bean
+    public ObjectMapper objectMapper() {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(DATETIME);
+        JavaTimeModule jtm = new JavaTimeModule();
+        jtm.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(fmt));
+        jtm.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(fmt));
+
+        ObjectMapper mapper = JsonMapper.builder()
+                .addModule(jtm)
+                .defaultDateFormat(new SimpleDateFormat(DATETIME))
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                .configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false)
+                .build();
+
+        // mix-in 은 build 후 등록
+        mapper.addMixIn(PageImpl.class, PageImplMixIn.class);
+        return mapper;
     }
 
     public abstract class PageImplMixIn<T> {
