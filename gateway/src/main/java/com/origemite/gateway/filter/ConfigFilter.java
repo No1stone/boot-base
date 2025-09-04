@@ -33,10 +33,10 @@ public class ConfigFilter {
 //                        .filters( f -> f.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 //                        )
 //                        .uri(gwCodeshop))
-                .route("route-content", r -> r
-                        .path("/content/**")
-                        .filters( f -> f.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri(apiProvisioning))
+//                .route("route-content", r -> r
+//                        .path("/auth/**")
+//                        .filters( f -> f.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config())))
+//                        .uri(apiProvisioning))
                 .build();
     }
 //                                .rewritePath("/internal/(?<segment>.*)", "/${segment}")
