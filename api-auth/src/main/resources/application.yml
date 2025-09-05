@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: api-auth
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+server:
+  port: 3031
+  servlet:
+    context-path: /auth
+  tomcat:
+    mbeanregistry:
+      enabled: true
+  shutdown: graceful
+  error:
+    whitelabel:
+      enabled: false
+
+jasypt:
+  encryptor:
+    bean: jasyptEnc
+    prefix: ENC(
+    suffix: )
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      consume: b3
+      produce: b3_multi
+    enabled: true
+

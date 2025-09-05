@@ -23,7 +23,7 @@ public class ConfigFilter {
                         .filters(
                                 f   -> f
                                         .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
-                                        .rewritePath("/auth/(?<segment>.*)", "/${segment}")
+//                                        .rewritePath("/auth/(?<segment>.*)", "/${segment}")
                         )
                         .uri("lb://auth"))
                 .build();
