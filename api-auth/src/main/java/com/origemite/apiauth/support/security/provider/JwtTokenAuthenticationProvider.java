@@ -1,15 +1,15 @@
 package com.origemite.apiauth.support.security.provider;
 
-import io.diddda.api.apia4.config.prop.JwtTokenProp;
-import io.diddda.lib.common.exception.BizErrorException;
-import io.diddda.lib.common.secruity.CustomUser;
-import io.diddda.lib.common.util.DateUtils;
-import io.diddda.lib.common.util.StringUtils;
-import io.diddda.lib.common.util.UuidUtils;
-import io.diddda.lib.common.web.ResponseType;
-import io.diddda.lib.model.auth.AuthenticationDto;
-import io.diddda.lib.model.auth.JwtToken;
-import io.diddda.lib.model.auth.RefreshToken;
+import com.origemite.apiauth.config.prop.JwtTokenProp;
+import io.origemite.lib.common.exception.BizErrorException;
+import io.origemite.lib.common.secruity.CustomUser;
+import io.origemite.lib.common.util.DateUtils;
+import io.origemite.lib.common.util.StringUtils;
+import io.origemite.lib.common.util.UuidUtils;
+import io.origemite.lib.common.web.ResponseType;
+import io.origemite.lib.model.auth.AuthenticationDto;
+import io.origemite.lib.model.auth.JwtToken;
+import io.origemite.lib.model.auth.RefreshToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-import static io.diddda.lib.common.util.ModelMapperUtil.map;
+import static io.origemite.lib.common.util.ModelMapperUtil.map;
 
 @Slf4j
 @Component
