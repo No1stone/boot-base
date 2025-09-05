@@ -1,0 +1,96 @@
+server:
+  port: 3031
+spring:
+  main:
+    banner-mode: log
+    allow-bean-definition-overriding: true
+  jpa:
+    database-platform: com.origemite.lib.common.extend.CustomMariaDBDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false
+    properties:
+      hibernate:
+        show-sql: false
+        format_sql: false
+        default_batch_fetch_size: 100
+  db:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+  datasource:
+    default:
+      #      jdbc-url: ${DRP_DB_URL}
+      #      username: ${DRP_DB_USERNAME}
+      #      password: ${DRP_DB_PASSWORD}
+      jdbc-url: jdbc:mariadb://localhost:3306/a4?serverTimezone=UTC
+      username: 123
+      password: '123'
+#      jdbc-url: jdbc:mariadb://59.15.233.45:3306/a4?serverTimezone=UTC?allowPublicKeyRetrieval=true&useSSL=false
+#      username: root
+#      password: 'Budit123!'
+      driver-class-name: org.mariadb.jdbc.Driver
+      connection-init-sql: SET time_zone = '+00:00'
+      pool-name: DEFAULT_POOL
+      idle-timeout: 600000
+      connection-timeout: 30000
+      validation-timeout: 5000
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+
+security:
+  jwt:
+    token: eyJhbGciOiJIUzI1NiJ9.eyJNIjoiQmVhcmVyIiwiSSI6IjJwT2JUdHhjVF8tb2NfQUlmS1NLbGciLCJTIjoiaE5iT1lGMV9Sb2VLcTdPWjhSZVRJdyIsIlIiOjE2MzgzLCJpYXQiOjE3MjQ2NjA4NzksImV4cCI6MjY3MDc0MDg3OX0.UHxnTFhyNnB9aaW6X6ac4DNCk8SLSuZ3POdj82t_9QU
+    secret-key: jceUBJRHtko7pPrNnZCQf2RvJMAHEtfDSjdNhdCIXIzFnEnTBUkPtzOkv0mcq5Afa4lCYvSIbLHxDe6xIjj5EGkEK
+    token-type: Bearer
+    header-string: Authorization
+    access-token-expiration: 3600000
+    refresh-token-expiration: 7200000
+
+logging:
+  level:
+    ai.mintit.drp.api: INFO
+    com.zaxxer.hikari.HikariConfig: DEBUG
+
+# 서비스 클라이언트
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      common:
+        endpoint:
+          base-url: http://localhost:8080/common
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      file:
+        endpoint:
+          base-url: http://localhost:8082/file
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      batch:
+        endpoint:
+          base-url: http://localhost:8083/batch
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      batch-statistics:
+        endpoint:
+          base-url: http://localhost:8084/batch-statistics
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      legacy:
+        endpoint:
+#          base-url: http://localhost:8085/legacy
+          base-url: https://5c08-218-53-148-80.ngrok-free.app/legacy
+          #개발로 돌려두면 알림톡옴main
+#          base-url:  https://drp-dev.mintit.ai/legacy
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+
+

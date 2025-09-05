@@ -4,7 +4,7 @@ import com.origemite.apiauth.support.security.JwtAuthenticationEntryPoint;
 import com.origemite.apiauth.support.security.filter.JwtTokenAuthenticationFilter;
 import com.origemite.apiauth.support.security.handler.JwtAccessDeniedHandler;
 import com.origemite.apiauth.support.security.provider.JwtTokenAuthenticationProvider;
-import io.origemite.lib.common.filter.ExceptionHandlerFilter;
+import com.origemite.lib.common.filter.ExceptionHandlerFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

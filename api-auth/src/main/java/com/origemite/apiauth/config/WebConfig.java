@@ -1,11 +1,11 @@
 package com.origemite.apiauth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.origemite.lib.common.converter.StringToEmptyConverter;
-import io.origemite.lib.common.serializer.CustomLocalDateDeserializer;
-import io.origemite.lib.common.serializer.CustomLocalDateSerializer;
-import io.origemite.lib.common.serializer.CustomLocalDateTimeDeserializer;
-import io.origemite.lib.common.serializer.CustomLocalDateTimeSerializer;
+import com.origemite.lib.common.converter.StringToEmptyConverter;
+import com.origemite.lib.common.serializer.CustomLocalDateDeserializer;
+import com.origemite.lib.common.serializer.CustomLocalDateSerializer;
+import com.origemite.lib.common.serializer.CustomLocalDateTimeDeserializer;
+import com.origemite.lib.common.serializer.CustomLocalDateTimeSerializer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

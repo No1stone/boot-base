@@ -1,15 +1,15 @@
 package com.origemite.apiauth.support.security.provider;
 
 import com.origemite.apiauth.config.prop.JwtTokenProp;
-import io.origemite.lib.common.exception.BizErrorException;
-import io.origemite.lib.common.secruity.CustomUser;
-import io.origemite.lib.common.util.DateUtils;
-import io.origemite.lib.common.util.StringUtils;
-import io.origemite.lib.common.util.UuidUtils;
-import io.origemite.lib.common.web.ResponseType;
-import io.origemite.lib.model.auth.AuthenticationDto;
-import io.origemite.lib.model.auth.JwtToken;
-import io.origemite.lib.model.auth.RefreshToken;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.secruity.CustomUser;
+import com.origemite.lib.common.util.DateUtils;
+import com.origemite.lib.common.util.StringUtils;
+import com.origemite.lib.common.util.UuidUtils;
+import com.origemite.lib.common.web.ResponseType;
+import com.origemite.lib.model.auth.AuthenticationDto;
+import com.origemite.lib.model.auth.JwtToken;
+import com.origemite.lib.model.auth.RefreshToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-import static io.origemite.lib.common.util.ModelMapperUtil.map;
+import static com.origemite.lib.common.util.ModelMapperUtil.map;
 
 @Slf4j
 @Component

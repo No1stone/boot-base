@@ -1,7 +1,7 @@
 package com.origemite.apiauth.support.security;
 
-import io.origemite.lib.common.exception.BizErrorException;
-import io.origemite.lib.common.web.ResponseType;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.web.ResponseType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

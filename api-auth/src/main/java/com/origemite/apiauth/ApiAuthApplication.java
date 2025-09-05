@@ -16,8 +16,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication(
         scanBasePackages = {
                 "com.origemite.apiauth",
-                "io.origemite.lib.common",
-                "io.origemite.lib.model",
+                "com.origemite.lib.common",
+                "com.origemite.lib.model",
 //                "io.origemite.lib.legacy"
         },
         exclude = {SecurityAutoConfiguration.class})

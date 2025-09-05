@@ -1,0 +1,5 @@
+package com.origemite.lib.common.base;
+
+public interface ServiceProviderble {
+    void setServiceId(String serviceId);
+}
