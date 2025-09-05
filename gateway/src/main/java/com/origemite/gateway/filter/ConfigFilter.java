@@ -25,7 +25,7 @@ public class ConfigFilter {
                                         .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 //                                        .rewritePath("/auth/(?<segment>.*)", "/${segment}")
                         )
-                        .uri("lb://auth"))
+                        .uri("lb://api-auth"))
                 .build();
     }
 //                                .rewritePath("/internal/(?<segment>.*)", "/${segment}")

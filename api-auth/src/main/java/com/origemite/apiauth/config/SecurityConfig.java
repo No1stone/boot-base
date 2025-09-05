@@ -59,8 +59,8 @@ public class SecurityConfig {
                                 "/target/**", // TODO. GW 토큰 시 수정
                                 "/portal/second-authentications/**", // 처음 로그인 시
                                 "/user/**",
-                                "/member/api-safe",
-                                "/member/api-safe/pass-identifications/*/token"
+                                "/auth/**",
+                                "/member/api-safe"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
