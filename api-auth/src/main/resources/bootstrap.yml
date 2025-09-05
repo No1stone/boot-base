@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    config:
+#      uri: http://localhost:8888
+      uri: https://git.origemite.com/resume/configserver.git
+      name: auth
