@@ -47,7 +47,7 @@ dependencies {
 
 
     // KMS
-    implementation 'org.zalando:spring-cloud-config-aws-kms:5.1.2'
+//    implementation 'org.zalando:spring-cloud-config-aws-kms:5.1.2'
     implementation 'com.amazonaws:aws-java-sdk-core:1.11.1019'
     implementation 'com.amazonaws:aws-java-sdk-kms:1.11.1019'
     implementation 'com.amazonaws:jmespath-java:1.11.1019'

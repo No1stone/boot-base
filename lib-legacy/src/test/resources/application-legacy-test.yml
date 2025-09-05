@@ -1,0 +1,29 @@
+datasource:
+  url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;MODE=MySQL
+  driver-class-name: org.h2.Driver
+  username: sa
+  password:
+jpa:
+  hibernate:
+    ddl-auto: update
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      format_sql: true
+      globally_quoted_identifiers: true
+  show-sql: true
+  generate-ddl: true
+  database-platform: org.hibernate.dialect.MySQL8Dialect
+  database: h2
+h2:
+  console:
+    enabled: true
+
+
+legacy:
+  client:
+    # 하나은행 (환율조회)
+
+
+
+

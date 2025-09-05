@@ -27,12 +27,9 @@ spring:
       #      jdbc-url: ${DRP_DB_URL}
       #      username: ${DRP_DB_USERNAME}
       #      password: ${DRP_DB_PASSWORD}
-      jdbc-url: jdbc:mariadb://localhost:3306/a4?serverTimezone=UTC
-      username: 123
-      password: '123'
-#      jdbc-url: jdbc:mariadb://59.15.233.45:3306/a4?serverTimezone=UTC?allowPublicKeyRetrieval=true&useSSL=false
-#      username: root
-#      password: 'Budit123!'
+      jdbc-url: jdbc:mariadb://localhost:3307/origemite?serverTimezone=UTC
+      username: origemite
+      password: 'test123'
       driver-class-name: org.mariadb.jdbc.Driver
       connection-init-sql: SET time_zone = '+00:00'
       pool-name: DEFAULT_POOL

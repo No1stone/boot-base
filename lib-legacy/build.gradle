@@ -1,0 +1,76 @@
+bootJar { enabled = false }
+jar { enabled = true }
+
+dependencies {
+
+    implementation project(':lib-common')
+    annotationProcessor project(":lib-common")
+
+    // String Boot
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //implementation 'org.springframework.boot:spring-boot-starter-quartz'
+
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+
+    // Aws S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 테스트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    runtimeOnly 'com.h2database:h2'
+
+    implementation 'com.jayway.jsonpath:json-path:2.9.0'
+
+    // Model Mapper
+    implementation 'org.modelmapper:modelmapper:3.2.0'
+
+    // Swagger Springdoc
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    //thyemleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    // kait
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //cengold
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.75'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.75'
+    //pdf
+    implementation 'org.xhtmlrenderer:flying-saucer-pdf:9.8.0'
+
+    // JWT Token
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+
+    implementation platform('software.amazon.awssdk:bom:2.31.47') // 버전은 최신으로
+    implementation 'software.amazon.awssdk:kms'
+//    implementation 'software.amazon.awssdk:core'
+
+
+}
+//
+//
+//tasks.withType(JavaCompile).configureEach {
+//    options.compilerArgs += "--add-exports=java.base/com.sun.crypto.provider=ALL-UNNAMED"
+//}
+//
+
+
+
+
+
+
+

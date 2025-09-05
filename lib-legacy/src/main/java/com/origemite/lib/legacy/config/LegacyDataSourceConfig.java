@@ -1,15 +1,15 @@
-package com.origemite.apiauth.config;
+package com.origemite.lib.legacy.config;
 
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -22,34 +22,31 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-		entityManagerFactoryRef = "entityManager",
-		transactionManagerRef = "transactionManager",
-		basePackages = {"com.origemite.apiauth"}
+		entityManagerFactoryRef = "EntityManager_LEGACY",
+		transactionManagerRef = "TransactionManager_LEGACY",
+		basePackages = {"com.origemite.lib.legacy"}
 )
-public class DataSourceConfig {
+public class LegacyDataSourceConfig {
 
-	@Primary
-	@Bean(name = "dataSource")
-	@ConfigurationProperties(prefix="spring.datasource.default")
+	@Bean(name = "dataSource_LEGACY")
+	@ConfigurationProperties(prefix="spring.datasource.legacy")
 	public DataSource dataSource() {
 		return  DataSourceBuilder.create().type(HikariDataSource.class).build();
 	}
 
-	@Primary
-	@Bean(name = "entityManager")
+	@Bean(name = "EntityManager_LEGACY")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-    		EntityManagerFactoryBuilder entityManagerFactoryBuilder,
-    		@Qualifier("dataSource") DataSource dataSource) {
-        return entityManagerFactoryBuilder.dataSource(dataSource)
-        		.packages("com.origemite.apiauth","com.origemite.lib")
-				.persistenceUnit("PERSISTENCE_DEFAULT")
+    		EntityManagerFactoryBuilder builder,
+    		@Qualifier("dataSource_LEGACY") DataSource dataSource) {
+        return builder.dataSource(dataSource)
+        		.packages("com.origemite.lib.legacy")
+				.persistenceUnit("PERSISTENCE_LEGACY")
         		.build();
     }
 
-	@Primary
-	@Bean(name = "transactionManager")
+	@Bean(name = "TransactionManager_LEGACY")
 	public PlatformTransactionManager transactionManager(
-			@Qualifier("entityManager") EntityManagerFactory entityManagerFactory) {
+			@Qualifier("EntityManager_LEGACY") EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
 	}
 
