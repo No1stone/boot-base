@@ -13,9 +13,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class JwtToken {
 
-    String option;
     String jwtTokenType;
-    String type;
     String id;
     String loginSessionId;
     String accessToken;
@@ -24,6 +22,4 @@ public class JwtToken {
     String refreshToken;
     LocalDateTime refreshTokenExpiration;
     Long refreshTokenExpiresIn;
-    List<AuthenticationDto.ServiceRole> roles;
-    boolean isNew;
 }
