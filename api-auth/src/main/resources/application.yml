@@ -5,12 +5,19 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  web:
+    encoding:
+      force-response: true
 
 
 server:
   port: 3031
   servlet:
     context-path: /auth
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   tomcat:
     mbeanregistry:
       enabled: true

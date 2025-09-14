@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Home</title></head>
+<body>
+<h2>홈</h2>
+<div id="user-box">로딩중...</div>
+
+<script>
+    function ck(n){ const m=document.cookie.match('(?:^|; )'+n+'=([^;]*)'); return m?decodeURIComponent(m[1]):null; }
+    function b64json(s){ try{ return JSON.parse(atob(s.replace(/-/g,'+').replace(/_/g,'/'))); }catch(_){ return null; } }
+
+    const ui = b64json(ck('UI_USER'));
+    document.getElementById('user-box').innerHTML = ui
+        ? `<p><b>${ui.name}</b><b>${ui.sub}</b> (${ui.email||''}) ${ui.picture?`<img src="${ui.picture}" width="56" style="vertical-align:middle">`:''}</p>
+       <a href="/logout">로그아웃</a>`
+        : ` <a th:href="@{/oauth/login}">로그인 페이지로</a>`;
+</script>
+</body>
+</html>

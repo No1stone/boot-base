@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(
 		entityManagerFactoryRef = "entityManager",
 		transactionManagerRef = "transactionManager",
-		basePackages = {"com.origemite.apiauth"}
+		basePackages = {"com.origemite.apiauth","com.origemite.lib.**"}
 )
 public class DataSourceConfig {
 
@@ -41,7 +41,7 @@ public class DataSourceConfig {
     		EntityManagerFactoryBuilder entityManagerFactoryBuilder,
     		@Qualifier("dataSource") DataSource dataSource) {
         return entityManagerFactoryBuilder.dataSource(dataSource)
-        		.packages("com.origemite.apiauth","com.origemite.lib")
+        		.packages("com.origemite.apiauth","com.origemite.lib.**")
 				.persistenceUnit("PERSISTENCE_DEFAULT")
         		.build();
     }
