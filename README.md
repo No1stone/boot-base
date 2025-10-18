@@ -154,6 +154,24 @@ GET	/find-all-name	이름 전체 조회
 예: @RequestMapping("/b4dd4878")  
 
 
+## 12. Ingest & Fan-out 구조 (확장 설계)
+
+게이트웨이 및 WebFlux Facade는 모든 외부 요청을 **Ingest Layer**로 수집한다.  
+이 레이어는 추후 Kafka, Redis Stream, 또는 HTTP 비동기 큐 기반의 **Fan-out 구조**로 확장될 수 있다.
+
+- **Ingest Layer**
+    - 모든 외부 요청/이벤트/로그를 통합 수집하는 진입점
+    - Saga 및 REST 트랜잭션 흐름 이전 단계에서 데이터 검증/필터링 수행
+
+- **Fan-out Pattern**
+    - 단일 요청을 여러 서비스로 비동기 분배
+    - 예: 주문 생성 → `Order`, `Inventory`, `Notification` 서비스 병렬 전달
+    - Outbox 또는 Event Gateway 기반 확장 가능
+
+현재 버전에서는 REST 기반 트랜잭션으로 동작하지만,  
+향후 Kafka 기반 Fan-out으로 확장될 수 있도록 인터페이스 레벨에서 **Ingest 구조를 미리 분리**하였다.
+
+
 spring boot 4
 
 ```text
