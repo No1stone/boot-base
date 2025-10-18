@@ -8,12 +8,12 @@
 ---
 
 ## 1. 패키지 구조
-/api-{domain} → 각 마이크로서비스(API)  
+/api-{domain} → 각 마이크로서비스(API)  controller, facade
 /batch-{domain} → 배치 처리 서비스  
 /gateway → 외부 진입 게이트웨이  
 /eureka → 서비스 디스커버리 서버  
 /lib-common → 공통 유틸, 예외, 응답 포맷, 상수  
-/lib-model → DTO, Enum, VO  
+/lib-model → service, entity, repo, spec, DTO, Enum, VO  
 /lib-webflux → 공통 WebFlux 설정 및 필터  
 /lib-legacy → 레거시 호환 라이브러리  
 /util-codegen → DB 스키마 기반 코드 생성 유틸리티  
