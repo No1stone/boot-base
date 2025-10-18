@@ -167,9 +167,9 @@ GET	/find-all-name	이름 전체 조회
     - 단일 요청을 여러 서비스로 비동기 분배
     - 예: 주문 생성 → `Order`, `Inventory`, `Notification` 서비스 병렬 전달
     - Outbox 또는 Event Gateway 기반 확장 가능
-
-현재 버전에서는 REST 기반 트랜잭션으로 동작하지만,  
-향후 Kafka 기반 Fan-out으로 확장될 수 있도록 인터페이스 레벨에서 **Ingest 구조를 미리 분리**하였다.
+    - 이 프로젝트는 기본적으로 REST 기반 트랜잭션(보상 SAGA)을 채택한다.
+      이벤트 드리븐 아키텍처는 쓰기·팬아웃·비동기 허용이 커지는 도메인에서만 선택적으로 적용한다.
+      향후 필요 시 Outbox→메시지 브로커(Kafka/Pulsar)로 확장하는 하이브리드 구조를 지원한다.
 
 
 spring boot 4
