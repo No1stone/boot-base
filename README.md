@@ -126,7 +126,7 @@ HTTP 표준 응답은 Response Envelope으로 통일
 
 API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
 
-시간/타임존: UTC+0 기준, ISO-8601 Z 포맷
+시간/타임존: UTC+0 기준, 시간은 front에서 user의 국가를 기반으로 시간계산.
 
 낙관적 락을 통해 스키마 진화 시 충돌 방지
 
