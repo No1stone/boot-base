@@ -8,7 +8,7 @@
 ---
 
 ## 1. 패키지 구조
-/api-{domain} → 각 마이크로서비스(API)  controller, facade
+/api-{domain} → 각 마이크로서비스(API)  controller, facade  
 /batch-{domain} → 배치 처리 서비스  
 /gateway → 외부 진입 게이트웨이  
 /eureka → 서비스 디스커버리 서버  
