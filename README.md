@@ -180,7 +180,7 @@ https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Note
 spring cloud 마일스톤버전은
 gateway, 스웨거등 의존성이 없고 boot와 자카르타 의존성이 많이 깨짐.
 아직개발중인거 같음
-기존 JAVAX -> jacarta 인터페이스 이름변경된거 다수 있음.
+기존 JAVAX -> jakarta 인터페이스 이름변경된거 다수 있음.
 boot4는 기본 java21 기반이라는 이야기가있음..
 Observability OTEL지원한다는 이야기가 있어 인프라 반영 예정
 내 프로젝트 버전업 리팩토링은 나중에 가능할듯
