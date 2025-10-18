@@ -130,7 +130,7 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
 
 낙관적 락을 통해 스키마 진화 시 충돌 방지
 
-## 11. 유틸 코드 제너레이터 규칙
+## 11. util-codejen (유틸 코드 제너레이터) 규칙
 
 DB 스키마 조회 후 Controller, Service, Facade, Repository, Entity, JpaSpec 자동 생성
 
