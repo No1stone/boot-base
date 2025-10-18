@@ -156,8 +156,8 @@ GET	/find-all-name	이름 전체 조회
 
 ## 12. Ingest & Fan-out 구조 (확장 설계)
 
-게이트웨이 및 WebFlux Facade는 모든 외부 요청을 **Ingest Layer**로 수집한다.  
-이 레이어는 추후 Kafka, Redis Stream, 또는 HTTP 비동기 큐 기반의 **Fan-out 구조**로 확장될 수 있다.
+게이트웨이 및 Facade는 모든 외부 요청을 **Ingest Layer**로 수집한다.  
+이 레이어는 추후 wenflux Orchestrator로변경하며, Kafka, Redis Stream, 또는 HTTP 비동기 큐 기반의 **Fan-out 구조**로 확장될 수 있다.
 
 - **Ingest Layer**
     - 모든 외부 요청/이벤트/로그를 통합 수집하는 진입점
