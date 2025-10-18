@@ -1,17 +1,8 @@
-spring boot 4
 
-```text
-spring cloud 마일스톤버전은
-gateway, 스웨거등 의존성이 없고 boot와 자카르타 의존성이 많이 깨짐.
-아직개발중인거 같음
-내 프로젝트 버전업 리팩토링은 나중에 가능할듯
-```
-![dependencies.png](images/dependencies.png)
-![gateway.png](images/gateway.png)
 
 
 본 프로젝트는 Spring Boot 3.5.0 / Java 17 기반의 MSA 애플리케이션으로,  
-모노리포(Gradle Import) 구조를 사용하며 Gateway, Eureka, Vault, Redis, Kafka 등을 통합 관리한다.  
+모노리포(Gradle Import) 구조를 사용하며 Gateway, Eureka, Vault, Redis 등을 통합 관리한다.  
 
 
 ---
@@ -158,3 +149,14 @@ GET	/search-name	이름 기반 페이지 조회
 GET	/find-all-name	이름 전체 조회  
 
 컨트롤러 프리픽스 예: @RequestMapping("/b4dd4878")  
+
+spring boot 4
+
+```text
+spring cloud 마일스톤버전은
+gateway, 스웨거등 의존성이 없고 boot와 자카르타 의존성이 많이 깨짐.
+아직개발중인거 같음
+내 프로젝트 버전업 리팩토링은 나중에 가능할듯
+```
+![dependencies.png](images/dependencies.png)
+![gateway.png](images/gateway.png)
