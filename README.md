@@ -1,8 +1,10 @@
 
 
 
-본 프로젝트는 Spring Boot 3.5.0 / Java 17 기반의 MSA 애플리케이션으로,  
-모노리포(Gradle Import) 구조를 사용하며 Gateway, Eureka, Vault, Redis 등을 통합 관리한다.  
+본 프로젝트는 Spring Boot 3.5.0 / Java 17 기반의 Request–Response Oriented MSA 애플리케이션으로,  
+모노리포(Gradle Import) 구조를 사용하며 Gateway, Eureka, Vault, Redis 등을 통합 관리한다.   
+각 서비스는 독립적으로 배포/확장 가능하며, 도메인 단위로 분리되어 있다.  
+향후 트래픽 증가 및 비동기 처리 요구에 따라 Kafka 또는 Pulsar 기반의 Event-driven 구조로 확장할 수 있다.
 
 
 ---
