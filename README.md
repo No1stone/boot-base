@@ -174,7 +174,7 @@ GET	/find-all-name	이름 전체 조회
       향후 필요 시 Outbox→메시지 브로커(Kafka/Pulsar)로 확장하는 하이브리드 구조를 지원한다.
 
 
-spring boot 4 마일스톤 2025년 7월 발표.  
+spring boot 4 마일스톤 2025년 7월 발표.   
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes
 ```text
 spring cloud 마일스톤버전은
