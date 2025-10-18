@@ -53,9 +53,9 @@
   "timestamp": "2025-10-18T23:00:00Z"
 }
 ```
-표준 페이징/정렬: JPA 스펙 그대로 사용 (page, size, sort=field,ASC|DESC)
 
 ## 5. 데이터 접근 규칙
+표준 페이징/정렬: JPA 스펙 그대로 사용 (page, size, sort=field,ASC|DESC)  
 
 단순 처리 (CRUD, 페이징) → JPA
 
