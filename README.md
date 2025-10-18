@@ -147,8 +147,12 @@ GET	/find-by-ids	다건 조회
 DELETE	/delete-by-ids	다건 삭제  
 GET	/search-name	이름 기반 페이지 조회  
 GET	/find-all-name	이름 전체 조회  
+규칙을 기반으로 service repo,entity, spec dto 기본생성  
+연관관계는 직접 구현.
 
-컨트롤러 프리픽스 예: @RequestMapping("/b4dd4878")  
+컨트롤러 프리픽스는 네이밍출동 방지를 위한 UUID 생성 endpoint 수정필요   
+예: @RequestMapping("/b4dd4878")  
+
 
 spring boot 4
 
