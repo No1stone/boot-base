@@ -1,0 +1,15 @@
+services:
+  gateway:
+    build:
+      context: ..          # 리포 루트
+      dockerfile: gateway/Dockerfile
+    container_name: gateway-local
+    ports:
+      - "2031:2031"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka
+    restart: always
+#docker compose -f gateway/docker-compose.local.yml up -d
+#docker compose -f gateway/docker-compose.local.yml down
+#docker logs -f gateway-local

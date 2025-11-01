@@ -1,0 +1,15 @@
+services:
+  api-eureka:
+    build:
+      context: ..          # 리포 루트
+      dockerfile: api-eureka/Dockerfile
+    container_name: api-eureka-local
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka
+    restart: always
+#docker compose -f api-eureka/docker-compose.local.yml up -d
+#docker compose -f api-eureka/docker-compose.local.yml down
+#docker logs -f api-eureka-local
