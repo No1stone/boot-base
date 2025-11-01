@@ -173,6 +173,36 @@ GET	/find-all-name	이름 전체 조회
       이벤트 드리븐 아키텍처는 쓰기·팬아웃·비동기 허용이 커지는 도메인에서만 선택적으로 적용한다.
       향후 필요 시 Outbox→메시지 브로커(Kafka/Pulsar)로 확장하는 하이브리드 구조를 지원한다.
 
+# 블루그린 & 점진적 블루그린 (Blue-Green / Progressive Blue-Green) 배포 전략
+점진적 블루그린을 롤링으로 사용
+대상서버 (gateway)
+이 구조는 **AWS EC2 + Docker Compose + Nginx + Jenkins** 기반에서 운영되며,  
+배포 상태 관리는 **3가지 상태(`lock`, `blue`, `green`)** 만으로 단순화합니다.
+
+| 상태 | 설명 |
+|------|------|
+| **lock** | 현재 배포 중(스위치/전환 중), 다른 배포 금지 |
+| **blue** | 현재 블루 세트가 트래픽 처리 중 (활성 상태) |
+| **green** | 현재 그린 세트가 트래픽 처리 중 (활성 상태) |
+
+
+### 구조 예시
+
+| 세트 | 컨테이너 | 포트 |
+|------|-----------|------|
+| Blue | gateway-blue-1 | 8081 |
+| Blue | gateway-blue-2 | 8082 |
+| Green | gateway-green-1 | 8083 |
+| Green | gateway-green-2 | 8084 |
+
+### 장점
+- **1대 서버에서도 무중단 가능**
+- 실제로는 롤링처럼 점진 교체되지만, 관리 상태는 Blue/Green 2세트로 단순화
+- 롤백도 한 번의 업스트림 교체로 끝
+
+### 단점
+- 리소스는 일시적으로 2배 필요
+- 포트/컨테이너명 관리 규칙 필요
 
 spring boot 4 마일스톤 2025년 7월 발표.   
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes
