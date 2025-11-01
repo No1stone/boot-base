@@ -10,6 +10,6 @@ services:
       - SPRING_PROFILES_ACTIVE=dev
 #      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka
     restart: always
-#docker compose -f api-eureka/docker-compose.local.yml up -d
-#docker compose -f api-eureka/docker-compose.local.yml down
-#docker logs -f api-eureka-local
+#docker compose -f api-eureka/docker-compose.dev.yml up -d
+#docker compose -f api-eureka/docker-compose.dev.yml down
+#docker logs -f api-eureka-dev
