@@ -204,6 +204,8 @@ GET	/find-all-name	이름 전체 조회
 - 리소스는 일시적으로 2배 필요
 - 포트/컨테이너명 관리 규칙 필요
 
+jenkins edit...
+
 spring boot 4 마일스톤 2025년 7월 발표.   
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes
 ```text
