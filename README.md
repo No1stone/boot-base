@@ -204,7 +204,9 @@ GET	/find-all-name	이름 전체 조회
 - 리소스는 일시적으로 2배 필요
 - 포트/컨테이너명 관리 규칙 필요
 
-jenkins edit...
+ci/cd 분리
+ci -> git tag 기준으로 jenkins 에 웹훅 / ecr 푸시
+cd -> ecr 로 푸쉬된 레지스트리를 배포
 
 spring boot 4 마일스톤 2025년 7월 발표.   
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes
