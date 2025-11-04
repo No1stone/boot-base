@@ -23,3 +23,6 @@ EXPOSE 8080
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
 
 #docker build -f gateway/Dockerfile -t gateway:local .
+
+#git tag -a gateway-v0.0.1 -m "gateway release v0.0.1"
+#git push origin gateway-v0.0.1
