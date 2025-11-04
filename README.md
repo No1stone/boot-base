@@ -205,7 +205,10 @@ GET	/find-all-name	이름 전체 조회
 - 포트/컨테이너명 관리 규칙 필요
 
 ### ci/cd 분리
-ci -> git tag 웹훅 -> jenkins -> ssm / ecr
+ci -> git tag 웹훅 -> jenkins -> ssm / ecr   
+![img.png](images/img.png)
+![img.png](images/img_1.png)
+![img_2.png](images/img_2.png)
 cd -> ssm / ecr -> 배포 -> nginx 변경
 
 
