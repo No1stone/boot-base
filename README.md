@@ -213,6 +213,10 @@ cd -> ssm / ecr -> 배포 -> nginx 변경
 
 
 
+  
+  
+  
+  
 
 spring boot 4 마일스톤 2025년 7월 발표.   
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes
