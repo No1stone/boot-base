@@ -8,6 +8,7 @@ spring:
     redis:
       host: 43.202.195.185
       port: 6379
+
   rabbitmq:
     port: 5672
     username: guest
