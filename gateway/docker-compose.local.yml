@@ -1,8 +1,10 @@
 services:
   gateway:
-    build:
-      context: ..          # 리포 루트
-      dockerfile: gateway/Dockerfile
+#    build:
+#      context: ..          # 리포 루트
+#      dockerfile: gateway/Dockerfile
+    image: 872759853372.dkr.ecr.ap-northeast-2.amazonaws.com/gateway:gateway-v0.0.8
+
     container_name: gateway-local
     ports:
       - "2031:2031"
