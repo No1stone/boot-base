@@ -4,19 +4,18 @@ server:
 spring:
   application:
     name: gateway
-    rabbitmq:
-    host: 43.202.195.185
-    port: 5672
-    username: guest
-    password: guest
-    listener:
-      simple:
-        prefetch: 5
   db:
     redis:
       host: 43.202.195.185
       port: 6379
-
+  rabbitmq:
+    port: 5672
+    username: guest
+    password: guest
+    host: 43.202.195.185
+    listener:
+      simple:
+        prefetch: 5
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
