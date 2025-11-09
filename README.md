@@ -210,9 +210,13 @@ ci -> git tag 웹훅 -> jenkins -> ssm / ecr
 ![img.png](images/img_1.png)
 ![img_2.png](images/img_2.png)
 cd -> ssm / ecr -> 배포 -> nginx 변경
+![img_3.png](images/img_3.png)
 
-
-
+  
+  
+  
+  
+  
   
   
   
