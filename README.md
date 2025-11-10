@@ -259,5 +259,9 @@ org.springframework.boot.tracing → org.springframework.boot.micrometer.tracing
 
 ![img_4.png](images/img_4.png)
 
-![dependencies.png](images/dependencies.png)
-![gateway.png](images/gateway.png)
+SpringCloud Gateway -> otlp -> loki -> grafana example
+![img_5.png](images/img_5.png)
+
+[//]: # (![dependencies.png]&#40;images/dependencies.png&#41;)
+
+[//]: # (![gateway.png]&#40;images/gateway.png&#41;)
