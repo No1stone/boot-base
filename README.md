@@ -212,15 +212,15 @@ ci -> git tag 웹훅 -> jenkins -> ssm / ecr
 cd -> ssm / ecr -> 배포 -> nginx 변경
 ![img_3.png](images/img_3.png)
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
+argoCd 배포 (gateway/eureka 외 서버)
+ci -> git tag 웹훅 -> jenkins -> ssm / ecr -> value git pr
+cd -> kuber -> argocd -> 클러스터배포
+
+
+
+
+
+
 
 spring boot 4 마일스톤 2025년 7월 발표.   
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes
@@ -230,8 +230,31 @@ gateway, 스웨거등 의존성이 없고 boot와 자카르타 의존성이 많�
 아직개발중인거 같음
 기존 JAVAX -> jakarta 인터페이스 이름변경된거 다수 있음.
 boot4는 기본 java21 기반이라는 이야기가있음..
+
 Observability OTEL지원한다는 이야기가 있어 인프라 반영 예정
-내 프로젝트 버전업 리팩토링은 나중에 가능할듯
+https://grafana.com/docs/loki/latest/send-data/otel/
+
+https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0.0-M2-Release-Notes
+A new starter, spring-boot-starter-opentelemetry has been added. This starter brings in all necessary dependencies to export metrics and traces over OTLP. It will also auto-configure the OpenTelemetry SDK.
+
+Renamed Observability Modules
+The following modules have been renamed:
+
+spring-boot-metrics → spring-boot-micrometer-metrics
+
+spring-boot-observation → spring-boot-micrometer-observation
+
+spring-boot-tracing → spring-boot-micrometer-tracing
+
+Each module’s root package has also been updated:
+
+org.springframework.boot.metrics → org.springframework.boot.micrometer.metrics
+
+org.springframework.boot.observation → org.springframework.boot.micrometer.observation
+
+org.springframework.boot.tracing → org.springframework.boot.micrometer.tracing
+
+
 ```
 ![dependencies.png](images/dependencies.png)
 ![gateway.png](images/gateway.png)
