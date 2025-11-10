@@ -5,7 +5,7 @@
     <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name" />
 
     <springProfile name="local">
-        <include resource="logback/logback-local.xml"/>
+        <include resource="logback/logback-local-otel.xml"/>
     </springProfile>
     <springProfile name="dev">
         <include resource="logback/logback-dev.xml"/>

@@ -2,7 +2,11 @@
 bootJar { enabled = true }
 jar { enabled = false }
 
-
+dependencyManagement {
+    imports {
+        mavenBom "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.18.1"
+    }
+}
 dependencies {
 
     implementation project(':lib-webflux')
@@ -17,6 +21,14 @@ dependencies {
     implementation 'org.springframework.data:spring-data-commons'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.projectreactor:reactor-core'
+    //https://docs.micrometer.io/tracing/reference/tracers.html
+    //otlp
+    implementation "io.opentelemetry:opentelemetry-api"
+    implementation "io.opentelemetry:opentelemetry-sdk"
+    implementation "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter"
+    implementation "io.opentelemetry:opentelemetry-exporter-otlp"
+    implementation "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.18.1-alpha"
+
     // swagger
     //안나왓네
 //    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")

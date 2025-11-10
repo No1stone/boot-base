@@ -256,5 +256,8 @@ org.springframework.boot.tracing → org.springframework.boot.micrometer.tracing
 
 
 ```
+
+![img_4.png](images/img_4.png)
+
 ![dependencies.png](images/dependencies.png)
 ![gateway.png](images/gateway.png)

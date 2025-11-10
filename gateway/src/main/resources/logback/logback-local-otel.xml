@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <!-- 콘솔 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} traceId=%X{traceId} spanId=%X{spanId} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- OTLP 로그 전송 -->
+    <appender name="OTEL" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+        <!-- Collector HTTP 수신(4318)로 전송 -->
+        <otelExporterType>otlp</otelExporterType>
+        <otelExporterEndpoint>http://localhost:4318/v1/logs</otelExporterEndpoint>
+        <otelExporterProtocol>http/protobuf</otelExporterProtocol>
+        <!-- 필요 시 gRPC 사용: endpoint: http://localhost:4317, protocol: grpc -->
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="OTEL"/>
+    </root>
+
+</included>
