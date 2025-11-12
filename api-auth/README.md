@@ -44,3 +44,7 @@ vault status
 
 ![img_3.png](images/img_3.png)   
 
+![img_4.png](images/img_4.png)  
+
+
+
