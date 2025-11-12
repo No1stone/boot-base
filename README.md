@@ -88,13 +88,8 @@ Kafka/Temporal 의존성 없이 HTTP로 Command/Compensation 처리
 각 서비스는 보상용 REST API 제공 (util-codejen 규칙으로 자동생성 필요한 보상은 별도 개발)
 
 WebClient timeout, retryWhen 사용 (Resilience4j 미사용)
-## 7. 인증 및 Vault 연동 (Vault, JWK 롤링은 추후 구현)
-
-Spring Vault Transit 기반의 JWT 서명 및 JWKS 공개 예정
-
-현재는 로컬 키 기반 서명으로 임시 운영 (JWK 롤링 구현 예정)
-
-Vault는 KV/Transit 모두 사용하며, Config Server는 제외
+## 7. 인증 및 Vault 연동 (Vault, JWK 롤링)
+https://github.com/No1stone/boot-base/tree/main/api-auth
 
 ## 8. JPA 트랜잭션 규칙
 
