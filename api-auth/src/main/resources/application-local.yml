@@ -27,9 +27,9 @@ spring:
       #      jdbc-url: ${DRP_DB_URL}
       #      username: ${DRP_DB_USERNAME}
       #      password: ${DRP_DB_PASSWORD}
-      jdbc-url: jdbc:mariadb://localhost:3307/origemite?serverTimezone=UTC
-      username: origemite
-      password: 'test123'
+      jdbc-url: jdbc:mariadb://localhost:3306/appdb?serverTimezone=UTC
+      username: root
+      password: 'pass1234'
       driver-class-name: org.mariadb.jdbc.Driver
       connection-init-sql: SET time_zone = '+00:00'
       pool-name: DEFAULT_POOL
@@ -51,6 +51,16 @@ spring:
         provider:
           google:
             issuer-uri: https://accounts.google.com
+
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      authentication: TOKEN
+      token: root
+      kv:
+        enabled: true
+        backend: secret
+
 
 security:
   jwt:
