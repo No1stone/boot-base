@@ -62,6 +62,7 @@ public class SecurityConfig {
                                 "/portal/second-authentications/**", // 처음 로그인 시
                                 "/user/**",
                                 "/auth/**",
+                                "/vault/**",
                                 "/member/api-safe",
                                 "/oauth/login",
                                 "/oauth/index",
