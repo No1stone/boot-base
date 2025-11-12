@@ -261,5 +261,5 @@ org.springframework.boot.tracing → org.springframework.boot.micrometer.tracing
 
 SpringCloud Gateway -> otlp -> loki -> grafana example  
 ![img_5.png](images/img_5.png)
-SpringCloud Gateway -> otlp -> zipkin -> grafana example  
+SpringCloud Gateway -> otlp -> zipkin 
 ![img_6.png](images/img_6.png)
