@@ -35,7 +35,7 @@ public class VaultService {
 
         VaultTransitOperations transit = vaultTemplate.opsForTransit();
         VaultTransitKey vaultKey = transit.getKey("auth-sig");
-        log.info("transit.getKey = {}", vaultKey.getKeys());
+        log.debug("transit.getKey = {}", vaultKey.getKeys());
 
         if (vaultKey == null) {
             throw new IllegalStateException("No key found for " + vaultKey);
