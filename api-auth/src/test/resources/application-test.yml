@@ -1,0 +1,46 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_batch_fetch_size: 500
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        globally_quoted_identifiers: true
+        format_sql: true
+        show_sql: true
+    show-sql: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: h2
+  h2:
+    console:
+      enabled: true
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+logging:
+  level:
+    ai.budit.api: DEBUG
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+security:
+  jwt:
+    secret-key: TODO secret-key
+    access-token-validity-in-milliseconds: 43200000
+    refresh-token-validity-in-milliseconds: 43200000
+    access-token-expired-time-ms: 43200000
