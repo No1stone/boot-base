@@ -89,7 +89,12 @@ Kafka/Temporal 의존성 없이 HTTP로 Command/Compensation 처리
 
 WebClient timeout, retryWhen 사용 (Resilience4j 미사용)
 ## 7. 인증 및 Vault 연동 (Vault, JWK 롤링)
-https://github.com/No1stone/boot-base/tree/main/api-auth
+<details>
+<summary>클릭해서 api-auth README 보기</summary>
+
+[README.md](api-auth/README.md)
+
+</details>
 
 ## 8. JPA 트랜잭션 규칙
 
