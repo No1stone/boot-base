@@ -64,7 +64,6 @@ public class VaultService {
             Map<String, VaultKey.KeyVersion> keyMap = response.getKeys();
             keyMap.put(version, keyVersion);
         }
-
         return response;
     }
 
