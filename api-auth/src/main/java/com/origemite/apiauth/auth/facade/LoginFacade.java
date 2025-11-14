@@ -6,12 +6,6 @@ import com.origemite.lib.common.util.DateUtils;
 import com.origemite.lib.common.util.WebUtils;
 import com.origemite.lib.model.auth.JwtToken;
 import com.origemite.lib.model.auth.LoginReq;
-import com.origemite.lib.model.auth.dto.AppMemberLoginHistoryReq;
-import com.origemite.lib.model.auth.dto.AppMemberLoginHistoryRes;
-import com.origemite.lib.model.auth.dto.AppMemberSessionReq;
-import com.origemite.lib.model.auth.dto.AppMemberSessionRes;
-import com.origemite.lib.model.auth.service.AppMemberLoginHistoryService;
-import com.origemite.lib.model.auth.service.AppMemberSessionService;
 import com.origemite.lib.model.enums.common.EnYn;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginFacade {
 
     private final JwtTokenProp jwtTokenProp;
-    private final AppMemberLoginHistoryService appMemberLoginHistoryService;
-    private final AppMemberSessionService appMemberSessionService;
+//    private final AppMemberLoginHistoryService appMemberLoginHistoryService;
+//    private final AppMemberSessionService appMemberSessionService;
     private final JwtTokenAuthenticationProvider jwtTokenAuthenticationProvider;
 
 
@@ -57,32 +51,32 @@ public class LoginFacade {
         JwtToken jwtToken = jwtTokenAuthenticationProvider.createToken(LoginId, jwtTokenProp.getAccessTokenExpiration(), jwtTokenProp.getRefreshTokenExpiration());
 
         // step 4
-        AppMemberSessionReq.Create sessionCreate = AppMemberSessionReq.Create.builder()
-                .id(jwtToken.getLoginSessionId())
-                .memberId(LoginId)
-                .refreshToken(jwtToken.getRefreshToken())
-                .expiration(jwtToken.getRefreshTokenExpiration())
-                .build();
-        AppMemberSessionRes.Id sesseionId = appMemberSessionService.save(sessionCreate);
+//        AppMemberSessionReq.Create sessionCreate = AppMemberSessionReq.Create.builder()
+//                .id(jwtToken.getLoginSessionId())
+//                .memberId(LoginId)
+//                .refreshToken(jwtToken.getRefreshToken())
+//                .expiration(jwtToken.getRefreshTokenExpiration())
+//                .build();
+//        AppMemberSessionRes.Id sesseionId = appMemberSessionService.save(sessionCreate);
 
         // step 5
         if(history){
-            AppMemberLoginHistoryReq.Create create = AppMemberLoginHistoryReq.Create.builder()
-                    .memberId(LoginId)
-                    .loginAt(DateUtils.now())
-                    .loginHistoryUserAgent(WebUtils.getUserAgent())
-                    .loginHistoryIp(WebUtils.getRemoteAddr())
-                    .loginSuccessYn(EnYn.Y.getCode())
-                    .build();
-            AppMemberLoginHistoryRes.Id saveId = appMemberLoginHistoryService.save(create);
+//            AppMemberLoginHistoryReq.Create create = AppMemberLoginHistoryReq.Create.builder()
+//                    .memberId(LoginId)
+//                    .loginAt(DateUtils.now())
+//                    .loginHistoryUserAgent(WebUtils.getUserAgent())
+//                    .loginHistoryIp(WebUtils.getRemoteAddr())
+//                    .loginSuccessYn(EnYn.Y.getCode())
+//                    .build();
+//            AppMemberLoginHistoryRes.Id saveId = appMemberLoginHistoryService.save(create);
         }
         return jwtToken;
     }
 
 
-    public JwtToken refreshToken(LoginReq.RefreshToken refreshToken) {
-        AppMemberSessionRes.Single session = appMemberSessionService.loginByRefreshToken(refreshToken.getRefreshToken());
-        return tokenProcess(session.getMemberId(), true);
-    }
+//    public JwtToken refreshToken(LoginReq.RefreshToken refreshToken) {
+//        AppMemberSessionRes.Single session = appMemberSessionService.loginByRefreshToken(refreshToken.getRefreshToken());
+//        return tokenProcess(session.getMemberId(), true);
+//    }
 
 }
