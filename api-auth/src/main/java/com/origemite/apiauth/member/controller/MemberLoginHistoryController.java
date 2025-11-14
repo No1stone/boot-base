@@ -1,4 +1,4 @@
-package com.origemite.apiauth.member;
+package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.common.util.CommonResponseUtils;
 import com.origemite.lib.common.web.CommonResponse;
