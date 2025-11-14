@@ -20,12 +20,12 @@ public class ControllerGenerator {
         String filePath = Paths.get(path, context, "controller", entityName + "Controller.java").toString();
 
         try (FileWriter writer = prepareFile(filePath)) {
-            writer.write("package io.diddda.api." + context + ".controller;\n\n");
-            writer.write("import io.diddda.api." + context + ".dto." + entityName + "Req;\n");
-            writer.write("import io.diddda.api." + context + ".dto." + entityName + "Res;\n");
-            writer.write("import io.diddda.api." + context + ".service." + entityName + "Service;\n");
-            writer.write("import io.diddda.lib.common.util.CommonResponseUtils;\n");
-            writer.write("import io.diddda.lib.common.web.CommonResponse;\n");
+            writer.write("package com.origemite.api." + context + ".controller;\n\n");
+            writer.write("import com.origemite.api." + context + ".dto." + entityName + "Req;\n");
+            writer.write("import com.origemite.api." + context + ".dto." + entityName + "Res;\n");
+            writer.write("import com.origemite.api." + context + ".service." + entityName + "Service;\n");
+            writer.write("import com.origemite.lib.common.util.CommonResponseUtils;\n");
+            writer.write("import com.origemite.lib.common.web.CommonResponse;\n");
             writer.write("import io.swagger.v3.oas.annotations.Operation;\n");
             writer.write("import io.swagger.v3.oas.annotations.Parameter;\n");
             writer.write("import io.swagger.v3.oas.annotations.tags.Tag;\n");

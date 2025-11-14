@@ -20,22 +20,22 @@ public class ServiceGenerator {
         String repositoryName = toCamelCase(entityName) + "Repository";
 
         try (FileWriter writer = prepareFile(filePath)) {
-            writer.write("package io.diddda.api." + context + ".service;\n\n");
+            writer.write("package com.origemite.api." + context + ".service;\n\n");
             writer.write("import lombok.RequiredArgsConstructor;\n");
             writer.write("import lombok.extern.slf4j.Slf4j;\n");
             writer.write("import org.springframework.data.domain.*;\n");
             writer.write("import org.springframework.stereotype.Service;\n");
             writer.write("import org.springframework.transaction.annotation.Transactional;\n");
-            writer.write("import io.diddda.api." + context + ".entity." + entityName + ";\n");
-            writer.write("import io.diddda.api." + context + ".repository." + entityName + "Repository;\n");
-            writer.write("import io.diddda.api." + context + ".dto." + entityName + "Req;\n");
-            writer.write("import io.diddda.api." + context + ".dto." + entityName + "Res;\n");
-            writer.write("import io.diddda.lib.common.exception.BizErrorException;\n");
-            writer.write("import io.diddda.lib.common.util.BeanUtils;\n");
-            writer.write("import io.diddda.lib.common.web.ResponseType;\n");
+            writer.write("import com.origemite.api." + context + ".entity." + entityName + ";\n");
+            writer.write("import com.origemite.api." + context + ".repository." + entityName + "Repository;\n");
+            writer.write("import com.origemite.api." + context + ".dto." + entityName + "Req;\n");
+            writer.write("import com.origemite.api." + context + ".dto." + entityName + "Res;\n");
+            writer.write("import com.origemite.lib.common.exception.BizErrorException;\n");
+            writer.write("import com.origemite.lib.common.util.BeanUtils;\n");
+            writer.write("import com.origemite.lib.common.web.ResponseType;\n");
             writer.write("import java.util.*;\n\n");
-            writer.write("import static io.diddda.lib.common.util.ModelMapperUtil.map;\n");
-            writer.write("import static io.diddda.lib.common.util.ModelMapperUtil.mapAll;\n\n");
+            writer.write("import static com.origemite.lib.common.util.ModelMapperUtil.map;\n");
+            writer.write("import static com.origemite.lib.common.util.ModelMapperUtil.mapAll;\n\n");
 
             writer.write("@Service\n@Slf4j\n@RequiredArgsConstructor\n@Transactional(readOnly = true)\n");
             writer.write("public class " + entityName + "Service {\n\n");

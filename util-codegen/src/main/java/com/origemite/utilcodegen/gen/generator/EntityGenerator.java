@@ -49,10 +49,10 @@ public class EntityGenerator {
             file.getParentFile().mkdirs();
             try (FileWriter writer = new FileWriter(file)) {
 
-                writer.write("package io.diddda.api." + context + ".entity;\n\n");
-                writer.write("import io.diddda.lib.common.util.BeanUtils;\n");
+                writer.write("package com.origemite.api." + context + ".entity;\n\n");
+                writer.write("import com.origemite.lib.common.util.BeanUtils;\n");
                 if (superClass != null)
-                    writer.write("import io.diddda.lib.common.base." + superClass + ";\n");
+                    writer.write("import com.origemite.lib.common.base." + superClass + ";\n");
                 writer.write("import jakarta.persistence.*;\n");
                 writer.write("import lombok.*;\n");
                 writer.write("import lombok.experimental.FieldNameConstants;\n");

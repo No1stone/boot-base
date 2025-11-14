@@ -13,7 +13,7 @@ public class RepositoryGenerator {
         String entityName = toPascalCase(table.tableName());
         String pkType = getPkType(table); // ex: String, Long, Integer
         String context = extractContext(table.tableName());
-        String packageName = "io.diddda.api." + context + ".repository";
+        String packageName = "com.origemite.api." + context + ".repository";
         String filePath = Paths.get(outputDir, context, "repository", entityName + "Repository.java").toString();
 
         try {
@@ -24,7 +24,7 @@ public class RepositoryGenerator {
                 // 패키지 및 import
                 writer.write("package " + packageName + ";\n\n");
                 writer.write("import com.querydsl.jpa.impl.JPAQueryFactory;\n");
-                writer.write("import io.diddda.api." + context + ".entity." + entityName + ";\n");
+                writer.write("import com.origemite.api." + context + ".entity." + entityName + ";\n");
                 writer.write("import lombok.RequiredArgsConstructor;\n");
                 writer.write("import org.springframework.data.jpa.repository.JpaSpecificationExecutor;\n");
                 writer.write("import org.springframework.data.jpa.repository.JpaRepository;\n");

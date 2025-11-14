@@ -19,10 +19,10 @@ public class SpecGenerator {
             File file = new File(filePath);
             file.getParentFile().mkdirs();
             try (FileWriter writer = new FileWriter(file)) {
-                writer.write("package io.diddda.api." + context + ".spec;\n\n");
-                writer.write("import io.diddda.lib.common.base.UpdatedEntity;\n");
-                writer.write("import io.diddda.lib.common.base.CreatedEntity;\n");
-                writer.write("import io.diddda.lib.common.base.PredicateBuilder;\n");
+                writer.write("package com.origemite.api." + context + ".spec;\n\n");
+                writer.write("import com.origemite.lib.common.base.UpdatedEntity;\n");
+                writer.write("import com.origemite.lib.common.base.CreatedEntity;\n");
+                writer.write("import com.origemite.lib.common.base.PredicateBuilder;\n");
                 writer.write("import org.springframework.data.jpa.domain.Specification;\n\n");
 
                 writer.write("public class " + className + "Specs {\n\n");

@@ -13,11 +13,11 @@ public class EnumGenerator {
             File file = new File(filePath);
             file.getParentFile().mkdirs();
             try (FileWriter writer = new FileWriter(file)) {
-                writer.write("package io.diddda.lib.enums;\n\n");
-                writer.write("import io.diddda.lib.common.enums.CodeValue;\n");
-                writer.write("import io.diddda.lib.common.exception.BizErrorException;\n");
-                writer.write("import io.diddda.lib.common.processor.annotation.BizEnum;\n");
-                writer.write("import io.diddda.lib.common.web.ResponseType;\n");
+                writer.write("package com.origemite.lib.enums;\n\n");
+                writer.write("import com.origemite.lib.common.enums.CodeValue;\n");
+                writer.write("import com.origemite.lib.common.exception.BizErrorException;\n");
+                writer.write("import com.origemite.lib.common.processor.annotation.BizEnum;\n");
+                writer.write("import com.origemite.lib.common.web.ResponseType;\n");
                 writer.write("import lombok.AccessLevel;\n");
                 writer.write("import lombok.RequiredArgsConstructor;\n");
                 writer.write("import lombok.experimental.FieldDefaults;\n\n");
