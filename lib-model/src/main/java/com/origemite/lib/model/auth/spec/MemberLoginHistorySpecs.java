@@ -3,6 +3,8 @@ package com.origemite.lib.model.auth.spec;
 import com.origemite.lib.common.base.UpdatedEntity;
 import com.origemite.lib.common.base.CreatedEntity;
 import com.origemite.lib.common.base.PredicateBuilder;
+import com.origemite.lib.model.auth.dto.MemberLoginHistoryReq;
+import com.origemite.lib.model.auth.entity.MemberLoginHistory;
 import org.springframework.data.jpa.domain.Specification;
 
 public class MemberLoginHistorySpecs {
