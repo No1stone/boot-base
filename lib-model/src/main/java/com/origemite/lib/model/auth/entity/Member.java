@@ -1,5 +1,6 @@
 package com.origemite.lib.model.auth.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.origemite.lib.common.util.BeanUtils;
 import com.origemite.lib.common.base.UpdatedEntity;
 import jakarta.persistence.*;
@@ -7,6 +8,9 @@ import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.DynamicInsert;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * me_member Entity
@@ -55,4 +59,26 @@ public class Member extends UpdatedEntity {
     public void update(Member entity) {
         BeanUtils.map(entity, this);
     }
+
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "member_id")
+    @Schema(description = "멤버 로그인 히스토리 목록")
+    private List<MemberLoginHistory> memberLoginHistories = new ArrayList<>();
+
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "member_id")
+    @Schema(description = "멤버 탈퇴 목록")
+    private List<MemberOut> memberOuts = new ArrayList<>();
+
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "member_id")
+    @Schema(description = "멤버 탈퇴 목록")
+    private List<MemberPasswordChangeHistory> MemberPasswordChangeHistories = new ArrayList<>();
+
 }
