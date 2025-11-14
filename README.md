@@ -90,7 +90,7 @@ Kafka/Temporal 의존성 없이 HTTP로 Command/Compensation 처리
 WebClient timeout, retryWhen 사용 (Resilience4j 미사용)
 ## 7. 인증 및 Vault 연동 (Vault, JWK 롤링)
 <details>
-<summary>클릭해서 api-auth README 보기</summary>
+<summary>api-auth README 보기</summary>
 
 [README.md](api-auth/README.md)
 
@@ -240,10 +240,14 @@ org.springframework.boot.tracing → org.springframework.boot.micrometer.tracing
 
 
 ```
+# Observability
+<details>
+<summary>Observability</summary>
 
 ![img_4.png](images/img_4.png)
 
 SpringCloud Gateway -> otlp -> loki -> grafana example  
-![img_5.png](images/img_5.png)
-SpringCloud Gateway -> otlp -> zipkin 
-![img_6.png](images/img_6.png)
+![img_5.png](images/img_5.png). 
+SpringCloud Gateway -> otlp -> zipkin. 
+![img_6.png](images/img_6.png). 
+</details>
