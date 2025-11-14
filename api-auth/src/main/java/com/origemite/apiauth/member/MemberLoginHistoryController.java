@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "7e222a45-3e1f-46b8-849e-d4a843f2ac3a", description = "MemberLoginHistory")
+@Tag(name = "member-login-histories", description = "MemberLoginHistory")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/7e222a45-3e1f-46b8-849e-d4a843f2ac3a")
+@RequestMapping("/member-login-histories")
 public class MemberLoginHistoryController {
 
     private final MemberLoginHistoryService memberLoginHistoryService;

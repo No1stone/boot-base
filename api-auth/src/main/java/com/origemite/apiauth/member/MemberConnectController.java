@@ -15,11 +15,11 @@ import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@Tag(name = "82d28928-acee-4ced-b852-8005cc92e16b", description = "MemberConnect")
+@Tag(name = "member-connects", description = "MemberConnect")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/82d28928-acee-4ced-b852-8005cc92e16b")
+@RequestMapping("/member-connects")
 public class MemberConnectController {
 
     private final MemberConnectService memberConnectService;

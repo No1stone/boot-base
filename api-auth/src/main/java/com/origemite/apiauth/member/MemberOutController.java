@@ -15,11 +15,11 @@ import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@Tag(name = "0149596c-d143-44f4-bc36-5a453c767505", description = "MemberOut")
+@Tag(name = "member-out", description = "MemberOut")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/0149596c-d143-44f4-bc36-5a453c767505")
+@RequestMapping("/member-out")
 public class MemberOutController {
 
     private final MemberOutService memberOutService;

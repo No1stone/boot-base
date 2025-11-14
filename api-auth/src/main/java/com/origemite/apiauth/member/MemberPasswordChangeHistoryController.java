@@ -15,11 +15,11 @@ import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@Tag(name = "c7ced3f8-0a39-47cb-b037-e64440787f96", description = "MemberPasswordChangeHistory")
+@Tag(name = "member-password-changes-histories", description = "MemberPasswordChangeHistory")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/c7ced3f8-0a39-47cb-b037-e64440787f96")
+@RequestMapping("/member-password-changes-histories")
 public class MemberPasswordChangeHistoryController {
 
     private final MemberPasswordChangeHistoryService memberPasswordChangeHistoryService;

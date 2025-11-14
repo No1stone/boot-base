@@ -15,11 +15,11 @@ import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@Tag(name = "631544b3-f2af-4d42-8395-a338915f4d14", description = "Member")
+@Tag(name = "member", description = "Member")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/631544b3-f2af-4d42-8395-a338915f4d14")
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
