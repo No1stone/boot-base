@@ -1,10 +1,10 @@
 package com.origemite.apiauth.member;
 
-import com.origemite.api.me.dto.MemberConnectReq;
-import com.origemite.api.me.dto.MemberConnectRes;
-import com.origemite.api.me.service.MemberConnectService;
 import com.origemite.lib.common.util.CommonResponseUtils;
 import com.origemite.lib.common.web.CommonResponse;
+import com.origemite.lib.model.auth.dto.MemberConnectReq;
+import com.origemite.lib.model.auth.dto.MemberConnectRes;
+import com.origemite.lib.model.auth.service.MemberConnectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

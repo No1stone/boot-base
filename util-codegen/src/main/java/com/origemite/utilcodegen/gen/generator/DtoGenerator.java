@@ -65,7 +65,7 @@ public class DtoGenerator {
     }
     private void generateRes(TableMetadata table, String entityName, String pkType, String context, String filePath) {
         try (FileWriter writer = prepareFile(filePath)) {
-            writer.write("package io.diddda.api." + context + ".dto;\n\n");
+            writer.write("package com.origemite.api." + context + ".dto;\n\n");
             writer.write("import lombok.*;\nimport io.swagger.v3.oas.annotations.media.Schema;\n");
             writer.write("import lombok.experimental.FieldDefaults;\nimport java.util.*;\nimport java.time.*;\n\n");
 
