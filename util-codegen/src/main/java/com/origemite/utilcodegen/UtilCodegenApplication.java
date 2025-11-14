@@ -10,9 +10,9 @@ public class UtilCodegenApplication {
         String[] data = {
                 "--url=jdbc:mysql://localhost:3306/"
                 , "--username=root"
-                , "--password=11"
-                , "--schemaName=shared"
-                , "--table=co_exchange_rate"
+                , "--password=pass1234"
+                , "--schemaName=appdb"
+                , "--table=me_member"
                 ,
         };
         CodeGenRunner.run(data);
