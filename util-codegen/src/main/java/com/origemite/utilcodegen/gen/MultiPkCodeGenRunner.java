@@ -1,13 +1,8 @@
 package com.origemite.utilcodegen.gen;
 
 import com.origemite.utilcodegen.gen.generator.ace.*;
-import io.diddda.utilcodegen.gen.generator.MultiPkControllerGenerator;
-import io.diddda.utilcodegen.gen.generator.ace.*;
-import io.origemite.utilcodegen.gen.generator.ace.*;
-import io.resumt.utilcodegen.gen.generator.ace.*;
 import com.origemite.utilcodegen.gen.metadata.TableMetadata;
 import com.origemite.utilcodegen.gen.metadata.TableMetadataReader;
-
 import java.util.Arrays;
 
 public class MultiPkCodeGenRunner {

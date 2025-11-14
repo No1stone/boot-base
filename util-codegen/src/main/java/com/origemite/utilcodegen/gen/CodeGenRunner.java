@@ -1,9 +1,6 @@
 package com.origemite.utilcodegen.gen;
 
 import com.origemite.utilcodegen.gen.generator.*;
-import io.diddda.utilcodegen.gen.generator.*;
-import io.origemite.utilcodegen.gen.generator.*;
-import io.resumt.utilcodegen.gen.generator.*;
 import com.origemite.utilcodegen.gen.metadata.TableMetadata;
 import com.origemite.utilcodegen.gen.metadata.TableMetadataReader;
 
@@ -16,7 +13,7 @@ public class CodeGenRunner {
         String url = getArgumentValue(args, "--url");
         String userName = getArgumentValue(args, "--username");
         String password = getArgumentValue(args, "--password");
-        String outputDir = getArgumentValue(args, "--output", "util-codegen/src/main/java/io/diddda/utilcodegen/created/");
+        String outputDir = getArgumentValue(args, "--output", "util-codegen/src/main/java/com/origemite/utilcodegen/created/");
 
         TableMetadata metadata = TableMetadataReader.read(schemaName, tableName,url,userName,password);
 
