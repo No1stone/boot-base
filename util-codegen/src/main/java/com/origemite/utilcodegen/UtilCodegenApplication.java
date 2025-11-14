@@ -12,7 +12,7 @@ public class UtilCodegenApplication {
                 , "--username=root"
                 , "--password=pass1234"
                 , "--schemaName=appdb"
-                , "--table=me_member"
+                , "--table=me_member_login_history"
                 ,
         };
         CodeGenRunner.run(data);
