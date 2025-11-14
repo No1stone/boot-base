@@ -158,6 +158,9 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
       향후 필요 시 Outbox→메시지 브로커(Kafka/Pulsar)로 확장하는 하이브리드 구조를 지원한다.
 
 # 블루그린 & 점진적 블루그린 (Blue-Green / Progressive Blue-Green) 배포 전략
+<details>
+<summary>ci/cd</summary>
+
 점진적 블루그린을 롤링으로 사용
 대상서버 (gateway)
 이 구조는 **AWS EC2 + Docker Compose + Nginx + Jenkins** 기반에서 운영되며,  
@@ -200,20 +203,22 @@ argoCd 배포 (gateway/eureka 외 서버)
 ci -> git tag 웹훅 -> jenkins -> ssm / ecr -> value git pr
 cd -> kuber -> argocd -> 클러스터배포
 
+</details>
 
 
 
 
-
+# Observability
+<details>
+<summary>Observability</summary>
 
 spring boot 4 마일스톤 2025년 7월 발표.   
 https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes
 ```text
 spring cloud 마일스톤버전은
 gateway, 스웨거등 의존성이 없고 boot와 자카르타 의존성이 많이 깨짐.
-아직개발중인거 같음
-기존 JAVAX -> jakarta 인터페이스 이름변경된거 다수 있음.
-boot4는 기본 java21 기반이라는 이야기가있음..
+아직개발중..
+기존 JAVAX -> jakarta 인터페이스 이름변경된거 다수존재.
 
 Observability OTEL지원한다는 이야기가 있어 인프라 반영 예정
 https://grafana.com/docs/loki/latest/send-data/otel/
@@ -240,9 +245,6 @@ org.springframework.boot.tracing → org.springframework.boot.micrometer.tracing
 
 
 ```
-# Observability
-<details>
-<summary>Observability</summary>
 
 ![img_4.png](images/img_4.png)
 
