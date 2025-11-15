@@ -1,4 +1,4 @@
-package com.origemite.apiauth.auth.service;
+package com.origemite.apiauth.member.service;
 
 import com.origemite.lib.common.util.ModelMapperUtil;
 import com.origemite.lib.model.auth.dto.MemberReq;

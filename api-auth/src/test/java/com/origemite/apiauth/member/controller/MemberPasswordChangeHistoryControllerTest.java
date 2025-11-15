@@ -1,4 +1,4 @@
-package com.origemite.apiauth.auth.controller;
+package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryReq;
 import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryRes;
