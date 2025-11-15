@@ -23,6 +23,8 @@ public class CodeGenRunner {
         new ServiceGenerator().generate(metadata, outputDir);
         new ControllerGenerator().generate(metadata, outputDir);
         new SpecGenerator().generate(metadata, outputDir);
+        new ControllerTestGenerator().generate(metadata, outputDir);
+
         System.out.println("✅ 코드 생성 완료!");
     }
 
