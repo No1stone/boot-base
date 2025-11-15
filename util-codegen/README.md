@@ -1,7 +1,16 @@
-# CONTROLLER / SERVICE / DTO / ENTITY / REPOSITORY / SPEC 생성
+# CONTROLLER / SERVICE / DTO / ENTITY / REPOSITORY / SPEC 등 생성
 
 
-DB 스키마 조회 후 Controller, Service, Facade, Repository, Entity, JpaSpec 자동 생성
+DB 스키마 조회 후 Controller, Service, Repository, Entity, JpaSpec 자동 생성
+
+- {EntityName}Controller
+- {EntityName}Service
+- {EntityName}Repository
+- {EntityName}Entity
+- {EntityName}JpaSpec
+- {EntityName}ControllerTest
+- {EntityName}ServiceTest
+
 
 REST 엔드포인트 규칙:
 
@@ -21,3 +30,6 @@ GET	/find-all-name	이름 전체 조회
 
 컨트롤러 프리픽스는 네이밍출동 방지를 위한 UUID 생성 endpoint 수정필요   
 예: @RequestMapping("/b4dd4878")  
+
+
+이 구조를 기반으로, 신규 테이블을 추가할 때마다 **반자동으로 기본 CRUD API + 테스트 골격**까지 한 번에 생성하는 것을 목표로 합니다.
