@@ -32,8 +32,9 @@ Auth 서버는 Vault에서 공개키를 JWKS(JSON Web Key Set)로 변환해 Gate
 docker exec -it vault /bin/sh
 # 컨테이너 쉘에서
 export VAULT_ADDR=http://127.0.0.1:8200   
-export VAULT_TOKEN=root                   
-
+export VAULT_TOKEN=root     
+vault secrets list              
+vault secrets enable transit
 vault status
 ```
 
