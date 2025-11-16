@@ -50,7 +50,30 @@ vault status
 
 </details>
 
-# 2. 솔트(Salt)와 사이퍼키(Cipher Key) 사용
+# ## Vault - JWT 키 관리 동작 흐름
+<details>
+
+1. 서버 시작 시 (init 메소드)
+    - Vault Transit에서 `AUTH_JWT` 키 메타 정보를 조회한다.
+    - 각 버전별 public key를 Redis에 저장한다.
+        - 예) `AUTH_JWT:key:1`, `AUTH_JWT:key:2`, ...
+    - Vault에서 내려준 `latest_version` 값을 Redis에 저장한다.
+        - `LATEST_VERSION_KEY = {latest_version}`
+
+2. 토큰 생성 시 (로그인 / 재발급 등)
+    - Redis에서 `LATEST_VERSION_KEY` 를 조회하여 **가장 최신 버전 번호**를 가져온다.
+    - 최신 버전에 해당하는 public/private key로 JWT를 생성한다.
+    - JWT 헤더의 `kid` 에 해당 버전 번호를 설정한다.
+        - 예) `kid = "3"`
+
+3. 토큰 검증 시 (API 요청 처리)
+    - JWT 헤더의 `kid` 값을 읽어서 버전 번호를 확인한다.
+    - Redis에서 `AUTH_JWT:key:{kid}` 를 조회하여 해당 버전의 public key를 가져온다.
+    - 가져온 public key로 서명을 검증한다.
+</details>
+
+
+# 솔트(Salt)와 사이퍼키(Cipher Key) 사용
 <details>
 
 솔트(Salt) — 비밀번호 보안용  
