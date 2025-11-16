@@ -8,7 +8,7 @@ public class EnumGenRenner {
 
     public static void run(String[] args) {
         String tableName = getArgumentValue(args, "--classname");
-        String path = "util-codegen/src/main/java/io/diddda/utilcodegen/created/enums";
+        String path = "util-codegen/src/main/java/com/origemite/utilcodegen/created/enums";
         new EnumGenerator().generate(tableName, path);
     }
     private static String getArgumentValue(String[] args, String key) {

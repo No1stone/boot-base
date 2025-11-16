@@ -3,6 +3,7 @@ package com.origemite.apiauth.auth;
 
 import com.origemite.apiauth.auth.service.VaultService;
 import com.origemite.lib.model.auth.VaultKey;
+import com.origemite.lib.model.enums.auth.EnVaultType;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,9 @@ public class VaultController {
     private final VaultService vaultService;
 
     //Jenkins Pipeline으로 vault를 리레쉬 갱신하는 api
-    @GetMapping("/refresh-transit")
+    @GetMapping("/member-refresh-transit")
     public ResponseEntity valutTest() {
-        vaultService.getValutTransitKeys();
+        vaultService.getValutTransitKeys(EnVaultType.AUTH_JWT);
         return ResponseEntity.ok().build();
     }
 

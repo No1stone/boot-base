@@ -8,7 +8,7 @@ public class EnumCodegenApplication {
 
     public static void main(String[] args) {
         String[] data = {
-                "--classname=EnCodeShopFileType"
+                "--classname=EnVaultType"
         };
         EnumGenRenner.run(data);
     }

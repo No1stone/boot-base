@@ -2,6 +2,7 @@ package com.origemite.apiauth.auth.service;
 
 import com.origemite.lib.common.util.TransformUtils;
 import com.origemite.lib.model.auth.VaultKey;
+import com.origemite.lib.model.enums.auth.EnVaultType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -24,17 +25,17 @@ public class VaultService {
 
     private final VaultTemplate vaultTemplate;
     private final static String TRANSIT_PATH = "transit/keys/";
-    private final static String TRANSIT_KEY = "auth-sig";
+//    private final static String TRANSIT_KEY = "auth-sig";
 
-    public Signature signJwtPayload(String payload) {
+    public Signature signJwtPayload(String payload, EnVaultType vaultType) {
         VaultTransitOperations transit = vaultTemplate.opsForTransit();
-        return transit.sign(TRANSIT_KEY, Plaintext.of(payload));
+        return transit.sign(vaultType.getValue(), Plaintext.of(payload));
     }
 
-    public VaultKey.Response getValutTransitKeys() {
+    public VaultKey.Response getValutTransitKeys(EnVaultType vaultType) {
 
         VaultTransitOperations transit = vaultTemplate.opsForTransit();
-        VaultTransitKey vaultKey = transit.getKey("auth-sig");
+        VaultTransitKey vaultKey = transit.getKey(vaultType.getValue());
         log.debug("transit.getKey = {}", vaultKey.getKeys());
 
         if (vaultKey == null) {
