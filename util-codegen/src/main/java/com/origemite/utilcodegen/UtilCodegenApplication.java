@@ -19,3 +19,10 @@ public class UtilCodegenApplication {
     }
 
 }
+
+
+//  me_member_connect
+//        me_member
+//  me_member_login_history
+//        me_member_out
+//  me_member_password_change_history

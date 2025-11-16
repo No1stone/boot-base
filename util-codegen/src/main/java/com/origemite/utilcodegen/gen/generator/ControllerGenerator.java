@@ -21,9 +21,6 @@ public class ControllerGenerator {
 
         try (FileWriter writer = prepareFile(filePath)) {
             writer.write("package com.origemite.api." + context + ".controller;\n\n");
-            writer.write("import com.origemite.api." + context + ".dto." + entityName + "Req;\n");
-            writer.write("import com.origemite.api." + context + ".dto." + entityName + "Res;\n");
-            writer.write("import com.origemite.api." + context + ".service." + entityName + "Service;\n");
             writer.write("import com.origemite.lib.common.util.CommonResponseUtils;\n");
             writer.write("import com.origemite.lib.common.web.CommonResponse;\n");
             writer.write("import io.swagger.v3.oas.annotations.Operation;\n");
@@ -39,57 +36,57 @@ public class ControllerGenerator {
             writer.write("@Tag(name = \"" + requestMapping.substring(1) + "\", description = \"" + entityName + "\")\n");
             writer.write("@Slf4j\n@RestController\n@RequiredArgsConstructor\n@RequestMapping(\"" + requestMapping + "\")\n");
             writer.write("public class " + entityName + "Controller {\n\n");
-            writer.write("    private final " + entityName + "Service " + toCamelCase(entityName) + "Service;\n\n");
+            writer.write("    private final " + entityName + "Facade " + toCamelCase(entityName) + "Facade;\n\n");
 
             writer.write("    @Operation(summary = \"목록 조회\")\n");
             writer.write("    @GetMapping\n");
             writer.write("    public CommonResponse<Page<" + entityName + "Res.Item>> search(@ModelAttribute @Valid " + entityName + "Req.Filter filter, Pageable pageable) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.search(filter, pageable));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.search(filter, pageable));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"생성\")\n");
             writer.write("    @PostMapping\n");
             writer.write("    public CommonResponse<" + entityName + "Res.Id> save(@RequestBody @Valid " + entityName + "Req.Create create) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.save(create));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.save(create));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"단건 조회\")\n");
             writer.write("    @GetMapping(\"/{id}\")\n");
             writer.write("    public CommonResponse<" + entityName + "Res.Item> findById(@Parameter(description = \"ID\") @PathVariable(name = \"id\") " + pkType + " id) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.findById(id));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.findById(id));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"수정\")\n");
             writer.write("    @PutMapping(\"/{id}\")\n");
             writer.write("    public CommonResponse<" + entityName + "Res.Id> saveById(@Parameter(description = \"ID\") @PathVariable(name = \"id\") " + pkType + " id, @RequestBody " + entityName + "Req.Update update) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.saveById(id, update));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.saveById(id, update));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"삭제\")\n");
             writer.write("    @DeleteMapping(\"/{id}\")\n");
             writer.write("    public CommonResponse<?> deleteById(@Parameter(description = \"ID\") @PathVariable(name = \"id\") " + pkType + " id) {\n");
-            writer.write("        " + toCamelCase(entityName) + "Service.deleteById(id);\n        return CommonResponseUtils.responseSuccess();\n    }\n\n");
+            writer.write("        " + toCamelCase(entityName) + "Facade.deleteById(id);\n        return CommonResponseUtils.responseSuccess();\n    }\n\n");
 
             writer.write("    @Operation(summary = \"전체 조회\")\n");
             writer.write("    @GetMapping(\"/find-all\")\n");
             writer.write("    public CommonResponse<List<" + entityName + "Res.Item>> findAll(@ModelAttribute " + entityName + "Req.Filter filter) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.findAll(filter));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.findAll(filter));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"아이디 선택 조회\")\n");
             writer.write("    @GetMapping(\"/find-by-ids\")\n");
             writer.write("    public CommonResponse<List<" + entityName + "Res.Item>> findByIds(@RequestParam @Valid List<" + pkType + "> ids) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.findByIds(ids));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.findByIds(ids));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"이름 검색\")\n");
             writer.write("    @GetMapping(\"/search-name\")\n");
             writer.write("    public CommonResponse<Page<" + entityName + "Res.Name>> searchName(@ModelAttribute @Valid " + entityName + "Req.Filter filter, Pageable pageable) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.searchName(filter, pageable));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.searchName(filter, pageable));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"이름 전체 조회\")\n");
             writer.write("    @GetMapping(\"/find-all-name\")\n");
             writer.write("    public CommonResponse<List<" + entityName + "Res.Name>> findAllName(@ModelAttribute @Valid " + entityName + "Req.Filter filter) {\n");
-            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Service.findAllName(filter));\n    }\n\n");
+            writer.write("        return CommonResponseUtils.responseSuccess(" + toCamelCase(entityName) + "Facade.findAllName(filter));\n    }\n\n");
 
             writer.write("    @Operation(summary = \"아이디 선택 삭제\")\n");
             writer.write("    @DeleteMapping(\"/delete-by-ids\")\n");
             writer.write("    public CommonResponse<?> deleteByIds(@RequestParam @Valid List<" + pkType + "> ids) {\n");
-            writer.write("        " + toCamelCase(entityName) + "Service.deleteByIds(ids);\n        return CommonResponseUtils.responseSuccess();\n    }\n}");
+            writer.write("        " + toCamelCase(entityName) + "Facade.deleteByIds(ids);\n        return CommonResponseUtils.responseSuccess();\n    }\n}");
 
             System.out.println("✔ Controller 생성 완료: " + filePath);
         } catch (Exception e) {

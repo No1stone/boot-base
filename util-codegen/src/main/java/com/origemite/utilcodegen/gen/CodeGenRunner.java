@@ -21,6 +21,7 @@ public class CodeGenRunner {
         new RepositoryGenerator().generate(metadata, outputDir);
         new DtoGenerator().generate(metadata, outputDir);
         new ServiceGenerator().generate(metadata, outputDir);
+        new FacadeGenerator().generate(metadata, outputDir);
         new ControllerGenerator().generate(metadata, outputDir);
         new SpecGenerator().generate(metadata, outputDir);
         new ControllerTestGenerator().generate(metadata, outputDir);
