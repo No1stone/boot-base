@@ -25,7 +25,7 @@ public class VaultController {
     //Jenkins Pipeline으로 vault를 리레쉬 갱신하는 api
     @GetMapping("/member-refresh-transit")
     public ResponseEntity valutTest() {
-        vaultService.getValutTransitKeys(EnVaultType.AUTH_JWT);
+        vaultService.initVaultForRedis();
         return ResponseEntity.ok().build();
     }
 
