@@ -12,10 +12,34 @@
 - Auth 서버가 Vault를 통해 서명(JWT 발급)을 수행하며
 - Jenkins 배치로 **자동 키 회전(Key Rotation)** 을 실행하는 구조를 정의한다.
 
-**Vault는 절대 개인키를 외부로 노출하지 않으며**,  
-Auth 서버는 Vault에서 공개키를 JWKS(JSON Web Key Set)로 변환해 Gateway에 제공한다.
+**Vault는 절대 개인키를 외부로 노출하지 않으며**    
+1. JWT 인증 – RS256 (비대칭키)
+    - Auth 서버는 Vault에서 공개키를 JWKS(JSON Web Key Set)로 변환해 Gateway에 제공한다.
+       
+2. 개인정보(Personal Data) 저장 – AES-256-GCM
+    - JWT는 RSA지만,
+      개인정보 암호화는 RSA가 아니라 AES 대칭키로 처리해야 한다.
+      Vault Transit에서 AES 키를 생성하여
+      Encrypt / Decrypt vault로 요청하여 데이터 접근한다.
+   
+3. 검색용 해시 컬럼 생성 - SHA-256 (PII 검색 지원)
+    - 개인정보는 암호화되면 “검색할 수 없기” 때문에
+      검색이 필요한 필드만 SHA-256 해시를 저장한다.
 
 <details> <summary>vault 명령어</summary>
+
+1. JWT 인증 – RS256 (비대칭키)
+서명(Sign)
+RSA Private Key → Vault Transit에서 관리
+서버는 private key를 절대 보유하지 않음
+JWT 서명은 Vault.transit.sign() 호출로만 생성됨
+alg = RS256 (SHA-256 + PKCS1v1.5) 사용
+
+검증(Verify)
+RSA Public Key → Redis에 버전별 저장
+JWT Header.kid = Vault Key Version
+JJWT parser(RS256)로 검증 수행
+
 
 | 목적          | 명령어                                                  |
 | ----------- | ---------------------------------------------------- |
