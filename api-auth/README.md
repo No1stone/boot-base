@@ -12,7 +12,6 @@
 - Auth 서버가 Vault를 통해 서명(JWT 발급)을 수행하며
 - Jenkins 배치로 **자동 키 회전(Key Rotation)** 을 실행하는 구조를 정의한다.
 
-**Vault는 절대 개인키를 외부로 노출하지 않으며**    
 1. JWT 인증 – RS256 (비대칭키)
     - Auth 서버는 Vault에서 공개키를 JWKS(JSON Web Key Set)로 변환해 Gateway에 제공한다.
        
