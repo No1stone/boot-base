@@ -60,7 +60,7 @@ public class VaultJwtTokenProvider {
         VaultKey.Signature signature = vaultService.signature(EnVaultType.AUTH_JWT, signValue);
 
         // 레디스 저장버전과 볼트버전이 일치하지 않는경우
-        if (redisVersion.equals(String.valueOf(signature))) {
+        if (!redisVersion.equals(String.valueOf(signature.getLatestVersion()))) {
             // 볼트 갱신후 ...
             vaultService.initVaultForRedis();
 
