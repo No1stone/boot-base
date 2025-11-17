@@ -98,4 +98,21 @@ public class VaultService {
                         + redisTemplate.opsForValue().get(LATEST_VERSION_KEY)
         );
     }
+
+    public VaultKey.Signature signature(EnVaultType vaultType, String signingInput) {
+        Plaintext plaintext = Plaintext.of(signingInput);
+        Signature signature = vaultTemplate
+                .opsForTransit()
+                .sign(vaultType.getValue(), plaintext);
+        String[] parts = signature.getSignature().split(":");
+        String version = parts[1];
+        String signatureString = parts[2];
+        Integer keyVersion = Integer.parseInt(version.substring(1)); // 3
+        VaultKey.Signature result = new VaultKey.Signature();
+        result.setLatestVersion(keyVersion);
+        result.setSignature(signatureString);
+        return result;
+    }
+
+
 }

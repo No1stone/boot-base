@@ -31,4 +31,11 @@ public class VaultKey {
         Instant creationTime;
     }
 
+    @Schema(description = "KeyVersion")
+    @Data
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class Signature {
+        int latestVersion;
+        String signature;
+    }
 }
