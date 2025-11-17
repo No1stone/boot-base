@@ -10,12 +10,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.core.VaultTransitOperations;
-import org.springframework.vault.support.Plaintext;
-import org.springframework.vault.support.Signature;
-import org.springframework.vault.support.VaultResponse;
-import org.springframework.vault.support.VaultTransitKey;
+import org.springframework.vault.support.*;
 
 import java.time.Instant;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,6 +81,10 @@ public class VaultService {
         redisTemplate.opsForValue().set(LATEST_VERSION_KEY, String.valueOf(authJwks.getLatestVersion()));
     }
 
+    public String getVaultLatestVersion() {
+        return redisTemplate.opsForValue().get(LATEST_VERSION_KEY);
+    }
+
     public String getVaultKeyForVersion(String version) {
         return redisTemplate.opsForValue().get(
                 EnVaultType.AUTH_JWT.getValue()
@@ -100,17 +102,29 @@ public class VaultService {
     }
 
     public VaultKey.Signature signature(EnVaultType vaultType, String signingInput) {
-        Plaintext plaintext = Plaintext.of(signingInput);
+        VaultSignRequest vsr = VaultSignRequest.builder()
+                .plaintext(Plaintext.of(signingInput))
+                .signatureAlgorithm("pkcs1v15")
+                .hashAlgorithm("sha2-256")
+                .build();
+
         Signature signature = vaultTemplate
                 .opsForTransit()
-                .sign(vaultType.getValue(), plaintext);
+                .sign(vaultType.getValue(), vsr);
         String[] parts = signature.getSignature().split(":");
         String version = parts[1];
         String signatureString = parts[2];
         Integer keyVersion = Integer.parseInt(version.substring(1)); // 3
+        byte[] sigBytes = Base64.getDecoder().decode(signatureString);
+
+        //Json **Web** Token 이라 Base64 URL 로 인코딩 필수.
+        //Vault로 보낼땐 일반Base64
+        String signatureBase64Url = Base64.getUrlEncoder()
+                .withoutPadding()
+                .encodeToString(sigBytes);
         VaultKey.Signature result = new VaultKey.Signature();
         result.setLatestVersion(keyVersion);
-        result.setSignature(signatureString);
+        result.setSignature(signatureBase64Url);
         return result;
     }
 

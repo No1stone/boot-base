@@ -16,15 +16,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
-
 import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
 @Slf4j
@@ -52,7 +47,7 @@ public class VaultJwtTokenProvider {
     public String createAccessToken(String id, Long milliseconds) {
         Date issuedAt = new Date();
 
-        String redisVersion = vaultService.getVaultKeyForLastVersion();
+        String redisVersion = vaultService.getVaultLatestVersion();
         Claims claims = creataPayload(id, issuedAt, milliseconds);
         String headerBase64 = createBase64(createTokenHeader(redisVersion));
         String payloadBase64 = createBase64(claims);
@@ -69,11 +64,12 @@ public class VaultJwtTokenProvider {
             payloadBase64 = createBase64(claims);
             signValue = headerBase64 + "." + payloadBase64;
             signature = vaultService.signature(EnVaultType.AUTH_JWT, signValue);
-            return headerBase64 + "." + payloadBase64 + "." + signature;
+            return headerBase64 + "." + payloadBase64 + "." + signature.getSignature();
         }
-        return headerBase64 + "." + payloadBase64 + "." + signature;
+        return signValue + "." + signature.getSignature();
     }
 
+    //Clamis 사용해도됨.
     public Map<String, String> createTokenHeader(String version) {
         Map<String, String> header = new HashMap<>();
         header.put("kid", version);
@@ -104,9 +100,13 @@ public class VaultJwtTokenProvider {
     }
 
     public Claims parse(String token) {
-        byte[] headerDecodedBytes = Base64.getUrlDecoder().decode(token.split(".")[0]);
+        String split = token.split("\\.")[0];
+//        String claimss = token.split("\\.")[1];
+//        String signature = token.split("\\.")[2];
+        byte[] headerDecodedBytes = Base64.getUrlDecoder().decode(split);
         String json = new String(headerDecodedBytes, StandardCharsets.UTF_8);
-        Map<String,String> header = TransformUtils.parse(json, new TypeReference<Map<String, String>>() {});
+        Map<String, String> header = TransformUtils.parse(json, new TypeReference<Map<String, String>>() {
+        });
         String publicKey = vaultService.getVaultKeyForVersion(header.get("kid"));
         RSAPublicKey rsaPublicKey = null;
 
