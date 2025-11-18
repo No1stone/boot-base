@@ -26,12 +26,9 @@
       검색이 필요한 필드만 SHA-512 해시를 저장한다.  salt 미사용
     - password는 salt 사용
     - ci 봉투 암호화 사용 (envelope encryption)
-
-<details> <summary>vault 명령어</summary>
-
-
+-
 # 암복호화 마스킹 예시
- <details>
+ <details> <summary>암복호화 마스킹 예시</summary>
 
 일반조회   
 ![img_5.png](images/img_5.png)
@@ -43,6 +40,8 @@
 ![img_7.png](images/img_7.png)
 
 </details>
+
+<details> <summary>vault 명령어</summary>
 
 1. JWT 인증 – RS256 (비대칭키)
 서명(Sign)
