@@ -1,6 +1,9 @@
 package com.origemite.apiauth.member.facade;
 
 
+import com.origemite.apiauth.auth.service.VaultService;
+import com.origemite.lib.common.util.EncUtils;
+import com.origemite.lib.common.util.Salt;
 import com.origemite.lib.model.auth.dto.MemberReq;
 import com.origemite.lib.model.auth.dto.MemberRes;
 import com.origemite.lib.model.auth.service.MemberService;
@@ -20,6 +23,7 @@ import java.util.List;
 public class MemberFacade {
 
     private final MemberService memberService;
+    private final VaultService vaultService;
 
     public Page<MemberRes.Item> search(MemberReq.Filter filter, Pageable pageable) {
         return memberService.search(filter, pageable);
@@ -27,6 +31,9 @@ public class MemberFacade {
 
     @Transactional
     public MemberRes.Id save(MemberReq.Create create) {
+        String salt = Salt.generate();
+        create.setLoginPasswordSaltKey(salt);
+        create.setLoginPassword(EncUtils.encSHA512(create.getLoginPassword(), salt));
         return memberService.save(create);
     }
 
