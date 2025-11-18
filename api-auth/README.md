@@ -45,17 +45,17 @@
 # vault 명령어
 <details> <summary>vault 명령어</summary>
 
-1. JWT 인증 – RS256 (비대칭키)
-서명(Sign)
-RSA Private Key → Vault Transit에서 관리
-서버는 private key를 절대 보유하지 않음
-JWT 서명은 Vault.transit.sign() 호출로만 생성됨
-alg = RS256 (SHA-256 + PKCS1v1.5) 사용
+1. JWT 인증 – RS256 (비대칭키)  
+서명(Sign)  
+RSA Private Key → Vault Transit에서 관리  
+서버는 private key를 절대 보유하지 않음  
+JWT 서명은 Vault.transit.sign() 호출로만 생성됨  
+alg = RS256 (SHA-256 + PKCS1v1.5) 사용  
 
-검증(Verify)
-RSA Public Key → Redis에 버전별 저장
-JWT Header.kid = Vault Key Version
-JJWT parser(RS256)로 검증 수행
+검증(Verify)  
+RSA Public Key → Redis에 버전별 저장  
+JWT Header.kid = Vault Key Version  
+JJWT parser(RS256)로 검증 수행  
 
 
 | 목적          | 명령어                                                        |
@@ -71,13 +71,13 @@ JJWT parser(RS256)로 검증 수행
 | aes 키 조회    | `vault read transit/keys/member-aes`                       |
 
 ```text
-docker exec -it vault /bin/sh
+docker exec -it vault /bin/sh  
 # 컨테이너 쉘에서
 export VAULT_ADDR=http://127.0.0.1:8200   
 export VAULT_TOKEN=root     
 vault secrets list              
-vault secrets enable transit
-vault status
+vault secrets enable transit  
+vault status  
 ```
 
 ![img.png](images/img.png)   
@@ -95,23 +95,23 @@ vault status
 # ## Vault - JWT 키 관리 동작 흐름
 <details>
 
-1. 서버 시작 시 (init 메소드)
-    - Vault Transit에서 `AUTH_JWT` 키 메타 정보를 조회한다.
-    - 각 버전별 public key를 Redis에 저장한다.
-        - 예) `AUTH_JWT:key:1`, `AUTH_JWT:key:2`, ...
-    - Vault에서 내려준 `latest_version` 값을 Redis에 저장한다.
-        - `LATEST_VERSION_KEY = {latest_version}`
+1. 서버 시작 시 (init 메소드)  
+    - Vault Transit에서 `AUTH_JWT` 키 메타 정보를 조회한다.  
+    - 각 버전별 public key를 Redis에 저장한다.  
+        - 예) `AUTH_JWT:key:1`, `AUTH_JWT:key:2`,   
+    - Vault에서 내려준 `latest_version` 값을 Redis에 저장한다.  
+        - `LATEST_VERSION_KEY = {latest_version}`  
 
 2. 토큰 생성 시 (로그인 / 재발급 등)
-    - Redis에서 `LATEST_VERSION_KEY` 를 조회하여 **가장 최신 버전 번호**를 가져온다.
-    - 최신 버전에 해당하는 public/private key로 JWT를 생성한다.
-    - JWT 헤더의 `kid` 에 해당 버전 번호를 설정한다.
-        - 예) `kid = "3"`
+    - Redis에서 `LATEST_VERSION_KEY` 를 조회하여 **가장 최신 버전 번호**를 가져온다.  
+    - 최신 버전에 해당하는 public/private key로 JWT를 생성한다.  
+    - JWT 헤더의 `kid` 에 해당 버전 번호를 설정한다.  
+        - 예) `kid = "3"`  
 
 3. 토큰 검증 시 (API 요청 처리)
-    - JWT 헤더의 `kid` 값을 읽어서 버전 번호를 확인한다.
-    - Redis에서 `AUTH_JWT:key:{kid}` 를 조회하여 해당 버전의 public key를 가져온다.
-    - 가져온 public key로 서명을 검증한다.
+    - JWT 헤더의 `kid` 값을 읽어서 버전 번호를 확인한다.  
+    - Redis에서 `AUTH_JWT:key:{kid}` 를 조회하여 해당 버전의 public key를 가져온다.  
+    - 가져온 public key로 서명을 검증한다.  
 </details>
 
 
