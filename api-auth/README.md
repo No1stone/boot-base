@@ -40,16 +40,17 @@ JWT Header.kid = Vault Key Version
 JJWT parser(RS256)로 검증 수행
 
 
-| 목적          | 명령어                                                  |
-| ----------- | ---------------------------------------------------- |
-| 컨테이너 접속     | `docker exec -it vault sh`                           |
-| Vault 상태 확인 | `vault status`                                       |
-| Transit 활성화 | `vault secrets enable transit`                       |
-| 키 생성        | `vault write -f transit/keys/auth-sig type=rsa-2048` |
-| 키 조회        | `vault read transit/keys/auth-sig`                   |
-| 키 회전        | `vault write -f transit/keys/auth-sig/rotate`        |
-| 서명 테스트      | `vault write transit/sign/auth-sig input=<base64>`   |
-
+| 목적          | 명령어                                                        |
+|-------------|------------------------------------------------------------|
+| 컨테이너 접속     | `docker exec -it vault sh`                                 |
+| Vault 상태 확인 | `vault status`                                             |
+| Transit 활성화 | `vault secrets enable transit`                             |
+| rsa 키 생성    | `vault write -f transit/keys/auth-sig type=rsa-2048`       |
+| rsa 키 조회    | `vault read transit/keys/auth-sig`                         |
+| rsa 키 회전    | `vault write -f transit/keys/auth-sig/rotate`              |
+| 서명 테스트      | `vault write transit/sign/auth-sig input=<base64>`         |
+| aes 키 생성    | `vault write -f transit/keys/member-aes \ type=aes256-gcm96` |
+| aes 키 조회    | `vault read transit/keys/member-aes`                       |
 
 ```text
 docker exec -it vault /bin/sh
