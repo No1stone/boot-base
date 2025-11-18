@@ -139,13 +139,4 @@ public class VaultService {
                 .opsForTransit().decrypt(vaultType.getValue(), s);
     }
 
-
-    public String shaEncrypt(String s) {
-        return EncUtils.encSHA512(s, "");
-    }
-
-    public String shaEncrypt(String s, String salt) {
-        return EncUtils.encSHA512(s, salt);
-    }
-
 }
