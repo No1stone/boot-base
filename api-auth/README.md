@@ -24,7 +24,7 @@
 3. 검색용 해시 컬럼 생성 - SHA-512 (PII 검색 지원)  
     - 개인정보는 암호화되면 “검색할 수 없기” 때문에  
       검색이 필요한 필드만 SHA-512 해시를 저장한다.  salt 미사용
-    - password는 slat 사용
+    - password는 salt 사용
     - ci 봉투 암호화 사용 (envelope encryption) 
 
 <details> <summary>vault 명령어</summary>
