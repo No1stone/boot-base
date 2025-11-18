@@ -18,6 +18,7 @@ public enum EnVaultType implements CodeValue {
 
     // TODO: 항목 채우기
     AUTH_JWT("AUTH000JWT", "auth-sig"),
+    MEMBER_AES("AUTHMEMBER", "member-aes"),
     ;
 
     final String code;
