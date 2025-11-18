@@ -77,4 +77,5 @@ public class MemberIdentificationRes {
     public static class Item extends Single {
         // 하위 연관 관계 DTO는 직접 작성할 수 있음.
     }
+
 }

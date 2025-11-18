@@ -32,7 +32,7 @@ public class MemberIdentificationController {
 
     @Operation(summary = "생성")
     @PostMapping
-    public CommonResponse<MemberIdentificationRes.Id> save(@RequestBody @Valid MemberIdentificationReq.Create create) {
+    public CommonResponse<MemberIdentificationRes.Id> save(@RequestBody @Valid MemberIdentificationReq.CreateForEncrypt create) {
         return CommonResponseUtils.responseSuccess(memberIdentificationFacade.save(create));
     }
 

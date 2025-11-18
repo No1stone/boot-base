@@ -12,7 +12,6 @@ public class MemberIdentificationReq {
 
     @Schema(description = "MemberIdentificationReq.Ids DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Ids {
         @Schema(description = "패스 본인 확인 아이디")
@@ -21,7 +20,6 @@ public class MemberIdentificationReq {
 
     @Schema(description = "MemberIdentificationReq.Filter DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Filter {
         @Schema(description = "패스 본인 확인 아이디")
@@ -70,7 +68,6 @@ public class MemberIdentificationReq {
 
     @Schema(description = "MemberIdentificationReq.Create DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Create {
         @Schema(description = "패스 본인 확인 아이디")
@@ -107,9 +104,33 @@ public class MemberIdentificationReq {
         private String status;
     }
 
+
+    @Schema(description = "MemberIdentificationReq.Create DTO")
+    @Data
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class CreateForEncrypt {
+        @Schema(description = "(Encrypted) 이름")
+        private String name;
+        @Schema(description = "(Encrypted) 휴대폰번호")
+        private String mobilePhoneNumber;
+        @Schema(description = "(Encrypted) 이메일")
+        private String email;
+        @Schema(description = "(Encrypted) CI")
+        private String ci;
+        @Schema(description = "생년월일")
+        private String birthday;
+        @Schema(description = "성별 (M: 남성, W: 여성, U: 알 수 없음)")
+        private String gender;
+        @Schema(description = "외국인 여부 (Y: 외국인, N: 내국인)")
+        private String foreignYn;
+        @Schema(description = "이동 통신사 코드 (CC. 공통)")
+        private String mobileCarrierCode;
+        @Schema(description = "상태 (R: 요청, C: 완료, A: 취소, E: 만료)")
+        private String status;
+    }
+
     @Schema(description = "MemberIdentificationReq.Update DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Update {
         @Schema(description = "패스 본인 확인 아이디")
