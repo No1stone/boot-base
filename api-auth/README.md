@@ -21,9 +21,9 @@
       Vault Transit에서 AES 키를 생성하여  
       Encrypt / Decrypt vault로 요청하여 데이터 접근한다.  
    
-3. 검색용 해시 컬럼 생성 - SHA-256 (PII 검색 지원)  
+3. 검색용 해시 컬럼 생성 - SHA-512 (PII 검색 지원)  
     - 개인정보는 암호화되면 “검색할 수 없기” 때문에  
-      검색이 필요한 필드만 SHA-256 해시를 저장한다.  
+      검색이 필요한 필드만 SHA-512 해시를 저장한다.  
 
 <details> <summary>vault 명령어</summary>
 
