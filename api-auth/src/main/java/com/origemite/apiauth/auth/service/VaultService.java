@@ -1,5 +1,6 @@
 package com.origemite.apiauth.auth.service;
 
+import com.origemite.lib.common.util.EncUtils;
 import com.origemite.lib.common.util.TransformUtils;
 import com.origemite.lib.model.auth.VaultKey;
 import com.origemite.lib.model.enums.auth.EnVaultType;
@@ -128,14 +129,23 @@ public class VaultService {
         return result;
     }
 
-    public String aesEncript(EnVaultType vaultType, String s) {
+    public String aesEncrypt(EnVaultType vaultType, String s) {
         return vaultTemplate
                 .opsForTransit().encrypt(vaultType.getValue(), s);
     }
 
-    public String aesDecript(EnVaultType vaultType, String s) {
+    public String aesDecrypt(EnVaultType vaultType, String s) {
         return vaultTemplate
                 .opsForTransit().decrypt(vaultType.getValue(), s);
+    }
+
+
+    public String shaEncrypt(String s) {
+        return EncUtils.encSHA512(s, "");
+    }
+
+    public String shaEncrypt(String s, String salt) {
+        return EncUtils.encSHA512(s, salt);
     }
 
 }
