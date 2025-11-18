@@ -29,6 +29,21 @@
 
 <details> <summary>vault 명령어</summary>
 
+
+# 암복호화 마스킹 예시
+ <details>
+
+일반조회   
+![img_5.png](images/img_5.png)
+
+마스킹 조회   
+![img_6.png](images/img_6.png)
+
+복호화 조회   
+![img_7.png](images/img_7.png)
+
+</details>
+
 1. JWT 인증 – RS256 (비대칭키)
 서명(Sign)
 RSA Private Key → Vault Transit에서 관리
@@ -98,19 +113,6 @@ vault status
     - 가져온 public key로 서명을 검증한다.
 </details>
 
-# 암복호화 마스킹 예시
- <details>
-
-일반조회   
-![img_5.png](images/img_5.png)   
-
-마스킹 조회   
-![img_6.png](images/img_6.png)   
-
-복호화 조회   
-![img_7.png](images/img_7.png)    
-
-</details>
 
 # 솔트(Salt)와 사이퍼키(Cipher Key) 사용
 <details>
