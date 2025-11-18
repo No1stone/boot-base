@@ -128,5 +128,14 @@ public class VaultService {
         return result;
     }
 
+    public String aesEncript(EnVaultType vaultType, String s) {
+        return vaultTemplate
+                .opsForTransit().encrypt(vaultType.getValue(), s);
+    }
+
+    public String aesDecript(EnVaultType vaultType, String s) {
+        return vaultTemplate
+                .opsForTransit().decrypt(vaultType.getValue(), s);
+    }
 
 }
