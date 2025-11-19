@@ -7,7 +7,6 @@
 향후 트래픽 증가 및 비동기 처리 요구에 따라 Kafka 또는 Pulsar 기반의 Event-driven 구조로 확장할 수 있다.
 
 
----
 
 ## 1. 패키지 구조
 
@@ -24,7 +23,6 @@
 /util-codegen → DB 스키마 기반 코드 생성 유틸리티  
 /images → README용 캡처 및 다이어그램 리소스  
 </details>
----
 
 ## 2. DB 설계 규칙
 <details> <summary>db</summary>
@@ -34,7 +32,6 @@
 - 서비스별 **데이터 소유권 원칙** 유지 (조인 금지, 교차조회는 API로 수행)
 - 스키마 변경 시 `version` 필드 및 **낙관적 락(Optimistic Lock)** 사용
 </details>
----
 
 ## 3. 코드 네이밍 규칙
 
@@ -45,7 +42,6 @@
     - 도메인/타입/세부 식별자로 구성된 Structured Business Code Convention 적용
     - Enum + BizErrorException 조합으로 타입 안정성 확보
 </details>
----
 
 ## 4. HTTP 응답 규칙
 
@@ -196,7 +192,8 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
 
 </details>
 
-# 블루그린 & 점진적 블루그린 (Blue-Green / Progressive Blue-Green) 배포 전략
+# 블루그린 & 점진적 블루그린 
+# (Blue-Green / Progressive Blue-Green) 배포 전략
 <details>
 <summary>ci/cd</summary>
 
