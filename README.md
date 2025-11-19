@@ -10,6 +10,9 @@
 ---
 
 ## 1. 패키지 구조
+
+<details> <summary>package</summary>
+
 /api-{domain} → 각 마이크로서비스(API)  controller, facade  
 /batch-{domain} → 배치 처리 서비스  
 /gateway → 외부 진입 게이트웨이  
@@ -20,28 +23,33 @@
 /lib-legacy → 레거시 호환 라이브러리  
 /util-codegen → DB 스키마 기반 코드 생성 유틸리티  
 /images → README용 캡처 및 다이어그램 리소스  
-
+</details>
 ---
 
 ## 2. DB 설계 규칙
+<details> <summary>db</summary>
 
 - 모든 테이블은 `id (BIGINT, AUTO_INCREMENT)` 형태의 **대리키(Surrogate Key)** 사용
 - 비즈니스 키(자연키)는 Unique Index로만 관리
 - 서비스별 **데이터 소유권 원칙** 유지 (조인 금지, 교차조회는 API로 수행)
 - 스키마 변경 시 `version` 필드 및 **낙관적 락(Optimistic Lock)** 사용
-
+</details>
 ---
 
 ## 3. 코드 네이밍 규칙
+
+<details> <summary>common code</summary>
 
 - **Prefix 기반 계층형 비즈니스 코드 체계**
     - 예: `C1FT000REP` → Prefix(`C1FT`) + Sequence(`000`) + Identifier(`REP`)
     - 도메인/타입/세부 식별자로 구성된 Structured Business Code Convention 적용
     - Enum + BizErrorException 조합으로 타입 안정성 확보
-
+</details>
 ---
 
 ## 4. HTTP 응답 규칙
+
+<details> <summary>http envelope</summary>
 
 - **Response Envelope Pattern** 적용
 - HTTP 상태코드와 애플리케이션 상태코드를 분리
@@ -56,7 +64,12 @@
 }
 ```
 
+</details>
+
 ## 5. 데이터 접근 규칙
+
+<details> <summary>데이터 접근 규칙</summary>
+
 표준 페이징/정렬: JPA 스펙 그대로 사용 (page, size, sort=field,ASC|DESC)  
 
 단순 처리 (CRUD, 페이징) → JPA
@@ -65,9 +78,12 @@
 
 UNION 등 복합 SQL 처리 → Spring 3.x JdbcClient
 
-외부 리소스 연동 트랜잭션 → Facade 계층에서 조립
+외부 리소스 연동 트랜잭션 → Facade(orchestration) 계층에서 조립
+</details>
 
 ## 6. SAGA (보상 트랜잭션)
+
+<details> <summary>saga</summary>
 
 REST API 기반 보상 트랜잭션 방식 사용
 
@@ -88,15 +104,23 @@ Kafka/Temporal 의존성 없이 HTTP로 Command/Compensation 처리
 각 서비스는 보상용 REST API 제공 (util-codejen 규칙으로 자동생성 필요한 보상은 별도 개발)
 
 WebClient timeout, retryWhen 사용 (Resilience4j 미사용)
+</details>
+
 ## 7. 인증 및 Vault 연동 (Vault, JWK 롤링)
-<details>
+<details> <summary>정보보호</summary>
 <summary>api-auth README 보기</summary>
 
 [README.md](api-auth/README.md)
 
+![img_7.png](images/img_7.png)  
+![img_8.png](images/img_8.png)  
+![img_9.png](images/img_9.png)  
+
 </details>
 
 ## 8. JPA 트랜잭션 규칙
+
+<details> <summary>트랜잭션</summary>
 
 단순 트랜잭션: JPA 처리 우선
 
@@ -106,13 +130,22 @@ WebClient timeout, retryWhen 사용 (Resilience4j 미사용)
 
 고급 SQL (UNION, 복잡 조인 등): JdbcClient 사용
 
+</details>
+
 ## 9. API 버전 정책
+
+<details> <summary>api version rule</summary>
 
 버저닝은 URL 버전(v1, v2) 대신 도메인 단위 분리 방식을 채택한다.
 DB 스키마나 엔티티 구조가 변경될 경우 기존 API를 유지한 채 신규 도메인 API를 생성하고,
 구버전은 Deprecation 공지를 통해 단계적으로 제거한다.
 
+
+</details>
+
 ## 10. MSA 운영 규칙
+
+<details> <summary>MSA rule</summary>
 
 Eureka 기반 서비스 디스커버리
 
@@ -132,6 +165,8 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
 
 낙관적 락을 통해 스키마 진화 시 충돌 방지
 
+</details>
+
 ## 11. util-codejen (유틸 코드 제너레이터) 규칙
 <details>
 <summary>util-codejen README</summary>
@@ -141,6 +176,8 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
 
 
 ## 12. Ingest & Fan-out 구조 (확장 설계)
+
+<details> <summary>event dreven</summary>
 
 게이트웨이 및 Facade는 모든 외부 요청을 **Ingest Layer**로 수집한다.  
 이 레이어는 추후 wenflux Orchestrator로변경하며, Kafka, Redis Stream, 또는 HTTP 비동기 큐 기반의 **Fan-out 구조**로 확장될 수 있다.
@@ -156,6 +193,8 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
     - 이 프로젝트는 기본적으로 REST 기반 트랜잭션(보상 SAGA)을 채택한다.
       이벤트 드리븐 아키텍처는 쓰기·팬아웃·비동기 허용이 커지는 도메인에서만 선택적으로 적용한다.
       향후 필요 시 Outbox→메시지 브로커(Kafka/Pulsar)로 확장하는 하이브리드 구조를 지원한다.
+
+</details>
 
 # 블루그린 & 점진적 블루그린 (Blue-Green / Progressive Blue-Green) 배포 전략
 <details>

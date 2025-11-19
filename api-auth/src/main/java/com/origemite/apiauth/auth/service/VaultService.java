@@ -73,6 +73,8 @@ public class VaultService {
 
     public void initVaultForRedis() {
         VaultKey.Response authJwks = valutTransitKeys(EnVaultType.AUTH_JWT);
+
+        // lua script 동시성 제어 로직 추가필요.
         for (Map.Entry<String, VaultKey.KeyVersion> entry : authJwks.getKeys().entrySet()) {
             redisTemplate.opsForValue().set(EnVaultType.AUTH_JWT.getValue()
                             + ":key:"
