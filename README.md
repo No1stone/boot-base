@@ -173,7 +173,7 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
 
 ## 12. Ingest & Fan-out 구조 (확장 설계)
 
-<details> <summary>event dreven</summary>
+<details> <summary>event driven</summary>
 
 게이트웨이 및 Facade는 모든 외부 요청을 **Ingest Layer**로 수집한다.  
 이 레이어는 추후 wenflux Orchestrator로변경하며, Kafka, Redis Stream, 또는 HTTP 비동기 큐 기반의 **Fan-out 구조**로 확장될 수 있다.
