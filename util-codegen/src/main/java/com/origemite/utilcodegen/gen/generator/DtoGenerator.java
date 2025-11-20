@@ -37,7 +37,7 @@ public class DtoGenerator {
 
             // Ids
             writer.write("    @Schema(description = \"" + entityName + "Req.Ids DTO\")\n");
-            writer.write("    @Data\n    @Builder\n    @FieldDefaults(level = AccessLevel.PRIVATE)\n");
+            writer.write("    @Data\n   @FieldDefaults(level = AccessLevel.PRIVATE)\n");
             writer.write("    public static class Ids {\n");
             writer.write("        @Schema(description = \"" + getPkColumn(table).comment() + "\")\n");
             writer.write("        private List<" + pkType + "> ids;\n    }\n\n");
@@ -45,7 +45,7 @@ public class DtoGenerator {
             // Filter/Create/Update
             for (String type : List.of("Filter", "Create", "Update")) {
                 writer.write("    @Schema(description = \"" + entityName + "Req." + type + " DTO\")\n");
-                writer.write("    @Data\n    @Builder\n    @FieldDefaults(level = AccessLevel.PRIVATE)\n");
+                writer.write("    @Data\n    @FieldDefaults(level = AccessLevel.PRIVATE)\n");
                 writer.write("    public static class " + type + " {\n");
                 for (ColumnMetadata col : table.columns()) {
                     boolean isAudit = AUDIT_FIELDS.contains(col.name().toLowerCase());

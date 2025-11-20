@@ -107,8 +107,7 @@ WebClient timeout, retryWhen 사용 (Resilience4j 미사용)
 <summary>api-auth README 보기</summary>
 
 [README.md](api-auth/README.md)
-
-![img_7.png](images/img_7.png)  
+![img_7.png](images/img_7.png)
 ![img_8.png](images/img_8.png)  
 ![img_9.png](images/img_9.png)  
 

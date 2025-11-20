@@ -12,7 +12,6 @@ public class MemberOutReq {
 
     @Schema(description = "MemberOutReq.Ids DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Ids {
         @Schema(description = "아이디")
@@ -21,7 +20,6 @@ public class MemberOutReq {
 
     @Schema(description = "MemberOutReq.Filter DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Filter {
         @Schema(description = "아이디")
@@ -46,7 +44,6 @@ public class MemberOutReq {
 
     @Schema(description = "MemberOutReq.Create DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Create {
         @Schema(description = "아이디")
@@ -61,7 +58,6 @@ public class MemberOutReq {
 
     @Schema(description = "MemberOutReq.Update DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Update {
         @Schema(description = "아이디")

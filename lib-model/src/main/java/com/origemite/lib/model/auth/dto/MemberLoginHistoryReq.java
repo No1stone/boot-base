@@ -12,7 +12,6 @@ public class MemberLoginHistoryReq {
 
     @Schema(description = "MemberLoginHistoryReq.Ids DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Ids {
         @Schema(description = "회원 로그인 이력 아이디")
@@ -21,7 +20,6 @@ public class MemberLoginHistoryReq {
 
     @Schema(description = "MemberLoginHistoryReq.Filter DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Filter {
         @Schema(description = "회원 로그인 이력 아이디")
@@ -44,7 +42,6 @@ public class MemberLoginHistoryReq {
 
     @Schema(description = "MemberLoginHistoryReq.Create DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Create {
         @Schema(description = "회원 로그인 이력 아이디")
@@ -63,7 +60,6 @@ public class MemberLoginHistoryReq {
 
     @Schema(description = "MemberLoginHistoryReq.Update DTO")
     @Data
-    @Builder
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Update {
         @Schema(description = "회원 로그인 이력 아이디")
