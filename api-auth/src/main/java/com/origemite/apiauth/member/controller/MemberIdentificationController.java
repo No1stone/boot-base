@@ -36,6 +36,13 @@ public class MemberIdentificationController {
         return CommonResponseUtils.responseSuccess(memberIdentificationFacade.save(create));
     }
 
+
+    @Operation(summary = "생성", hidden = true)
+    @PostMapping
+    public CommonResponse<MemberIdentificationRes.Id> save(@RequestBody @Valid MemberIdentificationReq.Create create) {
+        return CommonResponseUtils.responseSuccess(memberIdentificationFacade.save(create));
+    }
+
     @Operation(summary = "단건 조회")
     @GetMapping("/{id}")
     public CommonResponse<MemberIdentificationRes.Item> findById(@Parameter(description = "ID") @PathVariable(name = "id") Integer id) {
