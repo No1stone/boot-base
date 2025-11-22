@@ -13,6 +13,9 @@ public class MemberPasswordChangeHistoryReq {
     @Schema(description = "MemberPasswordChangeHistoryReq.Ids DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Ids {
         @Schema(description = "회원 비밀번호 변경 이력 아이디")
         private List<Integer> ids;
@@ -21,6 +24,9 @@ public class MemberPasswordChangeHistoryReq {
     @Schema(description = "MemberPasswordChangeHistoryReq.Filter DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Filter {
         @Schema(description = "회원 비밀번호 변경 이력 아이디")
         private Integer id;
@@ -49,6 +55,9 @@ public class MemberPasswordChangeHistoryReq {
     @Schema(description = "MemberPasswordChangeHistoryReq.Create DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Create {
         @Schema(description = "회원 비밀번호 변경 이력 아이디")
         private Integer id;
@@ -67,6 +76,9 @@ public class MemberPasswordChangeHistoryReq {
     @Schema(description = "MemberPasswordChangeHistoryReq.Update DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Update {
         @Schema(description = "회원 비밀번호 변경 이력 아이디")
         private Integer id;

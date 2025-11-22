@@ -13,6 +13,9 @@ public class MemberIdentificationReq {
     @Schema(description = "MemberIdentificationReq.Ids DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Ids {
         @Schema(description = "패스 본인 확인 아이디")
         private List<Integer> ids;
@@ -21,6 +24,9 @@ public class MemberIdentificationReq {
     @Schema(description = "MemberIdentificationReq.Filter DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Filter {
         @Schema(description = "패스 본인 확인 아이디")
         private Integer id;
@@ -69,6 +75,9 @@ public class MemberIdentificationReq {
     @Schema(description = "MemberIdentificationReq.Create DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Create {
         @Schema(description = "패스 본인 확인 아이디")
         private Integer id;
@@ -108,6 +117,9 @@ public class MemberIdentificationReq {
     @Schema(description = "MemberIdentificationReq.Create DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class CreateForEncrypt {
         @Schema(description = "(Encrypted) 이름")
         private String name;
@@ -132,6 +144,9 @@ public class MemberIdentificationReq {
     @Schema(description = "MemberIdentificationReq.Update DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Update {
         @Schema(description = "패스 본인 확인 아이디")
         private Integer id;

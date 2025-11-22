@@ -13,6 +13,9 @@ public class MemberReq {
     @Schema(description = "MemberReq.Ids DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Ids {
         @Schema(description = "회원 아이디")
         private List<String> ids;
@@ -21,6 +24,9 @@ public class MemberReq {
     @Schema(description = "MemberReq.Filter DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Filter {
         @Schema(description = "회원 아이디")
         private String id;
@@ -47,6 +53,9 @@ public class MemberReq {
     @Schema(description = "MemberReq.Create DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Create {
         @Schema(description = "회원 아이디")
         private String id;
@@ -63,6 +72,9 @@ public class MemberReq {
     @Schema(description = "MemberReq.Update DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Update {
         @Schema(description = "회원 아이디")
         private String id;

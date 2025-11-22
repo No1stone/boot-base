@@ -13,6 +13,9 @@ public class MemberConnectReq {
     @Schema(description = "MemberConnectReq.Ids DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Ids {
         @Schema(description = "회원 연결 아이디")
         private List<Integer> ids;
@@ -21,6 +24,9 @@ public class MemberConnectReq {
     @Schema(description = "MemberConnectReq.Filter DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Filter {
         @Schema(description = "회원 연결 아이디")
         private Integer id;
@@ -67,6 +73,9 @@ public class MemberConnectReq {
     @Schema(description = "MemberConnectReq.Create DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Create {
         @Schema(description = "회원 연결 아이디")
         private Integer id;
@@ -103,6 +112,9 @@ public class MemberConnectReq {
     @Schema(description = "MemberConnectReq.Update DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Update {
         @Schema(description = "회원 연결 아이디")
         private Integer id;

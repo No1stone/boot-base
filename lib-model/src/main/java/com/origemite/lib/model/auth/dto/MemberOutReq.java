@@ -13,6 +13,9 @@ public class MemberOutReq {
     @Schema(description = "MemberOutReq.Ids DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Ids {
         @Schema(description = "아이디")
         private List<Integer> ids;
@@ -21,6 +24,9 @@ public class MemberOutReq {
     @Schema(description = "MemberOutReq.Filter DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Filter {
         @Schema(description = "아이디")
         private Integer id;
@@ -45,6 +51,9 @@ public class MemberOutReq {
     @Schema(description = "MemberOutReq.Create DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Create {
         @Schema(description = "아이디")
         private Integer id;
@@ -59,6 +68,9 @@ public class MemberOutReq {
     @Schema(description = "MemberOutReq.Update DTO")
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Update {
         @Schema(description = "아이디")
         private Integer id;
