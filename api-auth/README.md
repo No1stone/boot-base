@@ -30,6 +30,9 @@
 # 암복호화 마스킹 예시
  <details> <summary>암복호화 마스킹 예시</summary>
 
+jwks 생명주기
+![img_8.png](images/img_8.png)
+
 일반조회   
 ![img_5.png](images/img_5.png)
 
