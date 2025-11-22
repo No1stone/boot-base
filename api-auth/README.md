@@ -30,9 +30,6 @@
 # 암복호화 마스킹 예시
  <details> <summary>암복호화 마스킹 예시</summary>
 
-jwks 생명주기
-![img_8.png](images/img_8.png)
-
 일반조회   
 ![img_5.png](images/img_5.png)
 
@@ -135,3 +132,7 @@ DB에는 키의 ID만 저장 (cipher_key_id)
 이름/휴대폰/CI 같은 민감정보 암호화에 사용  
 역할: 개인정보를 암호화/복호화하기 위한 Vault 전용 키  
 </details>
+
+
+jwks 생명주기  
+![img_8.png](images/img_8.png)
