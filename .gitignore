@@ -65,3 +65,6 @@ rebel.xml
 /jrebel-classpath-*.jar
 /api/docker-compose.yml
 
+/ecrlocalpush.sh
+/gateway/applog/
+/api-auth/applog/
