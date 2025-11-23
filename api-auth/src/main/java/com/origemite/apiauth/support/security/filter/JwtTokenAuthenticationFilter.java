@@ -1,6 +1,7 @@
 package com.origemite.apiauth.support.security.filter;
 
 import com.origemite.apiauth.support.security.provider.JwtTokenAuthenticationProvider;
+import com.origemite.apiauth.support.security.provider.VaultJwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,16 +21,23 @@ import java.io.IOException;
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenAuthenticationProvider jwtTokenAuthenticationProvider;
+    private final VaultJwtTokenProvider vaultJwtTokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = jwtTokenAuthenticationProvider.resolveToken(request);
         
-        if (token != null && jwtTokenAuthenticationProvider.validateToken(token)) {
-            Authentication auth = jwtTokenAuthenticationProvider.createAuthentication(token);
+//        if (token != null && jwtTokenAuthenticationProvider.validateToken(token)) {
+//            Authentication auth = jwtTokenAuthenticationProvider.createAuthentication(token);
+//            SecurityContextHolder.getContext().setAuthentication(auth);
+//        }
+
+        if (token != null && vaultJwtTokenProvider.validateToken(token)) {
+            Authentication auth = vaultJwtTokenProvider.createAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
+
         filterChain.doFilter(request, response);
     }
 }
