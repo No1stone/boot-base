@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.origemite.apiauth.auth.service.VaultService;
 import com.origemite.apiauth.config.prop.JwtTokenProp;
 import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.secruity.CustomUser;
 import com.origemite.lib.common.util.TransformUtils;
 import com.origemite.lib.common.util.UuidUtils;
 import com.origemite.lib.common.web.ResponseType;
@@ -14,6 +15,9 @@ import com.origemite.lib.model.enums.auth.EnVaultType;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -99,6 +103,14 @@ public class VaultJwtTokenProvider {
                 .encodeToString(str.getBytes(StandardCharsets.UTF_8));
     }
 
+
+    public boolean validateToken(String token) {
+        if (token == null)
+            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN); // TODO. 에러처리 시 refactoring
+        parse(token);
+        return true;
+    }
+
     public Claims parse(String token) {
         String split = token.split("\\.")[0];
 //        String claimss = token.split("\\.")[1];
@@ -130,6 +142,17 @@ public class VaultJwtTokenProvider {
                  ExpiredJwtException e) {
             throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
         }
+    }
+
+    public Authentication createAuthentication(String token) {
+        Claims claims = parse(token);
+        String memberId = MapUtils.getString(claims, "sub", null);
+        CustomUser principal = CustomUser.builder()
+                .id(memberId)
+                .token(token)
+                .build();
+
+        return new UsernamePasswordAuthenticationToken(principal, token, principal.getAuthorities());
     }
 
 }
