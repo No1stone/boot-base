@@ -6,7 +6,8 @@ spring:
     name: gateway
   db:
     redis:
-      host: 43.202.195.185
+#      host: 43.202.195.185
+      host: 127.0.0.1
       port: 6379
 
   rabbitmq:
