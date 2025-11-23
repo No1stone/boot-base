@@ -7,6 +7,7 @@ import com.origemite.lib.model.enums.auth.EnVaultType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.vault.core.VaultTemplate;
@@ -14,9 +15,7 @@ import org.springframework.vault.core.VaultTransitOperations;
 import org.springframework.vault.support.*;
 
 import java.time.Instant;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +27,10 @@ public class VaultService {
     //    private final static String TRANSIT_KEY = "auth-sig";
     private final StringRedisTemplate redisTemplate;
     private static final String LATEST_VERSION_KEY = "auth-sig:latest-version";
+    private static final String PREVIOUS_VERSION_KEY = "auth-sig:previous-version";
+    private static final String LATEST_PUBLIC_KEY = "auth-sig:latest-public-key";
+    private static final String PREVIOUS_PUBLIC_KEY = "auth-sig:previous-public-key";
+    private static final String META_KEY = "auth-sig:meta";
 
     //삭제할것.
     public VaultKey.Response getValutTransitKeys(EnVaultType vaultType) {
@@ -81,7 +84,21 @@ public class VaultService {
                             + entry.getKey()
                     , entry.getValue().getPublicKey());
         }
+
+        List<Integer> keyList = authJwks.getKeys().keySet().stream().map(e -> Integer.valueOf(e))
+                .sorted(Comparator.reverseOrder()).toList();
+
+        int previousVersion = keyList.size() > 1 ? keyList.get(1) : authJwks.getLatestVersion();
+
         redisTemplate.opsForValue().set(LATEST_VERSION_KEY, String.valueOf(authJwks.getLatestVersion()));
+        redisTemplate.opsForValue().set(PREVIOUS_VERSION_KEY, String.valueOf(previousVersion));
+
+        HashOperations<String, String, String> ops = redisTemplate.opsForHash();
+
+        ops.put(META_KEY, LATEST_VERSION_KEY, String.valueOf(authJwks.getLatestVersion()));
+        ops.put(META_KEY, LATEST_PUBLIC_KEY, authJwks.getKeys().get(String.valueOf(authJwks.getLatestVersion())).getPublicKey());
+        ops.put(META_KEY, PREVIOUS_VERSION_KEY, String.valueOf(previousVersion));
+        ops.put(META_KEY, PREVIOUS_PUBLIC_KEY, authJwks.getKeys().get(String.valueOf(previousVersion)).getPublicKey());
     }
 
     public String getVaultLatestVersion() {
