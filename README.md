@@ -191,8 +191,8 @@ API는 단일 책임 원칙, 교차 호출은 Facade 또는 Gateway 경유
 
 </details>
 
-# 블루그린 & 점진적 블루그린 
-# (Blue-Green / Progressive Blue-Green) 배포 전략
+## 13. 블루그린 & 점진적 블루그린 
+## (Blue-Green / Progressive Blue-Green) 배포 전략
 <details>
 <summary>ci/cd</summary>
 
@@ -243,7 +243,7 @@ cd -> kuber -> argocd -> 클러스터배포
 
 
 
-# Observability
+## 14. Observability
 <details>
 <summary>Observability</summary>
 
@@ -288,3 +288,12 @@ SpringCloud Gateway -> otlp -> loki -> grafana example
 SpringCloud Gateway -> otlp -> zipkin. 
 ![img_6.png](images/img_6.png). 
 </details>
+
+# 15. 테스트
+<details><summary>test</summary>
+
+[README.md](gateway/README.md)
+
+
+</details>
+
