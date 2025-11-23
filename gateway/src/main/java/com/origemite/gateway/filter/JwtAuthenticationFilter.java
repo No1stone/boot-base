@@ -1,5 +1,6 @@
 package com.origemite.gateway.filter;
 
+import com.origemite.gateway.conf.dto.AuthServerAllowPath;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
@@ -42,24 +43,22 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     }
 
     public boolean isJwtValid(ServerHttpRequest request) throws AuthenticationException {
-        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            return false;
-//        }
-//        try {
-//            var claim = jwtTokenAuthenticationProvider.parse(authHeader.substring(7).trim());
-//            if (claim.get("T") == null || claim.getExpiration().before(new Date())) {
-//                return false;
-//            }
-//            return true;
-//        } catch (ExpiredJwtException e) {
-//            log.warn("JWT expired: {}", e.getMessage());
-//            throw new AuthenticationException();
-//        } catch (JwtException e) {
-//            log.warn("JWT parsing error: {}", e.getMessage());
-//            throw new AuthenticationException();
-//        }
-        return true;
+        String path = request.getPath().toString();
+        boolean isAllowPath = AuthServerAllowPath.ALLOWED_PATHS.stream()
+                .anyMatch(allowedPath ->
+                path.matches(allowedPath.replaceAll("\\*\\*", ".*"))
+        );
+
+        if (isAllowPath) {
+            return isAllowPath;
+        } else {
+            String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return false;
+            }
+            var claim = jwtTokenAuthenticationProvider.rsaJwtParse(authHeader.substring(7).trim());
+            return true;
+        }
     }
 
     public static class Config {
