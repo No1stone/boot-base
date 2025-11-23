@@ -1,5 +1,6 @@
 package com.origemite.gateway.filter;
 
+import com.origemite.gateway.conf.JwkAtomic;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import com.origemite.lib.webflux.exception.BizErrorException;
@@ -8,12 +9,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenAuthenticationProvider {
 
     private final JwtTokenProp jwtTokenProp;
+    private final JwkAtomic jwkAtomic;
 
 
     public boolean validateToken(String token) {
@@ -21,6 +25,25 @@ public class JwtTokenAuthenticationProvider {
         parse(token);
         return true;
     }
+
+    public Jws<Claims> rsaJwtParse(String token) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKeyResolver(new SigningKeyResolverAdapter() {
+                        @Override
+                        public Key resolveSigningKey(JwsHeader header, Claims claims) {
+                            String kid = header.getKeyId();
+                            return jwkAtomic.resolveKey(kid);
+                        }
+                    })
+                    .build()
+                    .parseClaimsJws(token);
+        } catch (Exception e) {
+            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+        }
+    }
+
+
 
     public Claims parse(String token) {
         try {
