@@ -19,17 +19,14 @@ spring:
         default_batch_fetch_size: 100
   db:
     redis:
-      host: 127.0.0.1
+      host: 43.202.195.185
       port: 6379
 
   datasource:
     default:
-      #      jdbc-url: ${DRP_DB_URL}
-      #      username: ${DRP_DB_USERNAME}
-      #      password: ${DRP_DB_PASSWORD}
-      jdbc-url: jdbc:mariadb://localhost:3306/appdb?serverTimezone=UTC
-      username: root
-      password: 'pass1234'
+      jdbc-url: ${DRP_DB_URL}
+      username: ${DRP_DB_USERNAME}
+      password: ${DRP_DB_PASSWORD}
       driver-class-name: org.mariadb.jdbc.Driver
       connection-init-sql: SET time_zone = '+00:00'
       pool-name: DEFAULT_POOL
@@ -39,6 +36,7 @@ spring:
       minimum-idle: 3
       maximum-pool-size: 10
       max-lifetime: 1800000
+
   security:
     oauth2:
       client:
@@ -54,13 +52,22 @@ spring:
 
   cloud:
     vault:
-      uri: http://localhost:8200
+      uri: http://43.202.195.185:8200
       authentication: TOKEN
       token: root
       kv:
         enabled: true
         backend: secret
 
+    inetutils:
+      preferred-networks:
+        - 10.0.
+#        - 192.168.
+      ignored-interfaces:
+        - docker0
+        - veth.*
+        - br-.*
+        - lo
 
 security:
   jwt:
@@ -74,15 +81,13 @@ security:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-#  rabbitmq:
-#    host: 127.0.0.1
-#    port: 5672
-#    username: guest
-#    password: guest
-#    listener:
-#      simple:
-#        prefetch: 5
+      defaultZone: http://43.202.195.185:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    ip-address: ${HOST_IP:}
+
 
 logging:
   level:
