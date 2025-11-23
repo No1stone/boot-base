@@ -19,7 +19,7 @@ import java.util.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/0ba9ade2-dc55-4dd5-be07-d3d176a45607")
+@RequestMapping("/member-dentification")
 public class MemberIdentificationController {
 
     private final MemberIdentificationFacade memberIdentificationFacade;
@@ -38,7 +38,7 @@ public class MemberIdentificationController {
 
 
     @Operation(summary = "생성", hidden = true)
-    @PostMapping
+    @PostMapping("/hidden")
     public CommonResponse<MemberIdentificationRes.Id> save(@RequestBody @Valid MemberIdentificationReq.Create create) {
         return CommonResponseUtils.responseSuccess(memberIdentificationFacade.save(create));
     }
