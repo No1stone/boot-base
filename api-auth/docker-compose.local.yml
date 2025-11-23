@@ -1,0 +1,15 @@
+services:
+  api-eureka:
+    build:
+      context: ..          # 리포 루트
+      dockerfile: api-auth/Dockerfile
+    container_name: api-auth-local
+    ports:
+      - "3031:3031"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka
+    restart: always
+#docker compose -f api-auth/docker-compose.local.yml up -d
+#docker compose -f api-auth/docker-compose.local.yml down
+#docker logs -f api-auth-local

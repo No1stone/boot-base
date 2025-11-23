@@ -19,7 +19,7 @@ COPY --from=build /app/gateway/build/libs/*SNAPSHOT.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=""
 ENV JAVA_OPTS="-Xms256m -Xmx512m"
 
-EXPOSE 8080
+#EXPOSE 8080
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
 
 #docker build -f gateway/Dockerfile -t gateway:local .

@@ -1,0 +1,21 @@
+services:
+  api-eureka:
+    build:
+      context: ..          # 리포 루트
+      dockerfile: api-auth/Dockerfile
+    container_name: api-auth-dev
+    ports:
+      - "3031:3031"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka
+    restart: always
+    volumes:
+      - ./applog:/app/applog
+#docker compose -f api-auth/docker-compose.dev.yml up -d
+#docker compose -f api-auth/docker-compose.dev.yml down
+#docker logs -f api-auth-dev
+
+#echo "HOST_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)" > .env
+#  HOST_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4) docker compose up -d
+#  HOST_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4) docker-compose up -d

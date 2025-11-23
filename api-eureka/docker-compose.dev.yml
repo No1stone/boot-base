@@ -3,7 +3,7 @@ services:
     build:
       context: ..          # 리포 루트
       dockerfile: api-eureka/Dockerfile
-    container_name: api-eureka-local
+    container_name: api-eureka-dev
     ports:
       - "8761:8761"
     environment:
