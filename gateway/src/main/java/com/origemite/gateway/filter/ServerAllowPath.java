@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CodeshopServerAllowPath {
+public class ServerAllowPath {
 
     public static final Set<String> ALLOWED_PATHS = new HashSet<>(Arrays.asList(
             "/auth/api/v1/token/**",
