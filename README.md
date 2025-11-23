@@ -289,7 +289,7 @@ SpringCloud Gateway -> otlp -> zipkin.
 ![img_6.png](images/img_6.png). 
 </details>
 
-# 15. 테스트
+## 15. 테스트
 <details><summary>test</summary>
 
 [README.md](gateway/README.md)
