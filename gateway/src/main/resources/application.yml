@@ -1,29 +1,9 @@
 server:
   port: 2031
 
-spring:
-  application:
-    name: gateway
-  db:
-    redis:
-#      host: 43.202.195.185
-      host: 127.0.0.1
-      port: 6379
-
-  rabbitmq:
-    port: 5672
-    username: guest
-    password: guest
-    host: 43.202.195.185
-    listener:
-      simple:
-        prefetch: 5
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
 
 
 logging:
@@ -32,20 +12,10 @@ logging:
     reactor.netty.http.client: DEBUG
 
 management:
-  tracing:
-    enabled: true
-  otlp:
-    tracing:
-      endpoint: http://localhost:4318/v1/traces
-    metrics:
-      export:
-        enabled: true
-        url: http://localhost:4318/v1/metrics
   endpoints:
     web:
       exposure:
         include: refresh, health, beans, httpexchanges, busrefresh, info, metrics, prometheus
-
 
 springdoc:
   swagger-ui:

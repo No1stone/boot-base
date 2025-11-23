@@ -1,1 +1,24 @@
 gateway:
+
+
+spring:
+  application:
+    name: gateway
+  db:
+    redis:
+      host: 43.202.195.185
+      port: 6379
+
+  rabbitmq:
+    port: 5672
+    username: guest
+    password: guest
+    host: 43.202.195.185
+    listener:
+      simple:
+        prefetch: 5
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://43.202.195.185:8761/eureka/
