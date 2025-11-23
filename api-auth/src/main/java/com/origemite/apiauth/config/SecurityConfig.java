@@ -62,6 +62,9 @@ public class SecurityConfig {
                                 "/portal/second-authentications/**", // 처음 로그인 시
                                 "/user/**",
                                 "/auth/**",
+                                "/test1/**",
+                                //게이트웨이 트래픽테스트할땐 allow. gateway 검증 auth 미검증
+                                "/test2/**",
                                 "/vault/**",
                                 "/member/api-safe",
                                 "/oauth/login",
