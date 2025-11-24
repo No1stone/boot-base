@@ -1,14 +1,14 @@
 
 
+### gateway, eureka, vault 부분은 학습용입니다
+#### 실제 운영에선 안정성을위해 gateway, eureka, vault는 사용하지 않았으며
+#### aws kms(키스토어) 비용 절감과 vault transit(암호화 엔진) 특성을 학습하기 위한 프로젝트입니다.
+
 
 본 프로젝트는 Spring Boot 3.5.0 / Java 17 기반의 Request–Response Oriented MSA 애플리케이션으로,  
 모노리포(Gradle Import) 구조를 사용하며   
 각 서비스는 독립적으로 배포/확장 가능하며, 도메인 단위로 분리되어 있다.  
 향후 트래픽 증가 및 비동기 처리 요구에 따라 Kafka 또는 Pulsar 기반의 Event-driven 구조로 확장할 수 있다.  
-
-### gateway, eureka, vault 부분은 학습용입니다
-#### 실제 운영에선 안정성을위해 gateway, eureka, vault는 사용하지 않았으며 
-#### aws kms(키스토어) 비용 절감과 vault transit(암호화 엔진) 특성을 학습하기 위한 프로젝트입니다.
 
 ## 1. 패키지 구조
 
