@@ -6,7 +6,10 @@
 각 서비스는 독립적으로 배포/확장 가능하며, 도메인 단위로 분리되어 있다.  
 향후 트래픽 증가 및 비동기 처리 요구에 따라 Kafka 또는 Pulsar 기반의 Event-driven 구조로 확장할 수 있다.
 
-
+### 해당 프로젝트는 학습용입니다
+#### 실제 회사에선 안정성을위해 gateway eureka는 사용하지 않았으며
+#### vault 대신 aws kms를 사용했으며 
+#### vault 사용은 비용 및 암호화 엔진, kms(키스토어0 차이점을 학습하기 위해 사용하였습니다.
 
 ## 1. 패키지 구조
 
@@ -292,6 +295,7 @@ SpringCloud Gateway -> otlp -> zipkin.
 ## 15. 테스트
 <details><summary>test</summary>
 
+gateway README
 [README.md](gateway/README.md)
 
 
