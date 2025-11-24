@@ -2,7 +2,7 @@
 
 ### gateway, eureka, vault 부분은 학습용입니다
 #### 실제 운영에선 안정성을위해 gateway, eureka, vault는 사용하지 않았으며
-#### aws kms(키스토어) 비용 절감과 vault transit(암호화 엔진) 특성을 학습하기 위한 프로젝트입니다.
+#### aws kms비용 절감과 vault transit 특성을 학습하기 위한 프로젝트입니다.
 
 
 본 프로젝트는 Spring Boot 3.5.0 / Java 17 기반의 Request–Response Oriented MSA 애플리케이션으로,  
