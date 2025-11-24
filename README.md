@@ -7,7 +7,7 @@
 향후 트래픽 증가 및 비동기 처리 요구에 따라 Kafka 또는 Pulsar 기반의 Event-driven 구조로 확장할 수 있다.
 
 ### 해당 프로젝트는 학습용입니다
-#### 실제 회사에선 안정성을위해 gateway, eureka, vault는 사용하지 않았으며 
+#### 실제 운영에선 안정성을위해 gateway, eureka, vault는 사용하지 않았으며 
 #### aws kms(키스토어) 비용 절감과 vault transit(암호화 엔진) 특성을 학습하기 위한 프로젝트입니다.
 
 ## 1. 패키지 구조
