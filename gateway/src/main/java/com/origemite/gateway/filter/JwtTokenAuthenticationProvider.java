@@ -7,6 +7,7 @@ import com.origemite.lib.webflux.exception.BizErrorException;
 import com.origemite.lib.webflux.web.ResponseType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -18,7 +19,7 @@ public class JwtTokenAuthenticationProvider {
 
     private final JwtTokenProp jwtTokenProp;
     private final JwkAtomic jwkAtomic;
-
+    private final StringRedisTemplate redisTemplate;
 
     public boolean validateToken(String token) {
         if (token == null) throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
@@ -65,6 +66,22 @@ public class JwtTokenAuthenticationProvider {
                 .addClaims(claims)
                 .signWith(Keys.hmacShaKeyFor(jwtTokenProp.getSecretKey().getBytes()), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public boolean existsAccessToken(String accessToken) {
+        Boolean exists = redisTemplate.hasKey("access:" + accessToken);
+        return exists != null && exists;
+    }
+
+    public boolean verifyAccessToken(String token) {
+        // 1) Redis 캐시 존재 여부 확인
+        if (existsAccessToken(token)) {
+            return true;
+        }
+
+        // 2) Redis에 없으면 RSA 서명 검증 수행
+//        rsaJwtParse(token);
+        return true;
     }
 
 

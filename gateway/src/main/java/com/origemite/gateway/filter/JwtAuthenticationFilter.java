@@ -51,12 +51,20 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
         if (isAllowPath) {
             return isAllowPath;
-        } else {
+        }
+        else {
             String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+            String token = authHeader.substring(7).trim();
+
+
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 return false;
             }
-            var claim = jwtTokenAuthenticationProvider.rsaJwtParse(authHeader.substring(7).trim());
+            boolean accessExist = jwtTokenAuthenticationProvider.verifyAccessToken(token);
+            if(!accessExist){
+                log.info("안타야함");
+                var claim = jwtTokenAuthenticationProvider.rsaJwtParse(token);
+            }
             return true;
         }
     }

@@ -16,6 +16,7 @@ import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import java.security.KeyFactory;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -33,7 +35,7 @@ public class VaultJwtTokenProvider {
 
     private final VaultService vaultService;
     private final JwtTokenProp jwtTokenProp;
-
+    private final StringRedisTemplate redisTemplate;
 
     public RefreshToken createRefreshToken(long milliseconds) {
 
@@ -57,7 +59,7 @@ public class VaultJwtTokenProvider {
         String payloadBase64 = createBase64(claims);
         String signValue = headerBase64 + "." + payloadBase64;
         VaultKey.Signature signature = vaultService.signature(EnVaultType.AUTH_JWT, signValue);
-
+        String accessToken = null;
         // 레디스 저장버전과 볼트버전이 일치하지 않는경우
         if (!redisVersion.equals(String.valueOf(signature.getLatestVersion()))) {
             // 볼트 갱신후 ...
@@ -68,9 +70,13 @@ public class VaultJwtTokenProvider {
             payloadBase64 = createBase64(claims);
             signValue = headerBase64 + "." + payloadBase64;
             signature = vaultService.signature(EnVaultType.AUTH_JWT, signValue);
-            return headerBase64 + "." + payloadBase64 + "." + signature.getSignature();
+            accessToken = headerBase64 + "." + payloadBase64 + "." + signature.getSignature();
         }
-        return signValue + "." + signature.getSignature();
+
+        accessToken = signValue + "." + signature.getSignature();
+        redisTemplate.opsForValue()
+                .set("access:" + accessToken, "1", 6000000, TimeUnit.SECONDS);
+        return accessToken;
     }
 
     //Clamis 사용해도됨.
