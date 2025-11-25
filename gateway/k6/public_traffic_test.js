@@ -3,11 +3,13 @@ import { check, sleep } from 'k6';
 
 export const options = {
     stages: [
-        { duration: '30s', target: 10 },   // 준비: VU 10명
-        { duration: '30s',  target: 50 },   // 50 VU
-        { duration: '30s',  target: 100 },  // 100 VU
-        { duration: '30s',  target: 150 },  // 100 VU
-        { duration: '30s',  target: 200 },  // 200 VU
+        { duration: '20s', target: 10 },   // 준비: VU 10명
+        { duration: '20s',  target: 50 },   // 50 VU
+        { duration: '1m',  target: 100 },  // 100 VU
+        { duration: '1m',  target: 150 },  // 100 VU
+        { duration: '1m',  target: 200 },  // 200 VU
+        // { duration: '20s',  target: 250 },  // 200 VU
+        // { duration: '20s',  target: 300 },  // 200 VU
         { duration: '30s', target: 0 },    // 정리
     ],
     thresholds: {
