@@ -42,6 +42,22 @@ redis 에 access token을 ttl 처리하고 검증하는 로직으로 변경 필�
 | 안정 구간       | ~200 VU  | ~80 VU     | RSA bottleneck       |
 
 
+redis 적용후  
+
+![img_10.png](images/img_10.png)
+
+![img_9.png](images/img_9.png)  
+
+rps가 오히려 떨어짐.  
+레디스도 같은인스턴스여서 그런지 큰 성능 효과가 없음 
+그리고 네트워크 io 효과가잇는듯함.  
+서브넷 ip변경후에 테스트필요  
+![img_11.png](images/img_11.png)    
+![img_12.png](images/img_12.png)  
+레디스를 서버 분리후 테스트해야 할 거 같음  
+같은 인스턴스에선 오히려 cpu 자원 사용량이 늘어나서
+성능효과 개선이 안보임.
+
 </details>
 
 

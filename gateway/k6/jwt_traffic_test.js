@@ -35,4 +35,5 @@ export default function () {
 
     sleep(0.1); // 100ms
 }
+// K6_PROMETHEUS_RW_SERVER_URL=http://localhost:19090/api/v1/write \
 // JWT_TOKEN="" k6 run --out experimental-prometheus-rw jwt_traffic_test.js
