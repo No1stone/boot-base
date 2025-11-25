@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  # 자기 자신 스크랩 (대시보드에서 Prometheus 상태 확인용)
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']

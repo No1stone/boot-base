@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  prometheus2:
+    image: prom/prometheus:latest
+    container_name: k6-prom
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-remote-write-receiver'   # ← 이 플래그가 반드시 있어야 함
+    ports:
+      - "19090:9090"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: k6-grafana
+    ports:
+      - "13000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus2
+    restart: unless-stopped
