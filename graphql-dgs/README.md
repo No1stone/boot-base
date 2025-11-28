@@ -14,7 +14,17 @@ https://youtu.be/XpunFFS-n8I
   
 </details>   
   
-<details><summary>datatype</summary>  
+<details><summary>data type</summary>  
+
+| Java Type | Proto Type | 설명         |
+| --------- | ---------- | ---------- |
+| `int`     | `int32`    | 32비트 정수    |
+| `long`    | `int64`    | 64비트 정수    |
+| `boolean` | `bool`     | true/false |
+| `double`  | `double`   | 64비트 부동소수  |
+| `float`   | `float`    | 32비트 부동소수  |
+| `String`  | `string`   | UTF-8 문자열  |
+| `byte[]`  | `bytes`    | 바이너리 데이터   |
 
 </details>   
   
