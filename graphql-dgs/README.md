@@ -10,10 +10,13 @@ https://youtu.be/XpunFFS-n8I
 우리팀에서의 이유는 리소스 부족 및 안정성  
 넷플릭스 리소스 낭비 / 안정성과 속도를 dgs 로 개선.  
 
+## REST api 와 gRPC 차이
 <details><summary> rest vs grpc </summary>  
-  
+  http1.1, http2 차이 흠..
+network 레이턴씨 부분, 
 </details>   
   
+## java, gRPC 데이터타입 
 <details><summary>data type</summary>  
 
 | Java Type | Proto Type | 설명         |
@@ -28,7 +31,8 @@ https://youtu.be/XpunFFS-n8I
 
 </details>   
   
-<details><summary>grpc 패턴 </summary>  
+## gRPC 패턴
+<details><summary>gRPC 패턴 </summary>  
 
 unary
 server streaming
@@ -37,6 +41,7 @@ bidirectional streaming
   
 </details>  
 
+## 서버구성
 <details><summary> 서버구성 </summary>
 
 draw.io로 작성필요
@@ -48,15 +53,19 @@ api-auth
 
 </details>  
   
+## Netflex dgs 흐름
 <details><summary>dgs 흐름 </summary>
 
 </details>  
 
+## Postman gRPC 사용법
 <details> <summary> Postman gRPC 사용 </summary> </details>
 
+## Test 성능테스트
 <details> <summary> 테스트 </summary>
 
 아파치 벤치마킹
 ghz
 
 </details>
+
