@@ -11,9 +11,11 @@ https://youtu.be/XpunFFS-n8I
 넷플릭스 리소스 낭비 / 안정성과 속도를 dgs 로 개선.  
 
 ## REST api 와 gRPC 차이
-<details><summary> rest vs grpc </summary>  
-  http1.1, http2 차이 흠..  
+<details><summary> rest vs grpc </summary>
+
+http1.1, http2 차이  
 network 레이턴씨 부분,  
+json으로 변경하면서 생기는 리소스들, 
 </details>   
   
 ## java, gRPC 데이터타입 
