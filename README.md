@@ -299,11 +299,5 @@ gateway README
 [README.md](gateway/README.md)
 
 
-netflex  
-https://youtu.be/XpunFFS-n8I
-
-단순 gc 업그레이드만으로 성능20%향상  
-rxJava(webflux)를 사용안하는 이유, 처리방법  
-
 </details>
 
