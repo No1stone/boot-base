@@ -32,3 +32,22 @@ https://youtu.be/XpunFFS-n8I
   
 </details>  
 
+<details><summary> 서버구성 </summary>
+
+draw.io로 작성
+nginx
+gateway
+eureka
+grpc
+api-auth
+
+</details>
+
+<details> <summary> Postman gRPC 사용 </summary> </details>
+
+<details> <summary> 테스트 </summary>
+
+아파치 벤치마킹
+ghz
+
+</details>
