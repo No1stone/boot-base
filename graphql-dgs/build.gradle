@@ -33,6 +33,14 @@ jar { enabled = false }
 //}
 
 dependencies {
+    implementation project(':lib-common')
+    implementation project(':lib-model')
+    implementation project(':lib-legacy')
+
+    annotationProcessor project(":lib-common")
+    annotationProcessor project(":lib-model")
+
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
