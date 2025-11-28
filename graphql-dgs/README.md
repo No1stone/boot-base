@@ -12,8 +12,8 @@ https://youtu.be/XpunFFS-n8I
 
 ## REST api 와 gRPC 차이
 <details><summary> rest vs grpc </summary>  
-  http1.1, http2 차이 흠..
-network 레이턴씨 부분, 
+  http1.1, http2 차이 흠..  
+network 레이턴씨 부분,  
 </details>   
   
 ## java, gRPC 데이터타입 
@@ -34,22 +34,23 @@ network 레이턴씨 부분,
 ## gRPC 패턴
 <details><summary>gRPC 패턴 </summary>  
 
-unary
-server streaming
-client streaming
-bidirectional streaming
+표작성 필요  
+unary  
+server streaming  
+client streaming  
+bidirectional streaming  
   
 </details>  
 
 ## 서버구성
 <details><summary> 서버구성 </summary>
 
-draw.io로 작성필요
-nginx
-gateway
-eureka
-grpc
-api-auth
+draw.io로 작성필요  
+nginx  
+gateway   
+eureka  
+grpc  
+api-auth  
 
 </details>  
   
@@ -64,8 +65,8 @@ api-auth
 ## Test 성능테스트
 <details> <summary> 테스트 </summary>
 
-아파치 벤치마킹
-ghz
+아파치 벤치마킹  
+ghz  
 
 </details>
 
