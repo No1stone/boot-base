@@ -2,13 +2,15 @@
 
 https://github.com/Netflix/dgs-framework/blob/master/graphql-dgs-client/build.gradle.kts
 
-netflex    
+netflix    
 https://youtu.be/XpunFFS-n8I  
 단순 gc 업그레이드만으로 성능20%향상     
 넷플릭스가 rxJava(webflux)를 사용안하는 이유, 처리방법    
   
 우리팀에서의 이유는 리소스 부족 및 안정성  
-넷플릭스 리소스 낭비 / 안정성과 속도를 dgs 로 개선.  
+넷플릭스 리소스 낭비 / 안정성과 속도를 dgs 로 개선.
+
+Domain Graog Service
 
 ## REST api 와 gRPC 차이
 <details><summary> rest vs grpc </summary>
