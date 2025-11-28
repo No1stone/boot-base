@@ -29,19 +29,28 @@ https://youtu.be/XpunFFS-n8I
 </details>   
   
 <details><summary>grpc 패턴 </summary>  
+
+unary
+server streaming
+client streaming
+bidirectional streaming
   
 </details>  
 
 <details><summary> 서버구성 </summary>
 
-draw.io로 작성
+draw.io로 작성필요
 nginx
 gateway
 eureka
 grpc
 api-auth
 
-</details>
+</details>  
+  
+<details><summary>dgs 흐름 </summary>
+
+</details>  
 
 <details> <summary> Postman gRPC 사용 </summary> </details>
 
