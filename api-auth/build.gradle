@@ -9,9 +9,11 @@ dependencies {
     implementation project(':lib-common')
     implementation project(':lib-model')
     implementation project(':lib-legacy')
+    implementation project(':lib-proto')
 
     annotationProcessor project(":lib-common")
     annotationProcessor project(":lib-model")
+    annotationProcessor project(":lib-proto")
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
