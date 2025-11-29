@@ -301,11 +301,11 @@ gateway README
 
 
 </details>
+  
+  
+<details><summary>graphql-dgs</summary>
 
-
-<details><summary>grapgql-dgs</summary>
-
-dgs  
+dgs rRPS 아키텍쳐  
 [README.md](graphql-dgs/README.md)
 
 
