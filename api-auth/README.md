@@ -142,6 +142,7 @@ jwks 생명주기
 
 <details> <summary>grpc setting</summary>
 
-내용정리중..
+내용정리중입니다.   
+  
 ![img_9.png](images/img_9.png)   
 </details>
