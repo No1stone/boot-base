@@ -306,7 +306,7 @@ auth-api README
   
 <details><summary>graphql-dgs</summary>
 
-dgs rRPS 아키텍쳐  
+dgs gRPC 아키텍쳐  
 graphql-dgs README  
 [README.md](graphql-dgs/README.md)  
 
