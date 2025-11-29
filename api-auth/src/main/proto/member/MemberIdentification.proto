@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package com.origemite.member.identification;
+
+option java_package = "com.origemite.apiauth.member.grpc.MemberIdentificationGrpc";
+option java_multiple_files = true;
+
+service MemberIdentificationService {
+
+  rpc FindById (MemberIdentificationFindByIdRequest)
+      returns (MemberIdentificationItemResponse);
+}
+
+
+message MemberIdentificationFindByIdRequest {
+  int32 id = 1;
+}
+
+message MemberIdentificationItemResponse {
+  int32 id = 1;
+  string memberId = 2;
+  string name = 3;
+  string mobilePhoneNumber = 4;
+  string email = 5;
+  string ci = 6;
+  string status = 7;
+}
