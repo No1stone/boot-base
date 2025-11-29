@@ -1,3 +1,7 @@
+plugins {
+    id 'com.google.protobuf' version '0.9.4'
+}
+
 bootJar { enabled = false }
 jar { enabled = true }
 
@@ -25,6 +29,49 @@ dependencies {
     // Model Mapper
     implementation 'org.modelmapper:modelmapper:3.2.0'
 
+    //grpc
+    implementation "org.springframework.grpc:spring-grpc-spring-boot-starter"
+    implementation "io.grpc:grpc-netty-shaded"
+    implementation "io.grpc:grpc-protobuf"
+    implementation "io.grpc:grpc-stub"
+    implementation "io.grpc:grpc-services"
+    implementation "com.google.protobuf:protobuf-java"
 
 }
 
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java"
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                grpc {} //
+            }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            srcDir 'src/main/proto'
+        }
+        java {
+            srcDirs 'src/main/java',
+                    'build/generated/source/proto/main/java',
+                    'build/generated/source/proto/main/grpc'
+        }
+    }
+}
+
+tasks.named('processResources') {
+    exclude("**/*.proto")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
