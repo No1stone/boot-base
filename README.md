@@ -294,9 +294,9 @@ SpringCloud Gateway -> otlp -> zipkin.
 ## 15. 테스트
 <details><summary>test</summary>
 
-vault 를사용한 RSA 암호화 JWT test
-gateway README
-[README.md](gateway/README.md)
+vault 를사용한 RSA 암호화 JWT test   
+gateway README   
+[README.md](gateway/README.md)   
 
 
 </details>

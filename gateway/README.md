@@ -70,3 +70,6 @@ cpu 사용량이 rsa 검증보다
 
 </details>
 
+RSA 단점
+키길이가 너무 길어짐 -> ecdsa  
+검증비용이 큼  
