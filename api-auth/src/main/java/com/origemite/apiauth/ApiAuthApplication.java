@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
                 "com.origemite.apiauth",
                 "com.origemite.lib.common",
                 "com.origemite.lib.model",
-//                "io.origemite.lib.legacy"
+                "com.origemite.lib.proto"
         },
         exclude = {SecurityAutoConfiguration.class})
 public class ApiAuthApplication {
