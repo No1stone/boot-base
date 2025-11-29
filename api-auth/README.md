@@ -1,5 +1,6 @@
 # Vault Transit 기반 JWT 키 관리 & 회전 시스템
-
+<details> <summary> JWKS, 정보보호 </summary>
+ 
 > Origemite 인프라 표준 — Spring Auth / Gateway / Jenkins / AWS 기반  
 > 보안·운영·DevSecOps 연동 Vault 설정 
 
@@ -136,3 +137,11 @@ DB에는 키의 ID만 저장 (cipher_key_id)
 
 jwks 생명주기  
 ![img_8.png](images/img_8.png)
+
+</details>
+
+<details> <summary>grpc setting</summary>
+
+내용정리중..
+![img_9.png](images/img_9.png)   
+</details>
