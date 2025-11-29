@@ -1,3 +1,7 @@
+plugins {
+    id 'com.google.protobuf' version '0.9.4'
+}
+
 bootJar { enabled = true }
 jar { enabled = false }
 
@@ -80,6 +84,18 @@ dependencies {
 
     implementation 'org.apache.commons:commons-collections4:4.0'
 
+
+    //gRPC
+    implementation "org.springframework.grpc:spring-grpc-spring-boot-starter"
+    implementation "io.grpc:grpc-netty-shaded"
+    implementation "io.grpc:grpc-protobuf"
+    implementation "io.grpc:grpc-stub"
+    implementation "io.grpc:grpc-services"
+    implementation "com.google.protobuf:protobuf-java"
+
+
+
+
 //    // KMS
 //    implementation 'org.zalando:spring-cloud-config-aws-kms:5.1.2'
 //    implementation 'com.amazonaws:aws-java-sdk-core:1.11.1019'
@@ -89,5 +105,38 @@ dependencies {
 //    implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java"
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                grpc {} //
+            }
+        }
+    }
+}
 
+sourceSets {
+    main {
+        proto {
+            srcDir 'src/main/proto'
+        }
+        java {
+            srcDirs 'src/main/java',
+                    'build/generated/source/proto/main/java',
+                    'build/generated/source/proto/main/grpc'
+        }
+    }
+}
 
+tasks.named('processResources') {
+    exclude("**/*.proto")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

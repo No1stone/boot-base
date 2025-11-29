@@ -40,6 +40,7 @@ subprojects {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:2025.0.0"
             //1.0은 게이트웨이가 그래들 버전에 안들어가있음
 //            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2025.1.0-M1"
+            mavenBom "org.springframework.grpc:spring-grpc-dependencies:0.11.0"
         }
     }
 
