@@ -1,7 +1,6 @@
 
 
-### gateway, eureka, vault 부분은 학습용입니다
-#### 실제 운영에선 안정성을위해 gateway, eureka, vault는 사용하지 않았으며
+#### 실제 운영에선 안정성을위해 vault는 사용하지 않았으며
 #### aws kms비용 절감과 vault transit 특성을 학습하기 위한 프로젝트입니다.
 
 
