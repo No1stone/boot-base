@@ -9,6 +9,7 @@
 모노리포(Gradle Import) 구조를 사용하며   
 각 서비스는 독립적으로 배포/확장 가능하며, 도메인 단위로 분리되어 있다.  
 향후 트래픽 증가 및 비동기 처리 요구에 따라 Kafka 또는 Pulsar 기반의 Event-driven 구조로 확장할 수 있다.  
+<details><summary>프로젝트 설명 </summary>
 
 ## 1. 패키지 구조
 
@@ -290,9 +291,10 @@ SpringCloud Gateway -> otlp -> loki -> grafana example
 SpringCloud Gateway -> otlp -> zipkin. 
 ![img_6.png](images/img_6.png). 
 </details>
+</details>
 
-## 15. 테스트
-<details><summary>test</summary>
+##
+<details><summary>gateway jwks </summary>
 
 vault 를사용한 RSA 암호화 JWT test   
 gateway README   
