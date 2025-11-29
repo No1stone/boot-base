@@ -298,7 +298,8 @@ SpringCloud Gateway -> otlp -> zipkin.
 vault 를사용한 RSA 암호화 JWT test   
 gateway README   
 [README.md](gateway/README.md)   
-
+auth-api README  
+[README.md](api-auth/README.md)  
 
 </details>
   
@@ -306,7 +307,8 @@ gateway README
 <details><summary>graphql-dgs</summary>
 
 dgs rRPS 아키텍쳐  
-[README.md](graphql-dgs/README.md)
+graphql-dgs README  
+[README.md](graphql-dgs/README.md)  
 
 
 </details>
