@@ -8,7 +8,9 @@ spring:
   web:
     encoding:
       force-response: true
-
+  grpc:
+    server:
+      port: 9191
 
 server:
   port: 3031
