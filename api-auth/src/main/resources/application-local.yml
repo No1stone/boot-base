@@ -75,6 +75,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+  instance:
+    metadata-map:
+      grpcPort: 9191
+
+
 #  rabbitmq:
 #    host: 127.0.0.1
 #    port: 5672
