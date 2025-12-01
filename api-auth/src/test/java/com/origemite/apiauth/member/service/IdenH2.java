@@ -2,18 +2,17 @@ package com.origemite.apiauth.member.service;
 
 
 import com.origemite.apiauth.autoconfig.H2Config;
-import com.origemite.apiauth.autoconfig.MysqlConfig;
 import com.origemite.lib.common.util.TransformUtils;
 import com.origemite.lib.model.auth.dto.MemberIdentificationReq;
 import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
 import com.origemite.lib.model.auth.service.MemberIdentificationService;
 import com.origemite.lib.model.enums.common.EnMobileCarrierCode;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(classes = MemberIdentificationService.class)
@@ -37,10 +36,11 @@ public class IdenH2 {
         create.setForeignYn("N");
         create.setMobileCarrierCode(EnMobileCarrierCode.SKT.getCode());
         create.setStatus("A");
-        memberIdentificationService.save(create);
+        MemberIdentificationRes.Id entity = memberIdentificationService.save(create);
 
-
+        Assertions.assertThat(entity.getId()).isNotNull();
         MemberIdentificationRes.Item res = memberIdentificationService.findById(1);
+        Assertions.assertThat(res.getId()).isNotNull();
         System.out.println(TransformUtils.toString(res));
     }
 
