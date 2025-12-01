@@ -1,0 +1,74 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      authentication: TOKEN
+      token: root
+      kv:
+        enabled: true
+        backend: secret
+
+  datasource:
+    default:
+      jdbc-url: jdbc:mariadb://localhost:3306/appdb?serverTimezone=UTC
+      username: root
+      password: 'pass1234'
+      driver-class-name: org.mariadb.jdbc.Driver
+      connection-init-sql: SET time_zone = '+00:00'
+      pool-name: DEFAULT_POOL
+      idle-timeout: 600000
+      connection-timeout: 30000
+      validation-timeout: 5000
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+#      ddl-auto: update
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_batch_fetch_size: 500
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        globally_quoted_identifiers: true
+        format_sql: true
+        show_sql: true
+    show-sql: true
+    generate-ddl: true
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: h2
+  h2:
+    console:
+      enabled: true
+  db:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+logging:
+  level:
+    ai.budit.api: DEBUG
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+security:
+  jwt:
+    secret-key: TODO secret-key
+    access-token-validity-in-milliseconds: 43200000
+    refresh-token-validity-in-milliseconds: 43200000
+    access-token-expired-time-ms: 43200000
+
