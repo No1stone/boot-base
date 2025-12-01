@@ -7,6 +7,7 @@ import com.origemite.lib.common.util.TransformUtils;
 import com.origemite.lib.model.auth.dto.MemberIdentificationReq;
 import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
 import com.origemite.lib.model.auth.service.MemberIdentificationService;
+import com.origemite.lib.model.enums.common.EnMobileCarrierCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class IdenH2 {
         create.setBirthday("1989-10-03");
         create.setGender("M");
         create.setForeignYn("N");
-        create.setMobileCarrierCode("SK");
+        create.setMobileCarrierCode(EnMobileCarrierCode.SKT.getCode());
         create.setStatus("A");
         memberIdentificationService.save(create);
 

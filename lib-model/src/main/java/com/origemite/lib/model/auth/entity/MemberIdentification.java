@@ -2,6 +2,7 @@ package com.origemite.lib.model.auth.entity;
 
 import com.origemite.lib.common.util.BeanUtils;
 import com.origemite.lib.common.base.UpdatedEntity;
+import com.origemite.lib.model.enums.common.EnMobileCarrierCode;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
@@ -92,7 +93,7 @@ public class MemberIdentification extends UpdatedEntity {
     /** 이동 통신사 코드 (CC. 공통) */
     @Column(name = "mobile_carrier_code", length = 10, nullable = false)
     @Schema(description = "이동 통신사 코드 (CC. 공통)")
-    private String mobileCarrierCode;
+    private EnMobileCarrierCode mobileCarrierCode;
 
     /** 회원 아이디 */
     @Column(name = "member_id", length = 22)

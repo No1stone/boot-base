@@ -6,6 +6,7 @@ import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
 import com.origemite.lib.model.auth.entity.MemberIdentification;
 import com.origemite.lib.model.auth.repository.MemberIdentificationRepository;
 import com.origemite.lib.model.auth.service.MemberIdentificationService;
+import com.origemite.lib.model.enums.common.EnMobileCarrierCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -286,7 +287,7 @@ class MemberIdentificationServiceTest {
         entity.setEmailSha("email_sha-sample");
         entity.setCiSha("ci_sha-sample");
         entity.setCipherKeyId("cipher_key_id-sample");
-        entity.setMobileCarrierCode("mobile_carrier_code-sample");
+        entity.setMobileCarrierCode(EnMobileCarrierCode.SKT);
         entity.setMemberId("member_id-sample");
         entity.setStatus("status-sample");
         return entity;
