@@ -9,8 +9,8 @@
 plugins {
 	kotlin("jvm") version "2.0.21"
 	kotlin("plugin.spring") version "2.0.21"
-//	id("org.springframework.boot")
-//	id("io.spring.dependency-management")
+	id("org.springframework.boot")
+	id("io.spring.dependency-management")
 	id("com.netflix.dgs.codegen") version "8.2.1"
 }
 
@@ -40,6 +40,8 @@ dependencies {
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.springframework.boot:spring-boot-starter-logging")
+	implementation("org.slf4j:slf4j-api:2.0.12")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

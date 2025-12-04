@@ -10,7 +10,7 @@ import org.springframework.boot.runApplication
 	scanBasePackages = ["com.origemite.graphqldgskt"
 	], exclude = [SecurityAutoConfiguration::class]
 )
-open class GraphqlDgsKtApplication
+class GraphqlDgsKtApplication
 
 fun main(args: Array<String>) {
 	runApplication<GraphqlDgsKtApplication>(*args)
