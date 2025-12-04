@@ -10,6 +10,7 @@ import com.origemite.lib.model.enums.common.EnMobileCarrierCode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -18,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(classes = MemberIdentificationService.class)
 @ActiveProfiles({"test", "test-h2"})
 @Import({H2Config.class})
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class IdenH2 {
 
     @Autowired

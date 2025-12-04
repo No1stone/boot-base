@@ -62,5 +62,5 @@ tasks.named('test') {
 
 //https://github.com/Netflix/dgs-framework/blob/master/graphql-dgs-client/build.gradle.kts
 //dependency가 코틀린으로작성되어 코틀린 의존성생겨 아래 옵션 추가
-tasks.register("prepareKotlinBuildScriptModel") {
-}
+//tasks.register("prepareKotlinBuildScriptModel") {
+//}
