@@ -1,39 +1,21 @@
-//plugins {
-//	kotlin("jvm") version "2.2.21"
-//	kotlin("plugin.spring") version "2.2.21"
-//	id("org.springframework.boot") version "4.0.0"
-//	id("io.spring.dependency-management") version "1.1.7"
-//	id("com.netflix.dgs.codegen") version "7.0.3"
-//}
-
 plugins {
 	kotlin("jvm") version "2.0.21"
 	kotlin("plugin.spring") version "2.0.21"
-	id("org.springframework.boot")
-	id("io.spring.dependency-management")
+//	id("org.springframework.boot")
+//	id("io.spring.dependency-management")
 	id("com.netflix.dgs.codegen") version "8.2.1"
 }
 
+kotlin {
+	jvmToolchain(17)
+}
 
 group = "com.origemite"
 version = "0.0.1-SNAPSHOT"
 description = "graphql-dgs-kt"
 
-//java {
-//	toolchain {
-//		languageVersion = JavaLanguageVersion.of(17)
-//	}
-//}
-
-
-repositories {
-	mavenCentral()
-}
-
 dependencies {
-//	implementation(project(":lib-common"))
-//	implementation(project(":lib-model"))
-//	implementation(project(":lib-legacy"))
+	implementation(project(":lib-proto"))
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-graphql")
@@ -43,6 +25,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-logging")
 	implementation("org.slf4j:slf4j-api:2.0.12")
 
+	//gRPC
+	implementation ("org.springframework.grpc:spring-grpc-spring-boot-starter")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 

@@ -1,5 +1,6 @@
 plugins {
     id 'com.google.protobuf' version '0.9.4'
+    id 'java-library'
 }
 
 bootJar { enabled = false }
@@ -54,3 +55,41 @@ tasks.named('processResources') {
     exclude("**/*.proto")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+
+//
+//protobuf {
+//    protoc {
+//        artifact = "com.google.protobuf:protoc"
+//    }
+//    plugins {
+//        grpc {
+//            artifact = "io.grpc:protoc-gen-grpc-java"
+//        }
+//    }
+//    generateProtoTasks {
+//        all().each { task ->
+//            task.plugins {
+//                grpc {} //
+//            }
+//        }
+//    }
+//}
+//
+//sourceSets {
+//    main {
+//        proto {
+//            srcDir 'src/main/proto'
+//        }
+//        java {
+//            srcDirs 'src/main/java',
+//                    'build/generated/source/proto/main/java',
+//                    'build/generated/source/proto/main/grpc'
+//        }
+//    }
+//}
+//
+//tasks.named('processResources') {
+//    exclude("**/*.proto")
+//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//}
