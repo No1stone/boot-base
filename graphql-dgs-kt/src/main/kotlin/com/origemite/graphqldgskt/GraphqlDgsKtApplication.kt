@@ -8,6 +8,7 @@ import org.springframework.boot.runApplication
 @EnableConfigurationProperties
 @SpringBootApplication(
 	scanBasePackages = ["com.origemite.graphqldgskt"
+	,"com.origemite.lib.grpc"
 	], exclude = [SecurityAutoConfiguration::class]
 )
 class GraphqlDgsKtApplication

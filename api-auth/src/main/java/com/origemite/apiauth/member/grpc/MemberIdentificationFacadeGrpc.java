@@ -1,9 +1,9 @@
 package com.origemite.apiauth.member.grpc;
 
 import com.origemite.apiauth.member.facade.MemberIdentificationFacade;
-import com.origemite.member.grpc.MemberIdentificationGrpc.MemberIdentificationFindByIdRequest;
-import com.origemite.member.grpc.MemberIdentificationGrpc.MemberIdentificationItemResponse;
-import com.origemite.member.grpc.MemberIdentificationGrpc.MemberIdentificationServiceGrpc;
+import com.origemite.lib.grpc.MemberIdentificationGrpc.MemberIdentificationFindByIdRequest;
+import com.origemite.lib.grpc.MemberIdentificationGrpc.MemberIdentificationItemResponse;
+import com.origemite.lib.grpc.MemberIdentificationGrpc.MemberIdentificationServiceGrpc;
 import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class MemberIdentificationFacadeGrpc extends MemberIdentificationServiceG
 
     @Override
     public void findById(MemberIdentificationFindByIdRequest request,
-                         io.grpc.stub.StreamObserver<com.origemite.member.grpc.MemberIdentificationGrpc.MemberIdentificationItemResponse> responseObserver) {
+                         io.grpc.stub.StreamObserver<com.origemite.lib.grpc.MemberIdentificationGrpc.MemberIdentificationItemResponse> responseObserver) {
 
         MemberIdentificationRes.Item item = memberIdentificationFacade.findById(request.getId());
 
