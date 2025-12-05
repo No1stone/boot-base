@@ -101,7 +101,7 @@ GET  /graphql/playground     - GraphiQL / DGS Playground (local/dev only)
 
 - GraphQL은 **조회(Read) 전용 BFF 레이어**로 사용한다.
     - `query`만 허용, `mutation`/`subscription`은 사용하지 않는다.
-    - 쓰기(Write)는 REST/gRPC 서비스로 분리한다. (CQRS 목적)
+    - 쓰기(Write)는 REST/gRPC BlockingStub 서비스로 분리한다. (CQRS 목적)
 </details>
 
 ## Error log 규칙
