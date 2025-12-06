@@ -18,9 +18,18 @@ dependencies {
 	implementation(project(":lib-proto"))
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springframework.boot:spring-boot-starter-graphql")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 
+
+	implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform:10.4.0"))
+	implementation("com.netflix.graphql.dgs:dgs-starter") // = graphql-dgs-spring-graphql-starter
+	implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
+
+
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springframework.boot:spring-boot-starter-logging")
 	implementation("org.slf4j:slf4j-api:2.0.12")

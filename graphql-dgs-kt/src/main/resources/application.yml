@@ -1,3 +1,11 @@
 spring:
   application:
     name: graphql-dgs-kt
+server:
+  port: 3033
+
+dgs:
+  graphql:
+    path: /graphql   # POST 엔드포인트
+  graphiql:
+    enabled: true

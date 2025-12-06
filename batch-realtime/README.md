@@ -4,9 +4,10 @@
 
 <details>
 
-db -> 
-디비지움 avro -> 
-카프카 -> 
+db ->
+Debezium avro -> 
+카프카 iceberg-> 
 s3 -> 
-batch
+batch ->
+batchUpdate rewriteBatchedStatements=true
 </details>

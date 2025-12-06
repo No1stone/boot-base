@@ -1,0 +1,14 @@
+type Query {
+    # id로 회원 실명 인증 정보 조회
+    memberIdentification(id: Int!): MemberIdentification
+}
+
+type MemberIdentification {
+    id: Int!
+    memberId: String!
+    name: String
+    mobilePhoneNumber: String
+    email: String
+    ci: String
+    status: String
+}
