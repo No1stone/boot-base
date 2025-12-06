@@ -314,7 +314,7 @@ graphql-dgs README
 
 <details><summary>api-auth jwks, vault transit</summary>
 
-jwks 버전관리, 볼트연동, 암호화등 
-[README.md](api-auth/README.md)
+jwks 버전관리, 볼트연동, 암호화등  
+[README.md](api-auth/README.md)  
 </details>
 
