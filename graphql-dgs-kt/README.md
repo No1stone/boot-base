@@ -108,8 +108,17 @@ GET  /graphql/playground     - GraphiQL / DGS Playground (local/dev only)
 <details> <summary> Error </summary> </details>
 
 
-## Postman gRPC 사용법
-<details> <summary> Postman gRPC 사용 </summary> </details>
+## Graphql 사용법
+<details> <summary> Postman Graphql 사용 </summary> 
+
+postman  
+![img.png](images/img.png)  
+
+graphiql  
+http://{ipport}/graphiql  
+![img_1.png](images/img_1.png)  
+
+</details>
 
 ## Test 성능테스트
 <details> <summary> 테스트 </summary>
