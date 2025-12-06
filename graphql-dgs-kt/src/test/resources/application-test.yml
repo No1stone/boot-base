@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: graphql-dgs-kt
+
+dgs:
+  graphql:
+    path: /graphql   # POST 엔드포인트
+  graphiql:
+    enabled: true
