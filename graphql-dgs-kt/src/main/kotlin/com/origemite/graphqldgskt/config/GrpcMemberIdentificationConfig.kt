@@ -37,7 +37,7 @@ class GrpcMemberIdentificationConfig (
     }
 
     @Bean
-    fun memberIdentificationBlockingStub(channel: ManagedChannel): MemberIdentificationServiceGrpc.MemberIdentificationServiceBlockingStub? =
-        MemberIdentificationServiceGrpc.newBlockingStub(channel)
+    fun memberIdentificationBlockingStub(channel: ManagedChannel): MemberIdentificationServiceGrpc.MemberIdentificationServiceBlockingV2Stub? =
+        MemberIdentificationServiceGrpc.newBlockingV2Stub(channel)
 
 }

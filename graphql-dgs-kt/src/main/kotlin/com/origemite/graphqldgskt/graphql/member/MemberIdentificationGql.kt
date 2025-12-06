@@ -20,7 +20,7 @@ data class MemberIdentificationGql (
 
 @DgsComponent
 class MemberIdentificationQuery(
-    private val memberIdentificationBlockingStub: MemberIdentificationServiceGrpc.MemberIdentificationServiceBlockingStub,
+    private val memberIdentificationBlockingStub: MemberIdentificationServiceGrpc.MemberIdentificationServiceBlockingV2Stub,
 ) {
 
     private val log = LoggerFactory.getLogger(javaClass)
