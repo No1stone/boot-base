@@ -302,8 +302,15 @@ auth-api README
 [README.md](api-auth/README.md)  
 
 </details>
-  
-  
+
+
+<details><summary>api-auth jwks, vault transit</summary>
+
+jwks 버전관리, 볼트연동, 암호화등  
+[README.md](api-auth/README.md)
+</details>
+
+
 <details><summary>graphql-dgs</summary>
 
 dgs gRPC 아키텍쳐  
@@ -311,10 +318,3 @@ graphql-dgs README
 [README.md](graphql-dgs-kt/README.md)
 
 </details>
-
-<details><summary>api-auth jwks, vault transit</summary>
-
-jwks 버전관리, 볼트연동, 암호화등  
-[README.md](api-auth/README.md)  
-</details>
-
