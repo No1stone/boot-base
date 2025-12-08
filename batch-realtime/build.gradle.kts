@@ -17,8 +17,17 @@ description = "batch-realtime"
 
 dependencies {
 	implementation(project(":lib-proto"))
+	implementation(project(":lib-common"))
+	implementation(project(":lib-model"))
+	annotationProcessor(project(":lib-common"))
+	annotationProcessor(project(":lib-model"))
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-quartz")
+	implementation("org.springframework.boot:spring-boot-starter-batch")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springframework.boot:spring-boot-starter-logging")

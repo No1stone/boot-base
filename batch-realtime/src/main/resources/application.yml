@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: batch-realtime
+
+server:
+  port: 3034
+  servlet:
+    context-path: /
+  tomcat:
+    mbeanregistry:
+      enabled: true
+  shutdown: graceful
+  error:
+    whitelabel:
+      enabled: false
+
+logging:
+  level:
+    p6spy: error
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      consume: b3
+      produce: b3_multi
+    enabled: true
+

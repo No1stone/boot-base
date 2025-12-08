@@ -4,10 +4,10 @@
 
 <details>
 
-db ->
+db ->. 
 Debezium avro -> 
-카프카 iceberg-> 
-s3 -> 
-batch ->
-batchUpdate rewriteBatchedStatements=true
+카프카 iceberg->  
+s3 ->   
+batch ->.  
+batchUpdate rewriteBatchedStatements=true.  
 </details>

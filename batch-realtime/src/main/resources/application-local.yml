@@ -1,0 +1,109 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDB106Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false
+    properties:
+      hibernate:
+        show-sql: false
+        format_sql: false
+        default_batch_fetch_size: 100
+
+  datasource:
+    batch:
+      jdbc-url: ${DRP_DB_URL}
+      username: ${DRP_DB_USERNAME}
+      password: ${DRP_DB_PASSWORD}
+      driver-class-name: org.mariadb.jdbc.Driver
+      connection-init-sql: SET time_zone = '+00:00'
+      pool-name: DEFAULT_POOL
+      idle-timeout: 600000
+      connection-timeout: 30000
+      validation-timeout: 5000
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+
+  quartz:
+    scheduler-name: BatchScheduler
+    properties:
+      org.quartz.scheduler:
+        #TODO 정황진 각 호스트네임을 가져 올 수 있도록 설정
+        instanceName: BATCH
+        instanceId: AUTO
+        rmi:
+          export: false
+          proxy: false
+
+      org.quartz.jobStore:
+        class: org.quartz.impl.jdbcjobstore.JobStoreTX
+        driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+        tablePrefix: QRTZ_
+        isClustered: true
+        dataSource: default
+
+      org.quartz.threadPool:
+        threadCount: 10
+        class: org.quartz.simpl.SimpleThreadPool
+        threadPriority: 5
+
+      org.quartz.dataSource:
+        default:
+          connectionProvider.class: ai.mintit.drp.batch.common.extend.HikariCpPoolingConnectionProvider
+          driver: org.mariadb.jdbc.Driver
+          URL: jdbc:mariadb://drp-stg-rds.cwy8uiiiz3bu.ap-northeast-2.rds.amazonaws.com:3306/drp?stringtype=unspecified
+          user: admin
+          password: Mintitno1!
+          maximumPoolSize: 10
+          idleTimeout: 600000
+          minimumIdle: 3
+          maxLifetime: 1800000
+          connectionInitSql: SET time_zone = '+00:00'
+
+    auto-startup: true
+    wait-for-jobs-to-complete-on-shutdown: true
+    overwrite-existing-jobs: true
+
+security:
+  jwt:
+    token: eyJhbGciOiJIUzI1NiJ9.eyJNIjoiQmVhcmVyIiwiSSI6IlROWDBiVHo4UnhPSllBLWZWWUticXciLCJTIjoiSVVvams1eWxSZUNDVHdjdTdHUW15dyIsIlIiOjE2MzgzLCJpYXQiOjE3MjQ2NjA4NzksImV4cCI6MjY3MDc0MDg3OX0.PQr6AyETxTIGgCGpRlHM-ApWj7v77L-FIGkEsV4A5o4
+    secret-key: 0ceUBJRHtko7pPCNnZCQN1RvJJAHGtfDSjdNhdCIXIzFnEnTBUkPzzOkv0mcq5AfA4lCYvSIbLHxDe6xIjj5EGk7K
+    token-type: Bearer
+    header-string: Authorization
+
+# 서비스 클라이언트
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      api:
+        endpoint:
+          base-url: http://localhost:8080
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      member:
+        endpoint:
+          base-url: http://localhost:8081/member
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      file:
+        endpoint:
+          base-url: http://localhost:8082/file
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      batch-statistics:
+        endpoint:
+          base-url: http://localhost:8084/batch-statistics
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
+      legacy:
+        endpoint:
+          base-url: http://localhost:8085/legacy
+        connectTimeout: 5000  # 연결 타임아웃 (밀리초 단위, 예: 5000ms = 5초)
+        readTimeout: 3000    # 읽기 타임아웃 (밀리초 단위, 예: 10000ms = 10초)
