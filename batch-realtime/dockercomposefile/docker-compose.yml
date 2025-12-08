@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3099:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: cdctest
+      MYSQL_PASSWORD: cdctest
+      MYSQL_DATABASE: testdb
+    command:
+      - --server-id=223344
+      - --log-bin=mysql-bin
+      - --binlog_format=ROW
+      - --binlog_row_image=FULL
+      - --gtid_mode=ON
+      - --enforce_gtid_consistency=ON
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - cdc-net
+
+  kafka:
+    image: quay.io/debezium/kafka:3.3
+    container_name: kafka
+    ports:
+      - "20992:9092"
+    environment:
+      CLUSTER_ID: "kraft-cluster-1"
+      NODE_ID: 1
+      NODE_ROLE: controller,broker
+
+      # Listener 설정
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+
+      # KRaft 모드 설정 (Zookeeper 없음)
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    networks:
+      - cdc-net
+
+  connect:
+    image: quay.io/debezium/connect:3.3
+    container_name: connect
+    depends_on:
+      - kafka
+    ports:
+      - "28083:8083"
+    environment:
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+
+      BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_CONNECT_PLUGINS_DIR: /kafka/connect,/kafka/connect-plugins
+    networks:
+      - cdc-net
+    volumes:
+      - connect-data:/kafka/connect
+      - ./connect-plugins:/kafka/connect-plugins
+
+networks:
+  cdc-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  kafka-data:
+  connect-data:

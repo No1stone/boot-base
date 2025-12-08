@@ -16,7 +16,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 @EnableBatchProcessing
 @SpringBootApplication(
 	scanBasePackages = ["com.origemite.batchrealtime"
-//		, "com.origemite.lib.common"
+		, "com.origemite.lib.common"
+		, "com.origemite.lib.model"
 	],
 //	exclude = [RedisRepositoriesAutoConfiguration::class, JdbcRepositoriesAutoConfiguration::class, SecurityAutoConfiguration::class
 //	]
