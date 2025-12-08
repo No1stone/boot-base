@@ -16,7 +16,6 @@ version = "0.0.1-SNAPSHOT"
 description = "batch-realtime"
 
 dependencies {
-	implementation(project(":lib-proto"))
 	implementation(project(":lib-common"))
 	implementation(project(":lib-model"))
 	annotationProcessor(project(":lib-common"))
@@ -26,7 +25,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-quartz")
 	implementation("org.springframework.boot:spring-boot-starter-batch")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("com.jayway.jsonpath:json-path:2.6.0")
 
+	implementation ("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+	annotationProcessor ("com.querydsl:querydsl-apt:5.0.0:jakarta")
+	annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
+	annotationProcessor ("jakarta.persistence:jakarta.persistence-api")
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

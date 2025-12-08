@@ -1,4 +1,5 @@
 server:
+  #상황봐서 0번포트로
   port: 3031
 spring:
   main:
@@ -24,9 +25,12 @@ spring:
 
   datasource:
     default:
-      jdbc-url: ${DRP_DB_URL}
-      username: ${DRP_DB_USERNAME}
-      password: ${DRP_DB_PASSWORD}
+#      jdbc-url: ${DRP_DB_URL}
+#      username: ${DRP_DB_USERNAME}
+#      password: ${DRP_DB_PASSWORD}
+      jdbc-url: jdbc:mariadb://43.202.195.185:3307/drp?serverTimezone=UTC
+      username: root
+      password: '#test1234'
       driver-class-name: org.mariadb.jdbc.Driver
       connection-init-sql: SET time_zone = '+00:00'
       pool-name: DEFAULT_POOL
