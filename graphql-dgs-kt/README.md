@@ -1,5 +1,7 @@
 # 본 프로젝트는 netflex dgs 학습 프로젝트 입니다.
 
+## 작성중입니다.
+
 https://github.com/Netflix/dgs-framework/blob/master/graphql-dgs-client/build.gradle.kts
 
 Domain Graph Service
