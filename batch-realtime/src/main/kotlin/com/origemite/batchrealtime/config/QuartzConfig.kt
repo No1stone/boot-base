@@ -1,6 +1,7 @@
 package com.origemite.batchrealtime.config
 
 import com.origemite.batchrealtime.job.SampleJob1
+import com.origemite.batchrealtime.job.SampleJob2
 import jakarta.annotation.PostConstruct
 import org.quartz.CronScheduleBuilder
 import org.quartz.JobBuilder
@@ -19,15 +20,16 @@ class QuartzConfig (private val scheduler: Scheduler) {
     fun init() {
         scheduler.clear()
         Sample1()
+        Sample2()
     }
 
     fun Sample1(){
         val jobDetail = JobBuilder.newJob(SampleJob1::class.java)
-            .withIdentity("sample1QuartzJob", "DEFAULT")
+            .withIdentity("sample1QuartzJob","sample1QuartzJob")
             .build()
 
         val trigger = TriggerBuilder.newTrigger()
-            .withIdentity("sampleQuartzJobTrigger", "DEFAULT")
+            .withIdentity("sample1QuartzJobTrigger", "sample1QuartzJobTrigger")
             .forJob(jobDetail)
             .withSchedule(
                 CronScheduleBuilder.cronSchedule("0/30 * * * * ?")
@@ -37,5 +39,20 @@ class QuartzConfig (private val scheduler: Scheduler) {
         scheduler.scheduleJob(jobDetail, trigger)
     }
 
+    fun Sample2(){
+        val jobDetail = JobBuilder.newJob(SampleJob2::class.java)
+            .withIdentity("sample2QuartzJob", "sample2QuartzJob")
+            .build()
+
+        val trigger = TriggerBuilder.newTrigger()
+            .withIdentity("sample2QuartzJobTrigger", "sample2QuartzJobTrigger")
+            .forJob(jobDetail)
+            .withSchedule(
+                CronScheduleBuilder.cronSchedule("0/30 * * * * ?")
+            )
+            .build()
+
+        scheduler.scheduleJob(jobDetail, trigger)
+    }
 
 }

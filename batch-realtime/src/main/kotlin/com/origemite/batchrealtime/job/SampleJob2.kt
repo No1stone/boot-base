@@ -5,6 +5,6 @@ import org.springframework.scheduling.quartz.QuartzJobBean
 
 class SampleJob2 : QuartzJobBean() {
     override fun executeInternal(context: JobExecutionContext) {
-        TODO("Not yet implemented")
+        println("sample2")
     }
 }

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 @Component
 class SampleJob1 : QuartzJobBean() {
     override fun executeInternal(context: JobExecutionContext) {
-        println("test")
+        println("sample1")
     }
 }
