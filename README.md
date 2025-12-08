@@ -293,23 +293,15 @@ SpringCloud Gateway -> otlp -> zipkin.
 </details>
 </details>
 
-<details><summary>gateway jwks </summary>
+<details><summary>gateway jwks vault transit </summary>
 
-vault 를사용한 RSA 암호화 JWT test   
+vault 를사용한 RSA 암호화 JWT test    
 gateway README   
 [README.md](gateway/README.md)   
 auth-api README  
 [README.md](api-auth/README.md)  
 
 </details>
-
-
-<details><summary>api-auth jwks, vault transit</summary>
-
-jwks 버전관리, 볼트연동, 암호화등  
-[README.md](api-auth/README.md)  
-</details>
-
 
 <details><summary>graphql-dgs</summary>
 
