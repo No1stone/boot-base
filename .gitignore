@@ -68,3 +68,5 @@ rebel.xml
 /ecrlocalpush.sh
 /gateway/applog/
 /api-auth/applog/
+/api-auth/src/main/resources/application-dev-2.yml
+/api-auth/src/main/java/com/origemite/apiauth/auth/TestController.java
