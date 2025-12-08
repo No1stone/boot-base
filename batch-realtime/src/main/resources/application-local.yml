@@ -15,9 +15,9 @@ spring:
 
   datasource:
     batch:
-      jdbc-url: ${DRP_DB_URL}
-      username: ${DRP_DB_USERNAME}
-      password: ${DRP_DB_PASSWORD}
+      jdbc-url: jdbc:mariadb://localhost:3306/appdb?serverTimezone=UTC
+      username: root
+      password: pass1234
       driver-class-name: org.mariadb.jdbc.Driver
       connection-init-sql: SET time_zone = '+00:00'
       pool-name: DEFAULT_POOL
@@ -53,11 +53,11 @@ spring:
 
       org.quartz.dataSource:
         default:
-          connectionProvider.class: origemite.com.batch.common.extend.HikariCpPoolingConnectionProvider
+          connectionProvider.class: com.origemite.batchrealtime.config.HikariCpPoolingConnectionProvider
           driver: org.mariadb.jdbc.Driver
-          URL:
-          user:
-          password:
+          URL: jdbc:mariadb://localhost:3306/appdb?serverTimezone=UTC
+          user: root
+          password: pass1234
           maximumPoolSize: 10
           idleTimeout: 600000
           minimumIdle: 3
