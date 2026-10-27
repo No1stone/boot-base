@@ -12,7 +12,7 @@ include 'api-auth'
 //include 'gw-portal'
 include 'util-codegen'
 include 'gateway'
-//include 'graphql-dgs'
+include 'graphql-dgs'
 // Kotlin modules belong on kotlin/boot-4.1
 //include 'graphql-dgs-kt'
 //include 'event-saga'
