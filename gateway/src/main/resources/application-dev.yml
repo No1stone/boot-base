@@ -4,6 +4,7 @@ gateway:
 spring:
   application:
     name: gateway
+  # JWT/JWK 캐시용 Redis (RDB 아님)
   db:
     redis:
       host: 10.0.14.108

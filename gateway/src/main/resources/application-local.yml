@@ -7,14 +7,10 @@ spring:
       enabled: false
     config:
       enabled: false
-  # profile 값이 base exclude를 덮어쓰므로 JDBC 제외를 함께 유지
   autoconfigure:
     exclude:
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration
-      - org.springframework.boot.jdbc.autoconfigure.JdbcTemplateAutoConfiguration
-      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
       - org.springframework.boot.amqp.autoconfigure.RabbitAutoConfiguration
+  # JWT/JWK 캐시용 Redis (RDB 아님)
   db:
     redis:
       #      host: 43.202.195.185

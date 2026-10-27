@@ -9,7 +9,18 @@ dependencyManagement {
 }
 dependencies {
 
-    implementation project(':lib-common')
+    // CachePort·BizErrorException만 사용. JDBC/JPA/WebMVC는 gateway에 불필요
+    implementation(project(':lib-common')) {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-data-jdbc'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-data-jpa'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-jdbc'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-thymeleaf'
+        exclude group: 'com.github.gavlyukovskiy', module: 'p6spy-spring-boot-starter'
+        exclude group: 'org.mariadb.jdbc'
+        exclude group: 'com.querydsl'
+        exclude group: 'org.springdoc'
+    }
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
