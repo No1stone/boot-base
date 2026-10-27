@@ -55,3 +55,10 @@
 1. `lib-common`의 `spring-test` 버전 핀 제거(또는 test 범위로 정리) 후 컴파일·관련 테스트.
 2. 컴파일 경고에서 잡히는 3.x deprecated API만 최소 수정(양립 깨는 리팩터 금지).
 3. Jackson/starter rename은 **아직 하지 않음**.
+
+### 단계 1 진행
+
+- [x] `spring-test` 6.1.10 핀·main 의존 제거. `FileUtils`가 `MockMultipartFile` 대신 자체 `BytesMultipartFile` 사용.
+- [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
+- [ ] 기타 3.x deprecated 경고 추가 정리(있으면 이어서).
+- 참고: `GatewayApplicationTests` contextLoads는 datasource 없어 실패(기존). 이번 범위 밖.
