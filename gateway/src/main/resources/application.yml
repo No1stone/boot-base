@@ -1,6 +1,18 @@
 server:
   port: 2031
 
+spring:
+  main:
+    # lib-common의 starter-web이 있어도 Gateway는 WebFlux(Netty)
+    web-application-type: reactive
+  autoconfigure:
+    # lib-common JDBC/JPA가 classpath에 있어도 gateway는 DB 없음
+    exclude:
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.jdbc.autoconfigure.JdbcTemplateAutoConfiguration
+      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
+
 # Kubernetes DNS / docker compose service name
 app:
   upstream:
