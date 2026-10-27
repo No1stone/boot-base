@@ -89,11 +89,10 @@
 ### 단계 6 진행
 
 - [x] `:api-auth:bootJar` · `:gateway:bootJar` 성공 (Boot 4.1.2).
-- [x] `api-auth` local 기동: Tomcat 3031까지 진입.
-  - 수정: spring-grpc 0.11 `OAuth2ClientAutoConfiguration` exclude (Boot3 `OAuth2ClientProperties` 참조).
-  - 환경 차단: Vault `localhost:8200` connection refused → `Started` 미도달.
-  - 경고: p6spy·grpc가 Boot3 autoconfigure 클래스명 참조 (`TypeNotPresentException`).
-- [ ] auth↔gateway HTTP 통합: Redis/MariaDB/Vault 로컬 준비 후 재시도.
+- [x] `api-auth` local `Started` (profile=local). HTTP: `/auth/actuator/health` UP, swagger·api-docs 200.
+  - deps: p6spy **2.0.1**, springdoc **3.2.0**, spring-grpc BOM **1.0.1** (0.11 OAuth2 exclude 제거).
+  - 로컬 스모크: Vault(:8200 transit `auth-sig`)+MariaDB(:3306)+Redis(:6379).
+- [ ] auth↔gateway HTTP 통합: gateway 기동 후 대표 시나리오(추후).
 
 ### 단계 7 진행
 
@@ -104,7 +103,7 @@
   - `java/boot-4.1` = 업그레이드 라인 (Boot 4.1.2 / Cloud 2025.1.x).
   - 공통 개선(예: lib-webflux 제외, 테스트 매처)만 체리픽. Jackson·Boot 패키지·Gateway starter는 브랜치별 유지.
 - [x] 3.5에 Identification `any(Create.class)` 체리픽(테스트 컴파일 복구).
-- 다음: 단계 8 exclude 모듈(추후) · 4.1 푸시는 별도 승인 · Vault 준비 시 단계 6 HTTP 통합 재시도.
+- 다음: 단계 8 exclude 모듈(추후) · 4.1 푸시는 별도 승인 · gateway↔auth HTTP 통합은 추후.
 
 #### 3.5 양립에 깨지는 변경 (확정)
 
@@ -116,6 +115,6 @@
 | Gateway starter | `spring-cloud-starter-gateway` | `…-gateway-server-webflux` |
 | Cloud BOM | `2025.0.x` | `2025.1.x` |
 | Jackson | 2 (`ObjectMapper`) | 3 (`JsonMapper` / `tools.jackson`) |
-| spring-grpc OAuth2 AC | 기본 활성 | Boot4에서 exclude 필요(0.11) |
+| spring-grpc | 0.11.x | **1.0.1** (Boot4 호환) |
 
 → **동일 소스 동시 컴파일 불가**. 호환 래퍼는 비용 대비 이득 없어 채택하지 않음.
