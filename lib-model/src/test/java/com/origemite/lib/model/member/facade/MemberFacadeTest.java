@@ -1,7 +1,5 @@
 package com.origemite.lib.model.member.facade;
 
-import com.origemite.lib.cache.CachePort;
-import com.origemite.lib.common.util.TransformUtils;
 import com.origemite.lib.model.member.dto.MemberReq;
 import com.origemite.lib.model.member.dto.MemberRes;
 import com.origemite.lib.model.member.persistence.MemberPort;
@@ -16,15 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import java.time.Duration;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,9 +31,6 @@ class MemberFacadeTest {
 
     @Mock
     private DisplayNameResolver displayNameResolver;
-
-    @Mock
-    private CachePort cachePort;
 
     @InjectMocks
     private MemberFacade memberFacade;
@@ -65,7 +57,6 @@ class MemberFacadeTest {
         assertThat(saved.getLoginPasswordSaltKey()).isNotBlank();
         assertThat(saved.getLoginPassword()).isNotEqualTo("plain-password");
         assertThat(saved.getLoginPassword().length()).isGreaterThan(20);
-        verify(cachePort).delete(MemberFacade.ITEM_CACHE_KEY_PREFIX + "m1");
     }
 
     @Test
@@ -88,55 +79,20 @@ class MemberFacadeTest {
     }
 
     @Test
-    @DisplayName("findById 캐시 미스면 Port 조회 후 캐시에 넣고 표시명을 적용한다")
-    void findByIdCacheMissLoadsAndPuts() {
+    @DisplayName("findById는 Port 조회 후 비밀값을 제거하고 표시명을 적용한다")
+    void findByIdAppliesDisplayNamesAndStripsSecrets() {
         MemberRes.Item item = new MemberRes.Item();
         item.setId("m1");
-        item.setLoginId("user@test.com");
         item.setLoginPassword("secret");
-        when(cachePort.get(MemberFacade.ITEM_CACHE_KEY_PREFIX + "m1")).thenReturn(null);
+        item.setLoginPasswordSaltKey("salt");
         when(memberPort.findById("m1")).thenReturn(item);
 
-        assertThat(memberFacade.findById("m1").getId()).isEqualTo("m1");
+        MemberRes.Item result = memberFacade.findById("m1");
 
+        assertThat(result.getId()).isEqualTo("m1");
+        assertThat(result.getLoginPassword()).isNull();
+        assertThat(result.getLoginPasswordSaltKey()).isNull();
         verify(memberPort).findById("m1");
-        ArgumentCaptor<String> jsonCaptor = ArgumentCaptor.forClass(String.class);
-        verify(cachePort).set(
-                eq(MemberFacade.ITEM_CACHE_KEY_PREFIX + "m1"),
-                jsonCaptor.capture(),
-                eq(Duration.ofMinutes(30))
-        );
-        MemberRes.Item cached = TransformUtils.parse(jsonCaptor.getValue(), MemberRes.Item.class);
-        assertThat(cached.getLoginPassword()).isNull();
-        assertThat(cached.getLoginPasswordSaltKey()).isNull();
         verify(displayNameResolver).applyAuditorDisplayNames(eq(List.of(item)), any(), any(), any(), any());
-    }
-
-    @Test
-    @DisplayName("findById 캐시 히트면 Port를 호출하지 않는다")
-    void findByIdCacheHitSkipsPort() {
-        MemberRes.Item cached = new MemberRes.Item();
-        cached.setId("m1");
-        cached.setLoginId("user@test.com");
-        when(cachePort.get(MemberFacade.ITEM_CACHE_KEY_PREFIX + "m1"))
-                .thenReturn(TransformUtils.toString(cached));
-
-        assertThat(memberFacade.findById("m1").getLoginId()).isEqualTo("user@test.com");
-
-        verify(memberPort, never()).findById(anyString());
-        verify(cachePort, never()).set(anyString(), anyString(), any());
-    }
-
-    @Test
-    @DisplayName("saveById·deleteById는 캐시를 무효화한다")
-    void mutationsEvictCache() {
-        MemberRes.Id idRes = new MemberRes.Id();
-        idRes.setId("m1");
-        when(memberPort.saveById(eq("m1"), any())).thenReturn(idRes);
-
-        memberFacade.saveById("m1", MemberReq.Update.builder().build());
-        memberFacade.deleteById("m1");
-
-        verify(cachePort, org.mockito.Mockito.times(2)).delete(MemberFacade.ITEM_CACHE_KEY_PREFIX + "m1");
     }
 }

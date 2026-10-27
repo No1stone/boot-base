@@ -1,5 +1,6 @@
 package com.origemite.lib.model.member.support.display;
 
+import com.origemite.lib.model.member.dto.MemberReq;
 import com.origemite.lib.model.member.dto.MemberRes;
 import com.origemite.lib.model.member.persistence.MemberPort;
 import lombok.RequiredArgsConstructor;
@@ -29,16 +30,17 @@ public class DisplayNameResolver {
     private final MemberPort memberPort;
 
     /**
-     * 회원 id → 표시명(loginId). Port findByIds 결과를 사용한다.
+     * 회원 id → 표시명(loginId). {@code findAllName} + {@code Filter.ids}(IN)만 사용한다. Item/연관은 타지 않는다.
      */
     public Map<String, String> findMemberNameMap(List<String> ids) {
         List<String> distinctIds = distinctIds(ids);
         if (distinctIds.isEmpty()) {
             return Collections.emptyMap();
         }
-        return memberPort.findByIds(distinctIds).stream()
+        MemberReq.Filter filter = MemberReq.Filter.builder().ids(distinctIds).build();
+        return memberPort.findAllName(filter).stream()
                 .collect(Collectors.toMap(
-                        MemberRes.Item::getId,
+                        MemberRes.Name::getId,
                         DisplayNameResolver::toMemberDisplayName,
                         (left, right) -> left
                 ));
@@ -116,7 +118,7 @@ public class DisplayNameResolver {
         applyResolvedName(items, createdByGetter, createdBySetter, findMemberNameMap(auditorIds));
     }
 
-    private static String toMemberDisplayName(MemberRes.Item member) {
+    private static String toMemberDisplayName(MemberRes.Name member) {
         if (StringUtils.hasText(member.getLoginId())) {
             return member.getLoginId().trim();
         }
