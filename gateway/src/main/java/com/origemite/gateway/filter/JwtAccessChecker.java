@@ -5,15 +5,19 @@ import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Set;
 
-@Service
+/**
+ * 게이트웨이 JWT 접근 검사.
+ * 구 {@code JwtService} 역할. 데이터 접근 Service가 아니다.
+ */
+@Component
 @RequiredArgsConstructor
 @Slf4j
-public class JwtService {
+public class JwtAccessChecker {
 
     private final JwtTokenAuthenticationProvider jwtTokenAuthenticationProvider;
 

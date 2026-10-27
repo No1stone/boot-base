@@ -9,6 +9,7 @@ dependencyManagement {
 }
 dependencies {
 
+    implementation project(':lib-common')
     implementation project(':lib-webflux')
     annotationProcessor project(":lib-webflux")
 
