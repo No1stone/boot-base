@@ -1,6 +1,5 @@
 package com.origemite.apiauth.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.origemite.lib.common.converter.StringToEmptyConverter;
 import com.origemite.lib.common.serializer.CustomLocalDateDeserializer;
 import com.origemite.lib.common.serializer.CustomLocalDateSerializer;
@@ -15,14 +14,15 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.standard.TemporalAccessorParser;
 import org.springframework.format.datetime.standard.TemporalAccessorPrinter;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,14 +33,17 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
+
     @Bean
-    public ObjectMapper objectMapper() {
-        return Jackson2ObjectMapperBuilder
-                .json()
-                .deserializerByType(LocalDate.class, new CustomLocalDateDeserializer())
-                .serializerByType(LocalDate.class, new CustomLocalDateSerializer())
-                .deserializerByType(LocalDateTime.class, new CustomLocalDateTimeDeserializer())
-                .serializerByType(LocalDateTime.class, new CustomLocalDateTimeSerializer()).build();
+    public JsonMapper jsonMapper() {
+        SimpleModule dateTimeModule = new SimpleModule();
+        dateTimeModule.addSerializer(LocalDate.class, new CustomLocalDateSerializer());
+        dateTimeModule.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
+        dateTimeModule.addSerializer(LocalDateTime.class, new CustomLocalDateTimeSerializer());
+        dateTimeModule.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
+        return JsonMapper.builder()
+                .addModule(dateTimeModule)
+                .build();
     }
 
     /*
@@ -51,12 +54,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-
-        for (HttpMessageConverter<?> converter : converters) {
-            if (converter instanceof MappingJackson2HttpMessageConverter jacksonConverter) {
-                jacksonConverter.setObjectMapper(objectMapper());
-            }
-        }
+        converters.removeIf(JacksonJsonHttpMessageConverter.class::isInstance);
+        converters.add(new JacksonJsonHttpMessageConverter(jsonMapper()));
     }
 
     /*
