@@ -1,7 +1,7 @@
 package com.origemite.gateway.conf.dto;
 
-import com.origemite.lib.webflux.exception.BizErrorException;
-import com.origemite.lib.webflux.web.ResponseType;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.web.ResponseType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
