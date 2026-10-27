@@ -73,7 +73,8 @@
 
 - [x] Boot **4.1.2** + Cloud **2025.1.4**. 활성 모듈 컴파일 통과.
 - [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
-- [ ] `WebConfig` Jackson2 / lib-webflux `Jackson2Json*` removal 경고 → 단계 4.
+- [x] `lib-webflux` settings exclude. gateway → `lib-common` (`BizErrorException`/`ResponseType`). 소스는 보관.
+- [ ] `WebConfig` Jackson2 removal 경고 → 단계 4.
 - [ ] 설정 키 `spring.cloud.gateway.*` → `server.webflux` 접두 확인 → 단계 5.
 
 #### 3.5 양립에 깨지는 변경 (단계 7 게이트)
