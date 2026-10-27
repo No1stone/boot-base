@@ -85,7 +85,16 @@
 - [x] YAML에 `spring.cloud.gateway.*` 없음. 라우트는 `ConfigFilter` `RouteLocator`(Java).
 - [x] Cloud Gateway 5.0 설정 접두는 `spring.cloud.gateway.server.webflux.*` (메타데이터 확인). 마이그레이션할 구 키 없음.
 - [x] 로깅 `org.springframework.cloud.gateway` 패키지 유지(클래스 패키지 동일).
-- 다음: 단계 6 auth↔gateway 통합(또는 기동 스모크).
+
+### 단계 6 진행
+
+- [x] `:api-auth:bootJar` · `:gateway:bootJar` 성공 (Boot 4.1.2).
+- [x] `api-auth` local 기동: Tomcat 3031까지 진입.
+  - 수정: spring-grpc 0.11 `OAuth2ClientAutoConfiguration` exclude (Boot3 `OAuth2ClientProperties` 참조).
+  - 환경 차단: Vault `localhost:8200` connection refused → `Started` 미도달.
+  - 경고: p6spy·grpc가 Boot3 autoconfigure 클래스명 참조 (`TypeNotPresentException`).
+- [ ] auth↔gateway HTTP 통합: Redis/MariaDB/Vault 로컬 준비 후 재시도.
+- 다음: 단계 7 3.5 교차 전략 합의.
 
 #### 3.5 양립에 깨지는 변경 (단계 7 게이트)
 
