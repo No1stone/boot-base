@@ -4,7 +4,9 @@ jar { enabled = true }
 dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    // Boot 4 기본은 Jackson 3. 이 모듈은 아직 Jackson 2 API를 쓰므로 명시한다.
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
     implementation 'org.springframework.data:spring-data-commons'
     compileOnly 'org.projectlombok:lombok'

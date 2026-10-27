@@ -1,0 +1,2 @@
+com.origemite.lib.message.saga.kafka.KafkaSagaConsumerConfiguration
+com.origemite.lib.message.saga.grpc.GrpcSagaPublishConfiguration

@@ -1,40 +1,37 @@
 package com.origemite.lib.common.util;
 
-import com.origemite.lib.common.exception.JsonParseException;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.origemite.lib.common.exception.JsonParseException;
 import com.origemite.lib.common.serializer.CustomLocalDateDeserializer;
 import com.origemite.lib.common.serializer.CustomLocalDateSerializer;
 import com.origemite.lib.common.serializer.CustomLocalDateTimeDeserializer;
 import com.origemite.lib.common.serializer.CustomLocalDateTimeSerializer;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-
 public class TransformUtils {
-    private final static ObjectMapper mapper;
+    private final static JsonMapper mapper;
 
-    static
-    {
-        mapper = new ObjectMapper();
+    static {
+        SimpleModule dateTimeModule = new SimpleModule();
+        dateTimeModule.addSerializer(LocalDate.class, new CustomLocalDateSerializer());
+        dateTimeModule.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
+        dateTimeModule.addSerializer(LocalDateTime.class, new CustomLocalDateTimeSerializer());
+        dateTimeModule.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
 
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDate.class, new CustomLocalDateSerializer());
-        javaTimeModule.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
-        javaTimeModule.addSerializer(LocalDateTime.class, new CustomLocalDateTimeSerializer());
-        javaTimeModule.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
-
-        mapper.registerModule(javaTimeModule);
-        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-
+        mapper = JsonMapper.builder()
+                .addModule(dateTimeModule)
+                .changeDefaultVisibility(vc -> vc.withVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY))
+                .build();
     }
 
     public static <T> T convert(Object formValue, Class<T> clazz) {
@@ -58,12 +55,12 @@ public class TransformUtils {
 
     public static String stringify(Object object, String defaultValue) {
         if (object == null) return defaultValue;
-        if( object instanceof String e) {
+        if (object instanceof String e) {
             return e;
-        };
+        }
         try {
             return mapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new JsonParseException("An error occurred while parsing the object.");
         }
     }
@@ -73,7 +70,7 @@ public class TransformUtils {
 
         try {
             return mapper.readValue(jsonString, clazz);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new JsonParseException("An error occurred while parsing the object.");
         }
     }
@@ -85,25 +82,25 @@ public class TransformUtils {
 
         try {
             return mapper.readValue(jsonString, clazz);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new JsonParseException("An error occurred while parsing the object.");
         }
     }
 
     public static boolean isValidJsonString(String jsonString) {
         try {
-            if(StringUtils.isEmpty(jsonString)) return false;
+            if (StringUtils.isEmpty(jsonString)) return false;
             mapper.readTree(jsonString);
             return true;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             return false;
         }
     }
 
     public static <T> String toString(T clazz) {
         try {
-           return new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(clazz);
-        }catch (JsonProcessingException e){
+            return mapper.writeValueAsString(clazz);
+        } catch (JacksonException e) {
             throw new JsonParseException("An error occurred while parsing the object.");
         }
     }

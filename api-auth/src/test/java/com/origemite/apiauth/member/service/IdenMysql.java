@@ -3,8 +3,8 @@ package com.origemite.apiauth.member.service;
 
 import com.origemite.apiauth.autoconfig.MysqlConfig;
 import com.origemite.lib.common.util.TransformUtils;
-import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
-import com.origemite.lib.model.auth.persistence.MemberIdentificationAdapter;
+import com.origemite.lib.model.member.dto.MemberIdentificationRes;
+import com.origemite.lib.model.member.persistence.MemberIdentificationAdapter;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+
+bootJar { enabled = false }
+jar { enabled = true }
+
+dependencies {
+    api 'org.springframework.boot:spring-boot-starter-data-redis'
+    // RedisSerializer.json() (Jackson 3 GenericJacksonJsonRedisSerializer)
+    api 'org.springframework.boot:spring-boot-starter-json'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

@@ -1,4 +1,8 @@
-bootJar { enabled = true }
+bootJar {
+	enabled = true
+	// 유틸 엔트리포인트가 여러 개라 Boot 4 assemble 시 main 지정 필요
+	mainClass = 'com.origemite.utilcodegen.UtilCodegenApplication'
+}
 jar { enabled = false }
 
 dependencies {
@@ -20,17 +24,14 @@ dependencies {
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	// 테스트
-//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.apache.commons:commons-collections4:4.0'
 
 }
 
-
 test {
-//	useJUnitPlatform()
-        exclude '**/*'
-
+	useJUnitPlatform()
+	failOnNoDiscoveredTests = false
 }
 
 

@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: event-saga
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:eventsaga;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    producer:
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3
+
+origemite:
+  message:
+    saga:
+      # 서버는 발행(Outbox)만. lib 컨슘/ gRPC 클라이언트 자동구성 끔
+      publish:
+        enabled: false
+      consume:
+        enabled: false
+      outbox:
+        batch-size: 50
+        relay-delay-ms: 2000
+
+server:
+  port: 8095
+
+spring.grpc.server.port: 9095
+
+logging:
+  level:
+    com.origemite.eventsaga: INFO

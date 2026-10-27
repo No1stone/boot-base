@@ -1,7 +1,7 @@
 package com.origemite.gateway.filter;
 
 import com.origemite.gateway.conf.JwkAtomic;
-import com.origemite.lib.common.cache.CachePort;
+import com.origemite.lib.cache.CachePort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

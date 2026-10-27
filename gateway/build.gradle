@@ -4,18 +4,19 @@ jar { enabled = false }
 
 dependencyManagement {
     imports {
-        mavenBom "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.18.1"
+        mavenBom "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.33.1"
     }
 }
 dependencies {
 
-    implementation project(':lib-common')
+    // 캐시는 lib-cache만 (Port + Redis Adapter). lib-common 없음.
+    implementation project(':lib-cache')
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+    // Cloud 2025.1+: 구 spring-cloud-starter-gateway 제거 → server-webflux
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway-server-webflux'
     implementation 'org.springframework.data:spring-data-commons'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.projectreactor:reactor-core'
@@ -25,7 +26,7 @@ dependencies {
     implementation "io.opentelemetry:opentelemetry-sdk"
     implementation "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter"
     implementation "io.opentelemetry:opentelemetry-exporter-otlp"
-    implementation "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.18.1-alpha"
+    implementation "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.33.1-alpha"
 
     // swagger
     //안나왓네

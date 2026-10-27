@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 
 @ImportAutoConfiguration({
-        org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration.class
+        org.springframework.boot.data.redis.autoconfigure.DataRedisAutoConfiguration.class
 })
 public class RedisAutoConfig {
 }

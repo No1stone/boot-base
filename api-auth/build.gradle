@@ -6,6 +6,8 @@ bootJar { enabled = true }
 jar { enabled = false }
 
 dependencies {
+    implementation project(':lib-cache')
+    implementation project(':lib-distributed-lock')
     implementation project(':lib-common')
     implementation project(':lib-model')
     implementation project(':lib-legacy')
@@ -22,8 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.redisson:redisson:3.45.1'
+    // redis 캐시=lib-cache(Lettuce), 분산락=lib-distributed-lock(Redisson)
 // 부트스트랩 vault와.. 약간의 충돌있어서 비활성화
 //    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 //    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
@@ -58,7 +59,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
 
     // Swagger Springdoc
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.2.0'
 
     // Model Mapper
     implementation 'org.modelmapper:modelmapper:3.2.0'
@@ -73,7 +74,7 @@ dependencies {
     annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 
     // JPA Logging
-    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:2.0.1'
 
     // AWS 연동 추가
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'

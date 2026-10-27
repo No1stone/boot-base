@@ -1,0 +1,16 @@
+apply plugin: 'java-library'
+
+bootJar { enabled = false }
+jar { enabled = true }
+
+dependencies {
+    api 'org.redisson:redisson:3.45.1'
+    implementation 'org.springframework:spring-context'
+    // RedissonConfig ConditionalOn*
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

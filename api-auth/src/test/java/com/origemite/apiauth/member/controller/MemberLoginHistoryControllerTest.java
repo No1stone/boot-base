@@ -1,7 +1,7 @@
 package com.origemite.apiauth.member.controller;
 
-import com.origemite.lib.model.auth.dto.MemberLoginHistoryReq;
-import com.origemite.lib.model.auth.dto.MemberLoginHistoryRes;
+import com.origemite.lib.model.member.dto.MemberLoginHistoryReq;
+import com.origemite.lib.model.member.dto.MemberLoginHistoryRes;
 import com.origemite.apiauth.member.facade.MemberLoginHistoryFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

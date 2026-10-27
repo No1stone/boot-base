@@ -1,11 +1,7 @@
 package com.origemite.gateway.conf.dto;
 
-import com.origemite.lib.common.exception.BizErrorException;
-import com.origemite.lib.common.web.ResponseType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.origemite.gateway.support.InvalidAccessTokenException;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.KeyFactory;
@@ -58,7 +54,7 @@ public class JwkMeta {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
            return rsaPublicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
         } catch (Exception e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new InvalidAccessTokenException(e);
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.origemite.apiauth.support.security.provider;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import tools.jackson.core.type.TypeReference;
 import com.origemite.apiauth.config.prop.JwtTokenProp;
 import com.origemite.apiauth.support.token.JwtSigningKeySync;
-import com.origemite.lib.common.cache.CachePort;
+import com.origemite.lib.cache.CachePort;
 import com.origemite.lib.common.exception.BizErrorException;
 import com.origemite.lib.common.secruity.CustomUser;
 import com.origemite.lib.common.token.TokenPort;

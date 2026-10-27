@@ -1,9 +1,13 @@
 rootProject.name = 'boot-base'
+include 'lib-cache'
+include 'lib-distributed-lock'
+include 'lib-message-routing'
+include 'lib-message-saga'
 include 'lib-common'
 include 'lib-model'
 include 'lib-proto'
 include 'lib-legacy'
-//include 'lib-webflux' // GraphQL로 대체 예정. gateway는 lib-common만 사용
+//include 'lib-webflux' // GraphQL로 대체 예정
 include 'api-auth'
 // Eureka removed: service discovery uses Kubernetes DNS
 //include 'api-eureka'
@@ -12,8 +16,8 @@ include 'api-auth'
 //include 'gw-portal'
 include 'util-codegen'
 include 'gateway'
-//include 'graphql-dgs'
+include 'graphql-dgs'
 // Kotlin modules belong on kotlin/boot-4.1
 //include 'graphql-dgs-kt'
-//include 'event-saga'
+include 'event-saga'
 //include 'batch-realtime'

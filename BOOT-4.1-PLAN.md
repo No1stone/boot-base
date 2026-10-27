@@ -1,0 +1,134 @@
+# Boot 4.1 진행 방안
+
+> 브랜치: `java/boot-4.1` (작업) · `java/boot-3.5` (LTS, 삭제하지 않음)  
+> 목표: `java/boot-4.1`에서 Boot 4.1 기동·단위 테스트 통과. **3.5는 별도 LTS 브랜치**로 유지(동일 소스 양립 포기).
+
+## 전제
+
+- Spring 의존성 표면은 크게 안 바꾸되, **3.x에서 deprecated → 4.0에서 제거**된 API를 먼저 걷는다.
+- 공식 가이드상 4.0은 deprecation 제거 외에 Jackson 3, starter/모듈 분할, 일부 기능 제거도 있다.  
+  양립을 깨는 변경은 단계마다 따로 기록하고, 가능하면 공통 API만 쓴다.
+- 1차 범위: `lib-common` · `lib-model` · `api-auth` · `gateway`  
+  exclude(saga/batch/graphql)는 이후.
+
+## 순서
+
+| 단계 | 내용 | 통과 기준 | 비고 |
+|------|------|-----------|------|
+| 0 | 준비·호환 목록 | 이 문서 + 마이그레이션 노트 링크 정리 | 버전 bump 없음 |
+| 1 | **3.5 유지** 상태에서 deprecated API·설정 정리 | `lib-common`/`lib-model`/`api-auth`/`gateway` 컴파일·관련 단위 테스트 | 3.5에서도 동작해야 함 |
+| 2 | 자동생성 검증 | `@BizEnum` clean 재생성, QueryDSL Q타입, 컴파일 | Processor·생성물 |
+| 3 | Boot **4.1** BOM·플러그인만 올리기 | 동일 모듈 컴파일 | 깨지면 항목별로 기록 |
+| 4 | 4.x 전용 깨짐 대응 (Jackson/starter/Cloud 등) | api-auth 단위 테스트·기동 | 양립 불가 시 분기 전략 합의 |
+| 5 | gateway | 기동·CachePort·필터 | |
+| 6 | auth↔gateway 통합 | 대표 시나리오 | |
+| 7 | 3.5 교차 확인 | 같은 커밋/패치를 `java/boot-3.5` BOM으로 빌드 | **필수 게이트** |
+| 8 | exclude 모듈 | 인벤토리·컴파일 가능 모듈 편입 | Kotlin은 `kotlin/boot-4.1` |
+
+## 양립 규칙
+
+- 4.1에서만 되는 API를 기본 경로에 넣지 않는다. 필요하면 합의 후 기록.
+- 설정 키 rename은 양쪽에서 유효한 쪽을 우선하고, migrator는 임시만.
+- 단계 끝마다 커밋. 한 단계 실패 시 그 단계만 되돌린다.
+
+## 참고
+
+- [Spring Boot 4.0 Migration Guide](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide)
+- [Spring Boot 4.1 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.1-Release-Notes)
+
+## 단계 0 결과 (위험 목록)
+
+스캔일: 2026-10-27. Boot는 아직 **3.5.16**. 코드 변경 없음.
+
+| 우선 | 항목 | 위치 | 3.5 양립 메모 |
+|------|------|------|----------------|
+| 1 | `spring-test` **6.1.10 고정** | `lib-common/build.gradle` | BOM과 어긋남. 단계 1에서 핀 제거·BOM 위임 후보 |
+| 2 | Jackson2 API 직접 사용 | `WebConfig`, `TransformUtils`, serializers, RedisConfig, Feign | 4.x Jackson 3 영향. 단계 1에서는 **동작 유지**, 4.1 bump 후 대응 |
+| 3 | `spring-boot-starter-web` | lib-common, lib-model, api-auth | 4.x에서 `webmvc` 이름 전환 가능. bump 단계 |
+| 4 | Security | `SecurityFilterChain` 이미 사용 | 구 `WebSecurityConfigurerAdapter` 없음. 양호 |
+| 5 | 테스트 | 대부분 Mockito 단위 테스트 | `@MockBean` 거의 없음. 양호 |
+| 6 | 자동생성 | `BizEnumProcessor`, QueryDSL | 단계 2에서 clean 재생성 |
+| 7 | Cloud / Vault / gRPC / Redisson | api-auth, gateway | 단계 3~5에서 버전 매트릭스 |
+
+### 단계 1에서 할 일 (다음)
+
+1. `lib-common`의 `spring-test` 버전 핀 제거(또는 test 범위로 정리) 후 컴파일·관련 테스트.
+2. 컴파일 경고에서 잡히는 3.x deprecated API만 최소 수정(양립 깨는 리팩터 금지).
+3. Jackson/starter rename은 **아직 하지 않음**.
+
+### 단계 1 진행
+
+- [x] `spring-test` 6.1.10 핀·main 의존 제거. `FileUtils`가 `MockMultipartFile` 대신 자체 `BytesMultipartFile` 사용.
+- [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
+- [x] 기타 3.x deprecated 경고: 단계 1에서는 추가 강제 수정 없음(Jackson/starter는 bump 후).
+- 참고: `GatewayApplicationTests` contextLoads는 datasource 없어 실패(기존). 이번 범위 밖.
+
+### 단계 2 진행
+
+- [x] `clean` 후 `@BizEnum` 재생성: `_En*` 35개, QueryDSL `QMember*` 6개 확인. `jakarta.persistence.Converter` 유지.
+- [x] `:lib-model:compileJava` · `:api-auth:compileJava` · lib-common/api-auth 테스트 통과.
+- [x] `BizEnumProcessor` `SupportedSourceVersion` RELEASE_17 고정 제거 → `latestSupported()` (Java 25 경고 해소, 3.5 양립).
+
+### 단계 3 진행
+
+- [x] Boot **4.1.2** + Cloud **2025.1.4**. 활성 모듈 컴파일 통과.
+- [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
+- [x] `lib-webflux` settings exclude. gateway → `lib-common` (`BizErrorException`/`ResponseType`). 소스는 보관.
+### 단계 4 진행
+
+- [x] Jackson 3: `ValueSerializer`/`ValueDeserializer`, `TransformUtils`→`JsonMapper`, `WebConfig`→`JacksonJsonHttpMessageConverter`.
+- [x] `:lib-common`/`api-auth`/`gateway` 컴파일·단위 테스트 통과.
+- 비고: `com.fasterxml.jackson.annotation.*`는 유지(Jackson 3도 동일). 3.5 교차는 Jackson 2 API와 비양립 → 단계 7.
+
+### 단계 5 진행
+
+- [x] YAML에 `spring.cloud.gateway.*` 없음. 라우트는 `ConfigFilter` `RouteLocator`(Java).
+- [x] Cloud Gateway 5.0 설정 접두는 `spring.cloud.gateway.server.webflux.*` (메타데이터 확인). 마이그레이션할 구 키 없음.
+- [x] 로깅 `org.springframework.cloud.gateway` 패키지 유지(클래스 패키지 동일).
+
+### 단계 6 진행
+
+- [x] `:api-auth:bootJar` · `:gateway:bootJar` 성공 (Boot 4.1.2).
+- [x] `api-auth` local `Started` (profile=local). HTTP: `/auth/actuator/health` UP, swagger·api-docs 200.
+  - deps: p6spy **2.0.1**, springdoc **3.2.0**, spring-grpc BOM **1.0.1** (0.11 OAuth2 exclude 제거).
+  - 로컬 스모크: Vault(:8200 transit `auth-sig`)+MariaDB(:3306)+Redis(:6379).
+- [x] gateway local `Started` (Netty:2031). HTTP: `/actuator/health` UP.
+  - deps: OTEL instrumentation **2.33.1**.
+  - 설정: `web-application-type=reactive`, JDBC/JPA AC exclude, local에서 Rabbit/bus/config off.
+  - JWT 필터: AntPathMatcher + Authorization null 가드.
+- [x] auth↔gateway: `GET /auth/v3/api-docs` via gateway → 200.
+
+### 단계 7 진행
+
+- [x] `java/boot-3.5` LTS: `:lib-common`/`lib-model`/`api-auth`/`gateway` 컴파일 통과. `:lib-common:test` 통과.
+- [x] 교차: `java/boot-4.1` HEAD에 Boot **3.5.16** + Cloud **2025.0.0**만 적용 → `:lib-common:compileJava` **실패**(Jackson 3 `tools.jackson.*` 미존재). 이하 패키지·starter 차이도 동일 소스 양립 불가.
+- [x] 전략 확정: **브랜치 분리**
+  - `java/boot-3.5` = LTS (Boot 3.5.16 / Cloud 2025.0.x). 삭제·강제 머지 금지.
+  - `java/boot-4.1` = 업그레이드 라인 (Boot 4.1.2 / Cloud 2025.1.x).
+  - 공통 개선(예: lib-webflux 제외, 테스트 매처)만 체리픽. Jackson·Boot 패키지·Gateway starter는 브랜치별 유지.
+- [x] 3.5에 Identification `any(Create.class)` 체리픽(테스트 컴파일 복구).
+- 다음: 단계 8 exclude 모듈.
+
+#### 3.5 양립에 깨지는 변경 (확정)
+
+| 항목 | 3.5 | 4.1 |
+|------|-----|-----|
+| `EntityManagerFactoryBuilder` | `boot.orm.jpa` | `boot.jpa` |
+| `SecurityAutoConfiguration` | `boot.autoconfigure.security.servlet` | `boot.security.autoconfigure` |
+| JDBC/JPA/Redis 테스트 Import | `boot.autoconfigure.*` | `boot.jdbc` / `boot.hibernate` / `boot.data.redis` |
+| Gateway starter | `spring-cloud-starter-gateway` | `…-gateway-server-webflux` |
+| Cloud BOM | `2025.0.x` | `2025.1.x` |
+| Jackson | 2 (`ObjectMapper`) | 3 (`JsonMapper` / `tools.jackson`) |
+| spring-grpc | 0.11.x | **1.0.1** (Boot4 호환) |
+
+→ **동일 소스 동시 컴파일 불가**. 호환 래퍼는 비용 대비 이득 없어 채택하지 않음.
+
+### 단계 8 진행
+
+- [x] 활성 확인: `:util-codegen` · `:lib-legacy` · `:graphql-dgs` 컴파일 통과 (Boot 4.1).
+- [x] `graphql-dgs` settings include. `SecurityAutoConfiguration` exclude 제거(보안 스타터 없음·Boot4 패키지 불필요).
+- [x] Kotlin 모듈(`graphql-dgs-kt` · `event-saga` · `batch-realtime`): `java/boot-4.1`에서 exclude 유지 → **`kotlin/boot-4.1`** 담당.
+  - 프로브: `event-saga` compileKotlin 실패(Kotlin classpath snapshot / 구 `spring-grpc-spring-boot-starter` 좌표).
+- [x] 기타 exclude 유지: `lib-webflux` · `api-eureka` · `batch` · `batch-statistics` · `gw-portal`.
+- Boot 4.1 1차 범위(Java 핵심 + graphql-dgs) 완료. 푸시는 별도 승인.
+

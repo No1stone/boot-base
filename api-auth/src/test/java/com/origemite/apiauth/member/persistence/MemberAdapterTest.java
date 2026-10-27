@@ -2,11 +2,11 @@ package com.origemite.apiauth.member.persistence;
 
 import com.origemite.lib.common.exception.BizErrorException;
 import com.origemite.lib.common.web.ResponseType;
-import com.origemite.lib.model.auth.dto.MemberReq;
-import com.origemite.lib.model.auth.dto.MemberRes;
-import com.origemite.lib.model.auth.entity.Member;
-import com.origemite.lib.model.auth.persistence.MemberAdapter;
-import com.origemite.lib.model.auth.repository.MemberRepository;
+import com.origemite.lib.model.member.dto.MemberReq;
+import com.origemite.lib.model.member.dto.MemberRes;
+import com.origemite.lib.model.member.entity.Member;
+import com.origemite.lib.model.member.persistence.MemberAdapter;
+import com.origemite.lib.model.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

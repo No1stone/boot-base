@@ -1,9 +1,8 @@
 package com.origemite.gateway.filter;
 
 import com.origemite.gateway.conf.JwkAtomic;
-import com.origemite.lib.common.cache.CachePort;
-import com.origemite.lib.common.exception.BizErrorException;
-import com.origemite.lib.common.web.ResponseType;
+import com.origemite.gateway.support.InvalidAccessTokenException;
+import com.origemite.lib.cache.CachePort;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -31,7 +30,7 @@ public class JwtTokenAuthenticationProvider {
 
     public boolean validateToken(String token) {
         if (token == null) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new InvalidAccessTokenException();
         }
         parse(token);
         return true;
@@ -50,7 +49,7 @@ public class JwtTokenAuthenticationProvider {
                     .build()
                     .parseClaimsJws(token);
         } catch (Exception e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new InvalidAccessTokenException(e);
         }
     }
 
@@ -63,7 +62,7 @@ public class JwtTokenAuthenticationProvider {
                     .getBody();
         } catch (SecurityException | IllegalArgumentException | MalformedJwtException | UnsupportedJwtException |
                  ExpiredJwtException e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new InvalidAccessTokenException(e);
         }
     }
 

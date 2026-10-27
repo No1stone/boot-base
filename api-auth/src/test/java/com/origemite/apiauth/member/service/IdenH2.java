@@ -3,9 +3,9 @@ package com.origemite.apiauth.member.service;
 
 import com.origemite.apiauth.autoconfig.H2Config;
 import com.origemite.lib.common.util.TransformUtils;
-import com.origemite.lib.model.auth.dto.MemberIdentificationReq;
-import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
-import com.origemite.lib.model.auth.persistence.MemberIdentificationAdapter;
+import com.origemite.lib.model.member.dto.MemberIdentificationReq;
+import com.origemite.lib.model.member.dto.MemberIdentificationRes;
+import com.origemite.lib.model.member.persistence.MemberIdentificationAdapter;
 import com.origemite.lib.model.enums.common.EnMobileCarrierCode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;

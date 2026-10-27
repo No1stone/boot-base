@@ -2,6 +2,15 @@
 spring:
   application:
     name: gateway
+  cloud:
+    bus:
+      enabled: false
+    config:
+      enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.amqp.autoconfigure.RabbitAutoConfiguration
+  # JWT/JWK 캐시용 Redis (RDB 아님)
   db:
     redis:
       #      host: 43.202.195.185
@@ -12,7 +21,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-    host: 43.202.195.185
+    host: 127.0.0.1
     listener:
       simple:
         prefetch: 5
@@ -22,6 +31,9 @@ app:
     api-auth: http://localhost:3031
 
 management:
+  health:
+    rabbit:
+      enabled: false
   tracing:
     enabled: true
   otlp:
