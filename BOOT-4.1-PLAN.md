@@ -74,13 +74,18 @@
 - [x] Boot **4.1.2** + Cloud **2025.1.4**. 활성 모듈 컴파일 통과.
 - [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
 - [x] `lib-webflux` settings exclude. gateway → `lib-common` (`BizErrorException`/`ResponseType`). 소스는 보관.
-- [ ] 설정 키 `spring.cloud.gateway.*` → `server.webflux` 접두 확인 → 단계 5.
-
 ### 단계 4 진행
 
 - [x] Jackson 3: `ValueSerializer`/`ValueDeserializer`, `TransformUtils`→`JsonMapper`, `WebConfig`→`JacksonJsonHttpMessageConverter`.
 - [x] `:lib-common`/`api-auth`/`gateway` 컴파일·단위 테스트 통과.
 - 비고: `com.fasterxml.jackson.annotation.*`는 유지(Jackson 3도 동일). 3.5 교차는 Jackson 2 API와 비양립 → 단계 7.
+
+### 단계 5 진행
+
+- [x] YAML에 `spring.cloud.gateway.*` 없음. 라우트는 `ConfigFilter` `RouteLocator`(Java).
+- [x] Cloud Gateway 5.0 설정 접두는 `spring.cloud.gateway.server.webflux.*` (메타데이터 확인). 마이그레이션할 구 키 없음.
+- [x] 로깅 `org.springframework.cloud.gateway` 패키지 유지(클래스 패키지 동일).
+- 다음: 단계 6 auth↔gateway 통합(또는 기동 스모크).
 
 #### 3.5 양립에 깨지는 변경 (단계 7 게이트)
 

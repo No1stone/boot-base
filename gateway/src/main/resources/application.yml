@@ -6,6 +6,7 @@ app:
   upstream:
     api-auth: http://api-auth:3031
 
+# 라우트는 ConfigFilter(RouteLocator). YAML spring.cloud.gateway.server.webflux.* 미사용.
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
