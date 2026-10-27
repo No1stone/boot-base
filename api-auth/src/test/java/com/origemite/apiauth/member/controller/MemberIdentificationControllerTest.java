@@ -61,7 +61,7 @@ class MemberIdentificationControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberIdentificationFacade).save(any());
+        verify(memberIdentificationFacade).save(any(MemberIdentificationReq.Create.class));
     }
 
     @Test
