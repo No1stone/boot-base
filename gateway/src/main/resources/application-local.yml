@@ -2,6 +2,19 @@
 spring:
   application:
     name: gateway
+  cloud:
+    bus:
+      enabled: false
+    config:
+      enabled: false
+  # profile 값이 base exclude를 덮어쓰므로 JDBC 제외를 함께 유지
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.jdbc.autoconfigure.JdbcTemplateAutoConfiguration
+      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
+      - org.springframework.boot.amqp.autoconfigure.RabbitAutoConfiguration
   db:
     redis:
       #      host: 43.202.195.185
@@ -12,7 +25,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-    host: 43.202.195.185
+    host: 127.0.0.1
     listener:
       simple:
         prefetch: 5
@@ -22,6 +35,9 @@ app:
     api-auth: http://localhost:3031
 
 management:
+  health:
+    rabbit:
+      enabled: false
   tracing:
     enabled: true
   otlp:
