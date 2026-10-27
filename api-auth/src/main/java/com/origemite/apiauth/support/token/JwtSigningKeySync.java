@@ -1,6 +1,6 @@
 package com.origemite.apiauth.support.token;
 
-import com.origemite.lib.common.cache.CachePort;
+import com.origemite.lib.cache.CachePort;
 import com.origemite.lib.common.token.TokenPort;
 import com.origemite.lib.common.token.TokenSigningKeys;
 import com.origemite.lib.model.enums.auth.EnVaultType;
