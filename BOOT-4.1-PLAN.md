@@ -68,3 +68,22 @@
 - [x] `clean` 후 `@BizEnum` 재생성: `_En*` 35개, QueryDSL `QMember*` 6개 확인. `jakarta.persistence.Converter` 유지.
 - [x] `:lib-model:compileJava` · `:api-auth:compileJava` · lib-common/api-auth 테스트 통과.
 - [x] `BizEnumProcessor` `SupportedSourceVersion` RELEASE_17 고정 제거 → `latestSupported()` (Java 25 경고 해소, 3.5 양립).
+
+### 단계 3 진행
+
+- [x] Boot **4.1.2** + Cloud **2025.1.4**. 활성 모듈 컴파일 통과.
+- [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
+- [ ] `WebConfig` Jackson2 / lib-webflux `Jackson2Json*` removal 경고 → 단계 4.
+- [ ] 설정 키 `spring.cloud.gateway.*` → `server.webflux` 접두 확인 → 단계 5.
+
+#### 3.5 양립에 깨지는 변경 (단계 7 게이트)
+
+| 항목 | 3.5 | 4.1 |
+|------|-----|-----|
+| `EntityManagerFactoryBuilder` | `boot.orm.jpa` | `boot.jpa` |
+| `SecurityAutoConfiguration` | `boot.autoconfigure.security.servlet` | `boot.security.autoconfigure` |
+| JDBC/JPA/Redis 테스트 Import | `boot.autoconfigure.*` | `boot.jdbc` / `boot.hibernate` / `boot.data.redis` |
+| Gateway starter | `spring-cloud-starter-gateway` | `…-gateway-server-webflux` |
+| Cloud BOM | `2025.0.x` | `2025.1.x` |
+
+→ 같은 소스로 3.5·4.1 동시 컴파일은 **패키지 import만으로 불가**. 단계 7에서 브랜치별 유지 또는 호환 래퍼 합의 필요.
