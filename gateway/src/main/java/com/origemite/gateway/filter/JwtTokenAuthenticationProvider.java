@@ -2,8 +2,8 @@ package com.origemite.gateway.filter;
 
 import com.origemite.gateway.conf.JwkAtomic;
 import com.origemite.lib.common.cache.CachePort;
-import com.origemite.lib.webflux.exception.BizErrorException;
-import com.origemite.lib.webflux.web.ResponseType;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.web.ResponseType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
