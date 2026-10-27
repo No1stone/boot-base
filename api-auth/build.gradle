@@ -6,6 +6,7 @@ bootJar { enabled = true }
 jar { enabled = false }
 
 dependencies {
+    implementation project(':lib-cache')
     implementation project(':lib-common')
     implementation project(':lib-model')
     implementation project(':lib-legacy')
