@@ -23,7 +23,7 @@
 | 5 | gateway | 기동·CachePort·필터 | |
 | 6 | auth↔gateway 통합 | 대표 시나리오 | |
 | 7 | 3.5 교차 확인 | 같은 커밋/패치를 `java/boot-3.5` BOM으로 빌드 | **필수 게이트** |
-| 8 | exclude 모듈 | 추후 | |
+| 8 | exclude 모듈 | 인벤토리·컴파일 가능 모듈 편입 | Kotlin은 `kotlin/boot-4.1` |
 
 ## 양립 규칙
 
@@ -107,7 +107,7 @@
   - `java/boot-4.1` = 업그레이드 라인 (Boot 4.1.2 / Cloud 2025.1.x).
   - 공통 개선(예: lib-webflux 제외, 테스트 매처)만 체리픽. Jackson·Boot 패키지·Gateway starter는 브랜치별 유지.
 - [x] 3.5에 Identification `any(Create.class)` 체리픽(테스트 컴파일 복구).
-- 다음: 단계 8 exclude 모듈(추후) · 4.1 푸시는 별도 승인 · gateway↔auth HTTP 통합은 추후.
+- 다음: 단계 8 exclude 모듈.
 
 #### 3.5 양립에 깨지는 변경 (확정)
 
@@ -122,3 +122,13 @@
 | spring-grpc | 0.11.x | **1.0.1** (Boot4 호환) |
 
 → **동일 소스 동시 컴파일 불가**. 호환 래퍼는 비용 대비 이득 없어 채택하지 않음.
+
+### 단계 8 진행
+
+- [x] 활성 확인: `:util-codegen` · `:lib-legacy` · `:graphql-dgs` 컴파일 통과 (Boot 4.1).
+- [x] `graphql-dgs` settings include. `SecurityAutoConfiguration` exclude 제거(보안 스타터 없음·Boot4 패키지 불필요).
+- [x] Kotlin 모듈(`graphql-dgs-kt` · `event-saga` · `batch-realtime`): `java/boot-4.1`에서 exclude 유지 → **`kotlin/boot-4.1`** 담당.
+  - 프로브: `event-saga` compileKotlin 실패(Kotlin classpath snapshot / 구 `spring-grpc-spring-boot-starter` 좌표).
+- [x] 기타 exclude 유지: `lib-webflux` · `api-eureka` · `batch` · `batch-statistics` · `gw-portal`.
+- Boot 4.1 1차 범위(Java 핵심 + graphql-dgs) 완료. 푸시는 별도 승인.
+
