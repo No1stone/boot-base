@@ -1,14 +1,10 @@
 package com.origemite.apiauth.auth;
 
-
-import com.origemite.apiauth.auth.service.VaultService;
-import com.origemite.lib.model.auth.VaultKey;
-import com.origemite.lib.model.enums.auth.EnVaultType;
+import com.origemite.apiauth.support.token.JwtSigningKeySync;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,13 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/vault")
 public class VaultController {
 
-    private final VaultService vaultService;
+    private final JwtSigningKeySync jwtSigningKeySync;
 
     //Jenkins Pipeline으로 vault를 리레쉬 갱신하는 api
     @GetMapping("/member-refresh-transit")
-    public ResponseEntity valutTest() {
-        vaultService.initVaultForRedis();
+    public ResponseEntity<Void> refreshTransit() {
+        jwtSigningKeySync.syncAuthJwtKeys();
         return ResponseEntity.ok().build();
     }
-
 }
