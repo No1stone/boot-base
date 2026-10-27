@@ -10,13 +10,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
 import javax.security.sasl.AuthenticationException;
-import java.util.Date;
 
 @Component
 @Slf4j
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
+
+    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
     private final JwtTokenAuthenticationProvider jwtTokenAuthenticationProvider;
 
@@ -43,30 +45,25 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     }
 
     public boolean isJwtValid(ServerHttpRequest request) throws AuthenticationException {
-        String path = request.getPath().toString();
+        String path = request.getPath().pathWithinApplication().value();
         boolean isAllowPath = AuthServerAllowPath.ALLOWED_PATHS.stream()
-                .anyMatch(allowedPath ->
-                path.matches(allowedPath.replaceAll("\\*\\*", ".*"))
-        );
+                .anyMatch(allowedPath -> PATH_MATCHER.match(allowedPath, path));
 
         if (isAllowPath) {
-            return isAllowPath;
-        }
-        else {
-            String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-            String token = authHeader.substring(7).trim();
-
-
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                return false;
-            }
-            boolean accessExist = jwtTokenAuthenticationProvider.verifyAccessToken(token);
-            if(!accessExist){
-                log.info("안타야함");
-                var claim = jwtTokenAuthenticationProvider.rsaJwtParse(token);
-            }
             return true;
         }
+
+        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return false;
+        }
+        String token = authHeader.substring(7).trim();
+        boolean accessExist = jwtTokenAuthenticationProvider.verifyAccessToken(token);
+        if (!accessExist) {
+            log.info("안타야함");
+            jwtTokenAuthenticationProvider.rsaJwtParse(token);
+        }
+        return true;
     }
 
     public static class Config {
