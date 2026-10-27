@@ -1,6 +1,5 @@
 package com.origemite.gateway;
 
-//import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         "com.origemite.lib.common.cache",
 }
 )
-//@OpenAPIDefinition
 public class GatewayApplication {
 
     public static void main(String[] args) {
