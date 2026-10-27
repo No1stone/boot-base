@@ -1,5 +1,6 @@
 package com.origemite.lib.common.cache;
 
+import com.origemite.lib.cache.CachePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
