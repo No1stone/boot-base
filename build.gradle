@@ -53,6 +53,8 @@ subprojects {
 
     test {
         useJUnitPlatform()
+        // 테스트 소스는 있으나 실행 대상 메서드가 없는 모듈(예: lib-legacy) 허용
+        failOnNoDiscoveredTests = false
 //        exclude '**/*'
 
     }
