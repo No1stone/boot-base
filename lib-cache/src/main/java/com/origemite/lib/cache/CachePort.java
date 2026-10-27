@@ -4,7 +4,7 @@ import java.time.Duration;
 
 /**
  * 캐시 능력 계약.
- * Redis / Caffeine 등 Provider는 Adapter가 고른다.
+ * Redis 구현은 {@link com.origemite.lib.cache.redis.RedisCacheAdapter}.
  */
 public interface CachePort {
 

@@ -9,7 +9,7 @@ dependencyManagement {
 }
 dependencies {
 
-    // 캐시 계약만. Redis 어댑터는 gateway 모듈에 둔다.
+    // CachePort + RedisCacheAdapter (lib-common 아님)
     implementation project(':lib-cache')
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'

@@ -4,5 +4,10 @@ bootJar { enabled = false }
 jar { enabled = true }
 
 dependencies {
-    // 포트 계약만. Spring/Redis 구현은 앱·어댑터 모듈 책임.
+    api 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

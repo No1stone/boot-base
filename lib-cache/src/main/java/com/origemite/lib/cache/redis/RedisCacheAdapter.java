@@ -1,4 +1,4 @@
-package com.origemite.gateway.cache;
+package com.origemite.lib.cache.redis;
 
 import com.origemite.lib.cache.CachePort;
 import lombok.RequiredArgsConstructor;
