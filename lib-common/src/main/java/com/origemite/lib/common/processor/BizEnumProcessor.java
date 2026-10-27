@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-@SupportedSourceVersion(SourceVersion.RELEASE_17)
 @AutoService(Processor.class)
 public class BizEnumProcessor extends AbstractProcessor {
 
@@ -22,6 +21,11 @@ public class BizEnumProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         return Set.of(BizEnum.class.getName());
+    }
+
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
     }
 
     // 해당 애노테이션으로 작업을 처리하는 메소드
