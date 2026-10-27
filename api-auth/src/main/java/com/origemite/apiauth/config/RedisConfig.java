@@ -1,29 +1,23 @@
 package com.origemite.apiauth.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.CacheKeyPrefix;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.time.Duration;
-
+/**
+ * Redis 연결. {@code @Cacheable} CacheManager는 lib-cache {@code CachePortCacheConfiguration}이 제공한다.
+ * 값은 JSON으로 통일한다. CachePort 경로는 StringRedisTemplate을 쓴다.
+ */
 @Configuration
-@EnableCaching
 @EnableRedisRepositories("com.origemite.apiauth.**")
 public class RedisConfig {
-
 
     @Value("${spring.db.redis.host}")
     private String host;
@@ -33,50 +27,25 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        LettuceConnectionFactory redisConnectionFactory = new LettuceConnectionFactory(host, port);
-        return redisConnectionFactory;
+        return new LettuceConnectionFactory(host, port);
     }
 
     @Bean
-    public CacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory){
-
-        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-                .disableCachingNullValues()
-                .entryTtl(Duration.ofSeconds(60*60*24*7))
-                .computePrefixWith(CacheKeyPrefix.simple())
-                .serializeKeysWith(
-                        RedisSerializationContext.SerializationPair
-                                .fromSerializer(new StringRedisSerializer()))
-
-                .serializeValuesWith(RedisSerializationContext
-                        .SerializationPair
-                        .fromSerializer(RedisSerializer.java()));
-
-        // 캐시키 별 default 유효시간 설정
-//        Map<String, RedisCacheConfiguration> cacheConfiguration = new HashMap<>();
-//        cacheConfiguration.put("jusoBuild",RedisCacheConfiguration.defaultCacheConfig()
-//                .entryTtl(Duration.ofSeconds(60*60*24*7)));
-
-        return RedisCacheManager.RedisCacheManagerBuilder
-                .fromConnectionFactory(redisConnectionFactory)
-                .cacheDefaults(configuration)
-//                .withInitialCacheConfigurations(cacheConfiguration)
-                .build();
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        return new StringRedisTemplate(redisConnectionFactory);
     }
 
-
     @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(redisConnectionFactory());
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new JdkSerializationRedisSerializer());
-        template.setValueSerializer(new JdkSerializationRedisSerializer());
-//        template.setEnableTransactionSupport(true);
+        template.setConnectionFactory(redisConnectionFactory);
+        StringRedisSerializer keySerializer = new StringRedisSerializer();
+        RedisSerializer<Object> valueSerializer = RedisSerializer.json();
+        template.setKeySerializer(keySerializer);
+        template.setHashKeySerializer(keySerializer);
+        template.setValueSerializer(valueSerializer);
+        template.setHashValueSerializer(valueSerializer);
         template.afterPropertiesSet();
         return template;
     }
-
-
 }
