@@ -2,7 +2,7 @@ package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.model.auth.dto.MemberOutReq;
 import com.origemite.lib.model.auth.dto.MemberOutRes;
-import com.origemite.lib.model.auth.service.MemberOutService;
+import com.origemite.apiauth.member.facade.MemberOutFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +30,7 @@ class MemberOutControllerTest {
     MemberOutController memberOutController;
 
     @Mock
-    MemberOutService memberOutService;
+    MemberOutFacade memberOutFacade;
 
     @Test
     @DisplayName("MemberOut 목록 조회 성공")
@@ -39,14 +39,14 @@ class MemberOutControllerTest {
         MemberOutReq.Filter filter = sampleFilter();
         Pageable pageable = PageRequest.of(0, 10);
         Page<MemberOutRes.Item> page = new PageImpl<>(List.of(sampleItem()));
-        given(memberOutService.search(any(), any())).willReturn(page);
+        given(memberOutFacade.search(any(), any())).willReturn(page);
 
         // when
         var result = memberOutController.search(filter, pageable);
 
         // then
         assertNotNull(result);
-        verify(memberOutService).search(any(), any());
+        verify(memberOutFacade).search(any(), any());
     }
 
     @Test
@@ -55,14 +55,14 @@ class MemberOutControllerTest {
         // given
         MemberOutReq.Create create = sampleCreate();
         MemberOutRes.Id idRes = sampleIdRes();
-        given(memberOutService.save(any())).willReturn(idRes);
+        given(memberOutFacade.save(any())).willReturn(idRes);
 
         // when
         var result = memberOutController.save(create);
 
         // then
         assertNotNull(result);
-        verify(memberOutService).save(any());
+        verify(memberOutFacade).save(any());
     }
 
     @Test
@@ -70,7 +70,7 @@ class MemberOutControllerTest {
     void findById_success() {
         // given
         MemberOutRes.Item item = sampleItem();
-        given(memberOutService.findById(any())).willReturn(item);
+        given(memberOutFacade.findById(any())).willReturn(item);
         Integer id = sampleId();
 
         // when
@@ -78,7 +78,7 @@ class MemberOutControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberOutService).findById(any());
+        verify(memberOutFacade).findById(any());
     }
 
     @Test
@@ -88,14 +88,14 @@ class MemberOutControllerTest {
         MemberOutReq.Update update = sampleUpdate();
         MemberOutRes.Id idRes = sampleIdRes();
         Integer id = sampleId();
-        given(memberOutService.saveById(any(), any())).willReturn(idRes);
+        given(memberOutFacade.saveById(any(), any())).willReturn(idRes);
 
         // when
         var result = memberOutController.saveById(id, update);
 
         // then
         assertNotNull(result);
-        verify(memberOutService).saveById(any(), any());
+        verify(memberOutFacade).saveById(any(), any());
     }
 
     @Test
@@ -108,7 +108,7 @@ class MemberOutControllerTest {
         memberOutController.deleteById(id);
 
         // then
-        verify(memberOutService).deleteById(any());
+        verify(memberOutFacade).deleteById(any());
     }
 
     @Test
@@ -116,7 +116,7 @@ class MemberOutControllerTest {
     void findAll_success() {
         // given
         MemberOutReq.Filter filter = sampleFilter();
-        given(memberOutService.findAll(any()))
+        given(memberOutFacade.findAll(any()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -124,7 +124,7 @@ class MemberOutControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberOutService).findAll(any());
+        verify(memberOutFacade).findAll(any());
     }
 
     @Test
@@ -132,7 +132,7 @@ class MemberOutControllerTest {
     void findByIds_success() {
         // given
         List<Integer> ids = List.of(sampleId());
-        given(memberOutService.findByIds(anyList()))
+        given(memberOutFacade.findByIds(anyList()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -140,7 +140,7 @@ class MemberOutControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberOutService).findByIds(anyList());
+        verify(memberOutFacade).findByIds(anyList());
     }
 
     private Integer sampleId() {

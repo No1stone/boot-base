@@ -2,7 +2,7 @@ package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.model.auth.dto.MemberLoginHistoryReq;
 import com.origemite.lib.model.auth.dto.MemberLoginHistoryRes;
-import com.origemite.lib.model.auth.service.MemberLoginHistoryService;
+import com.origemite.apiauth.member.facade.MemberLoginHistoryFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +30,7 @@ class MemberLoginHistoryControllerTest {
     MemberLoginHistoryController memberLoginHistoryController;
 
     @Mock
-    MemberLoginHistoryService memberLoginHistoryService;
+    MemberLoginHistoryFacade memberLoginHistoryFacade;
 
     @Test
     @DisplayName("MemberLoginHistory 목록 조회 성공")
@@ -39,14 +39,14 @@ class MemberLoginHistoryControllerTest {
         MemberLoginHistoryReq.Filter filter = sampleFilter();
         Pageable pageable = PageRequest.of(0, 10);
         Page<MemberLoginHistoryRes.Item> page = new PageImpl<>(List.of(sampleItem()));
-        given(memberLoginHistoryService.search(any(), any())).willReturn(page);
+        given(memberLoginHistoryFacade.search(any(), any())).willReturn(page);
 
         // when
         var result = memberLoginHistoryController.search(filter, pageable);
 
         // then
         assertNotNull(result);
-        verify(memberLoginHistoryService).search(any(), any());
+        verify(memberLoginHistoryFacade).search(any(), any());
     }
 
     @Test
@@ -55,14 +55,14 @@ class MemberLoginHistoryControllerTest {
         // given
         MemberLoginHistoryReq.Create create = sampleCreate();
         MemberLoginHistoryRes.Id idRes = sampleIdRes();
-        given(memberLoginHistoryService.save(any())).willReturn(idRes);
+        given(memberLoginHistoryFacade.save(any())).willReturn(idRes);
 
         // when
         var result = memberLoginHistoryController.save(create);
 
         // then
         assertNotNull(result);
-        verify(memberLoginHistoryService).save(any());
+        verify(memberLoginHistoryFacade).save(any());
     }
 
     @Test
@@ -70,7 +70,7 @@ class MemberLoginHistoryControllerTest {
     void findById_success() {
         // given
         MemberLoginHistoryRes.Item item = sampleItem();
-        given(memberLoginHistoryService.findById(any())).willReturn(item);
+        given(memberLoginHistoryFacade.findById(any())).willReturn(item);
         Integer id = sampleId();
 
         // when
@@ -78,7 +78,7 @@ class MemberLoginHistoryControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberLoginHistoryService).findById(any());
+        verify(memberLoginHistoryFacade).findById(any());
     }
 
     @Test
@@ -88,14 +88,14 @@ class MemberLoginHistoryControllerTest {
         MemberLoginHistoryReq.Update update = sampleUpdate();
         MemberLoginHistoryRes.Id idRes = sampleIdRes();
         Integer id = sampleId();
-        given(memberLoginHistoryService.saveById(any(), any())).willReturn(idRes);
+        given(memberLoginHistoryFacade.saveById(any(), any())).willReturn(idRes);
 
         // when
         var result = memberLoginHistoryController.saveById(id, update);
 
         // then
         assertNotNull(result);
-        verify(memberLoginHistoryService).saveById(any(), any());
+        verify(memberLoginHistoryFacade).saveById(any(), any());
     }
 
     @Test
@@ -108,7 +108,7 @@ class MemberLoginHistoryControllerTest {
         memberLoginHistoryController.deleteById(id);
 
         // then
-        verify(memberLoginHistoryService).deleteById(any());
+        verify(memberLoginHistoryFacade).deleteById(any());
     }
 
     @Test
@@ -116,7 +116,7 @@ class MemberLoginHistoryControllerTest {
     void findAll_success() {
         // given
         MemberLoginHistoryReq.Filter filter = sampleFilter();
-        given(memberLoginHistoryService.findAll(any()))
+        given(memberLoginHistoryFacade.findAll(any()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -124,7 +124,7 @@ class MemberLoginHistoryControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberLoginHistoryService).findAll(any());
+        verify(memberLoginHistoryFacade).findAll(any());
     }
 
     @Test
@@ -132,7 +132,7 @@ class MemberLoginHistoryControllerTest {
     void findByIds_success() {
         // given
         List<Integer> ids = List.of(sampleId());
-        given(memberLoginHistoryService.findByIds(anyList()))
+        given(memberLoginHistoryFacade.findByIds(anyList()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -140,7 +140,7 @@ class MemberLoginHistoryControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberLoginHistoryService).findByIds(anyList());
+        verify(memberLoginHistoryFacade).findByIds(anyList());
     }
 
     private Integer sampleId() {

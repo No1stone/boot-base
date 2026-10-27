@@ -2,7 +2,7 @@ package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.model.auth.dto.MemberIdentificationReq;
 import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
-import com.origemite.lib.model.auth.service.MemberIdentificationService;
+import com.origemite.apiauth.member.facade.MemberIdentificationFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ class MemberIdentificationControllerTest {
     MemberIdentificationController memberIdentificationController;
 
     @Mock
-    MemberIdentificationService memberIdentificationService;
+    MemberIdentificationFacade memberIdentificationFacade;
 
     @Test
     @DisplayName("MemberIdentification 목록 조회 성공")
@@ -38,14 +38,14 @@ class MemberIdentificationControllerTest {
         MemberIdentificationReq.Filter filter = sampleFilter();
         Pageable pageable = PageRequest.of(0, 10);
         Page<MemberIdentificationRes.Item> page = new PageImpl<>(List.of(sampleItem()));
-        given(memberIdentificationService.search(any(), any())).willReturn(page);
+        given(memberIdentificationFacade.search(any(), any())).willReturn(page);
 
         // when
         var result = memberIdentificationController.search(filter, pageable);
 
         // then
         assertNotNull(result);
-        verify(memberIdentificationService).search(any(), any());
+        verify(memberIdentificationFacade).search(any(), any());
     }
 
     @Test
@@ -54,14 +54,14 @@ class MemberIdentificationControllerTest {
         // given
         MemberIdentificationReq.Create create = sampleCreate();
         MemberIdentificationRes.Id idRes = sampleIdRes();
-        given(memberIdentificationService.save(any())).willReturn(idRes);
+        given(memberIdentificationFacade.save(any(MemberIdentificationReq.Create.class))).willReturn(idRes);
 
         // when
         var result = memberIdentificationController.save(create);
 
         // then
         assertNotNull(result);
-        verify(memberIdentificationService).save(any());
+        verify(memberIdentificationFacade).save(any(MemberIdentificationReq.Create.class));
     }
 
     @Test
@@ -69,7 +69,7 @@ class MemberIdentificationControllerTest {
     void findById_success() {
         // given
         MemberIdentificationRes.Item item = sampleItem();
-        given(memberIdentificationService.findById(any())).willReturn(item);
+        given(memberIdentificationFacade.findById(any())).willReturn(item);
         Integer id = sampleId();
 
         // when
@@ -77,7 +77,7 @@ class MemberIdentificationControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberIdentificationService).findById(any());
+        verify(memberIdentificationFacade).findById(any());
     }
 
     @Test
@@ -87,14 +87,14 @@ class MemberIdentificationControllerTest {
         MemberIdentificationReq.Update update = sampleUpdate();
         MemberIdentificationRes.Id idRes = sampleIdRes();
         Integer id = sampleId();
-        given(memberIdentificationService.saveById(any(), any())).willReturn(idRes);
+        given(memberIdentificationFacade.saveById(any(), any())).willReturn(idRes);
 
         // when
         var result = memberIdentificationController.saveById(id, update);
 
         // then
         assertNotNull(result);
-        verify(memberIdentificationService).saveById(any(), any());
+        verify(memberIdentificationFacade).saveById(any(), any());
     }
 
     @Test
@@ -107,7 +107,7 @@ class MemberIdentificationControllerTest {
         memberIdentificationController.deleteById(id);
 
         // then
-        verify(memberIdentificationService).deleteById(any());
+        verify(memberIdentificationFacade).deleteById(any());
     }
 
     @Test
@@ -115,7 +115,7 @@ class MemberIdentificationControllerTest {
     void findAll_success() {
         // given
         MemberIdentificationReq.Filter filter = sampleFilter();
-        given(memberIdentificationService.findAll(any()))
+        given(memberIdentificationFacade.findAll(any()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -123,7 +123,7 @@ class MemberIdentificationControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberIdentificationService).findAll(any());
+        verify(memberIdentificationFacade).findAll(any());
     }
 
     @Test
@@ -131,7 +131,7 @@ class MemberIdentificationControllerTest {
     void findByIds_success() {
         // given
         List<Integer> ids = List.of(sampleId());
-        given(memberIdentificationService.findByIds(anyList()))
+        given(memberIdentificationFacade.findByIds(anyList()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -139,7 +139,7 @@ class MemberIdentificationControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberIdentificationService).findByIds(anyList());
+        verify(memberIdentificationFacade).findByIds(anyList());
     }
 
     private Integer sampleId() {

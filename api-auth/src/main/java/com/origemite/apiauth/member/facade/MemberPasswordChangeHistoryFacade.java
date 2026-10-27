@@ -1,8 +1,9 @@
 package com.origemite.apiauth.member.facade;
 
+import com.origemite.apiauth.support.display.DisplayNameResolver;
 import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryReq;
 import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryRes;
-import com.origemite.lib.model.auth.service.MemberPasswordChangeHistoryService;
+import com.origemite.lib.model.auth.persistence.MemberPasswordChangeHistoryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,49 +19,68 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MemberPasswordChangeHistoryFacade {
 
-    private final MemberPasswordChangeHistoryService memberPasswordChangeHistoryService;
+    private final MemberPasswordChangeHistoryPort memberPasswordChangeHistoryPort;
+    private final DisplayNameResolver displayNameResolver;
 
     public Page<MemberPasswordChangeHistoryRes.Item> search(MemberPasswordChangeHistoryReq.Filter filter, Pageable pageable) {
-        return memberPasswordChangeHistoryService.search(filter, pageable);
+        Page<MemberPasswordChangeHistoryRes.Item> page = memberPasswordChangeHistoryPort.search(filter, pageable);
+        applyAuditorNames(page.getContent());
+        return page;
     }
 
     @Transactional
     public MemberPasswordChangeHistoryRes.Id save(MemberPasswordChangeHistoryReq.Create create) {
-        return memberPasswordChangeHistoryService.save(create);
+        return memberPasswordChangeHistoryPort.save(create);
     }
 
     public MemberPasswordChangeHistoryRes.Item findById(Integer id) {
-        return memberPasswordChangeHistoryService.findById(id);
+        MemberPasswordChangeHistoryRes.Item item = memberPasswordChangeHistoryPort.findById(id);
+        applyAuditorNames(List.of(item));
+        return item;
     }
 
     @Transactional
     public MemberPasswordChangeHistoryRes.Id saveById(Integer id, MemberPasswordChangeHistoryReq.Update update) {
-        return memberPasswordChangeHistoryService.saveById(id, update);
+        return memberPasswordChangeHistoryPort.saveById(id, update);
     }
 
     @Transactional
     public void deleteById(Integer id) {
-        memberPasswordChangeHistoryService.deleteById(id);
+        memberPasswordChangeHistoryPort.deleteById(id);
     }
 
     public List<MemberPasswordChangeHistoryRes.Item> findAll(MemberPasswordChangeHistoryReq.Filter filter) {
-        return memberPasswordChangeHistoryService.findAll(filter);
+        List<MemberPasswordChangeHistoryRes.Item> items = memberPasswordChangeHistoryPort.findAll(filter);
+        applyAuditorNames(items);
+        return items;
     }
 
     public List<MemberPasswordChangeHistoryRes.Item> findByIds(List<Integer> ids) {
-        return memberPasswordChangeHistoryService.findByIds(ids);
+        List<MemberPasswordChangeHistoryRes.Item> items = memberPasswordChangeHistoryPort.findByIds(ids);
+        applyAuditorNames(items);
+        return items;
     }
 
     public Page<MemberPasswordChangeHistoryRes.Name> searchName(MemberPasswordChangeHistoryReq.Filter filter, Pageable pageable) {
-        return memberPasswordChangeHistoryService.searchName(filter, pageable);
+        return memberPasswordChangeHistoryPort.searchName(filter, pageable);
     }
 
     public List<MemberPasswordChangeHistoryRes.Name> findAllName(MemberPasswordChangeHistoryReq.Filter filter) {
-        return memberPasswordChangeHistoryService.findAllName(filter);
+        return memberPasswordChangeHistoryPort.findAllName(filter);
     }
 
     @Transactional
     public void deleteByIds(List<Integer> ids) {
-        memberPasswordChangeHistoryService.deleteByIds(ids);
+        memberPasswordChangeHistoryPort.deleteByIds(ids);
+    }
+
+    private void applyAuditorNames(List<MemberPasswordChangeHistoryRes.Item> items) {
+        displayNameResolver.applyAuditorDisplayNames(
+                items,
+                MemberPasswordChangeHistoryRes.Item::getCreatedBy,
+                MemberPasswordChangeHistoryRes.Item::setCreatedBy,
+                MemberPasswordChangeHistoryRes.Item::getUpdatedBy,
+                MemberPasswordChangeHistoryRes.Item::setUpdatedBy
+        );
     }
 }

@@ -1,12 +1,13 @@
 package com.origemite.apiauth.member.facade;
 
-import com.origemite.apiauth.auth.service.VaultService;
+import com.origemite.apiauth.support.display.DisplayNameResolver;
+import com.origemite.lib.common.encryption.EncryptionPort;
 import com.origemite.lib.common.util.EncUtils;
 import com.origemite.lib.common.util.MaskingUtils;
 import com.origemite.lib.common.util.UuidUtils;
 import com.origemite.lib.model.auth.dto.MemberIdentificationReq;
 import com.origemite.lib.model.auth.dto.MemberIdentificationRes;
-import com.origemite.lib.model.auth.service.MemberIdentificationService;
+import com.origemite.lib.model.auth.persistence.MemberIdentificationPort;
 import com.origemite.lib.model.enums.auth.EnVaultType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,18 +27,20 @@ import static com.origemite.lib.common.util.ModelMapperUtil.map;
 @Transactional(readOnly = true)
 public class MemberIdentificationFacade {
 
-    private final MemberIdentificationService memberIdentificationService;
-    private final VaultService vaultService;
+    private final MemberIdentificationPort memberIdentificationPort;
+    private final EncryptionPort encryptionPort;
+    private final DisplayNameResolver displayNameResolver;
 
     public Page<MemberIdentificationRes.Item> search(MemberIdentificationReq.Filter filter, Pageable pageable) {
-        return memberIdentificationService.search(filter, pageable);
+        Page<MemberIdentificationRes.Item> page = memberIdentificationPort.search(filter, pageable);
+        applyAuditorNames(page.getContent());
+        return page;
     }
 
     @Transactional
     public MemberIdentificationRes.Id save(MemberIdentificationReq.Create create) {
-        // 서비스 로직은 제외.
         create = setEncrypt(create);
-        return memberIdentificationService.save(create);
+        return memberIdentificationPort.save(create);
     }
 
     @Transactional
@@ -47,11 +50,11 @@ public class MemberIdentificationFacade {
     }
 
     private String memberAesEncrypt(String s) {
-        return vaultService.aesEncrypt(EnVaultType.MEMBER_AES, s);
+        return encryptionPort.encrypt(EnVaultType.MEMBER_AES.getValue(), s);
     }
 
     private String memberAesDecrypt(String s) {
-        return vaultService.aesDecrypt(EnVaultType.MEMBER_AES, s);
+        return encryptionPort.decrypt(EnVaultType.MEMBER_AES.getValue(), s);
     }
 
     private MemberIdentificationReq.Create setEncrypt(MemberIdentificationReq.Create create) {
@@ -87,9 +90,10 @@ public class MemberIdentificationFacade {
         return item;
     }
 
-
     public MemberIdentificationRes.Item findById(Integer id) {
-        return memberIdentificationService.findById(id);
+        MemberIdentificationRes.Item item = memberIdentificationPort.findById(id);
+        applyAuditorNames(List.of(item));
+        return item;
     }
 
     public MemberIdentificationRes.Item findByIdForDecrypt(Integer id) {
@@ -106,32 +110,46 @@ public class MemberIdentificationFacade {
 
     @Transactional
     public MemberIdentificationRes.Id saveById(Integer id, MemberIdentificationReq.Update update) {
-        return memberIdentificationService.saveById(id, update);
+        return memberIdentificationPort.saveById(id, update);
     }
 
     @Transactional
     public void deleteById(Integer id) {
-        memberIdentificationService.deleteById(id);
+        memberIdentificationPort.deleteById(id);
     }
 
     public List<MemberIdentificationRes.Item> findAll(MemberIdentificationReq.Filter filter) {
-        return memberIdentificationService.findAll(filter);
+        List<MemberIdentificationRes.Item> items = memberIdentificationPort.findAll(filter);
+        applyAuditorNames(items);
+        return items;
     }
 
     public List<MemberIdentificationRes.Item> findByIds(List<Integer> ids) {
-        return memberIdentificationService.findByIds(ids);
+        List<MemberIdentificationRes.Item> items = memberIdentificationPort.findByIds(ids);
+        applyAuditorNames(items);
+        return items;
     }
 
     public Page<MemberIdentificationRes.Name> searchName(MemberIdentificationReq.Filter filter, Pageable pageable) {
-        return memberIdentificationService.searchName(filter, pageable);
+        return memberIdentificationPort.searchName(filter, pageable);
     }
 
     public List<MemberIdentificationRes.Name> findAllName(MemberIdentificationReq.Filter filter) {
-        return memberIdentificationService.findAllName(filter);
+        return memberIdentificationPort.findAllName(filter);
     }
 
     @Transactional
     public void deleteByIds(List<Integer> ids) {
-        memberIdentificationService.deleteByIds(ids);
+        memberIdentificationPort.deleteByIds(ids);
+    }
+
+    private void applyAuditorNames(List<MemberIdentificationRes.Item> items) {
+        displayNameResolver.applyAuditorDisplayNames(
+                items,
+                MemberIdentificationRes.Item::getCreatedBy,
+                MemberIdentificationRes.Item::setCreatedBy,
+                MemberIdentificationRes.Item::getUpdatedBy,
+                MemberIdentificationRes.Item::setUpdatedBy
+        );
     }
 }

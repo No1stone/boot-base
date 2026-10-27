@@ -2,7 +2,7 @@ package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.model.auth.dto.MemberReq;
 import com.origemite.lib.model.auth.dto.MemberRes;
-import com.origemite.lib.model.auth.service.MemberService;
+import com.origemite.apiauth.member.facade.MemberFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ class MemberControllerTest {
     MemberController memberController;
 
     @Mock
-    MemberService memberService;
+    MemberFacade memberFacade;
 
     @Test
     @DisplayName("Member 목록 조회 성공")
@@ -38,14 +38,14 @@ class MemberControllerTest {
         MemberReq.Filter filter = sampleFilter();
         Pageable pageable = PageRequest.of(0, 10);
         Page<MemberRes.Item> page = new PageImpl<>(List.of(sampleItem()));
-        given(memberService.search(any(), any())).willReturn(page);
+        given(memberFacade.search(any(), any())).willReturn(page);
 
         // when
         var result = memberController.search(filter, pageable);
 
         // then
         assertNotNull(result);
-        verify(memberService).search(any(), any());
+        verify(memberFacade).search(any(), any());
     }
 
     @Test
@@ -54,14 +54,14 @@ class MemberControllerTest {
         // given
         MemberReq.Create create = sampleCreate();
         MemberRes.Id idRes = sampleIdRes();
-        given(memberService.save(any())).willReturn(idRes);
+        given(memberFacade.save(any())).willReturn(idRes);
 
         // when
         var result = memberController.save(create);
 
         // then
         assertNotNull(result);
-        verify(memberService).save(any());
+        verify(memberFacade).save(any());
     }
 
     @Test
@@ -69,7 +69,7 @@ class MemberControllerTest {
     void findById_success() {
         // given
         MemberRes.Item item = sampleItem();
-        given(memberService.findById(any())).willReturn(item);
+        given(memberFacade.findById(any())).willReturn(item);
         String id = sampleId();
 
         // when
@@ -77,7 +77,7 @@ class MemberControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberService).findById(any());
+        verify(memberFacade).findById(any());
     }
 
     @Test
@@ -87,14 +87,14 @@ class MemberControllerTest {
         MemberReq.Update update = sampleUpdate();
         MemberRes.Id idRes = sampleIdRes();
         String id = sampleId();
-        given(memberService.saveById(any(), any())).willReturn(idRes);
+        given(memberFacade.saveById(any(), any())).willReturn(idRes);
 
         // when
         var result = memberController.saveById(id, update);
 
         // then
         assertNotNull(result);
-        verify(memberService).saveById(any(), any());
+        verify(memberFacade).saveById(any(), any());
     }
 
     @Test
@@ -107,7 +107,7 @@ class MemberControllerTest {
         memberController.deleteById(id);
 
         // then
-        verify(memberService).deleteById(any());
+        verify(memberFacade).deleteById(any());
     }
 
     @Test
@@ -115,7 +115,7 @@ class MemberControllerTest {
     void findAll_success() {
         // given
         MemberReq.Filter filter = sampleFilter();
-        given(memberService.findAll(any()))
+        given(memberFacade.findAll(any()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -123,7 +123,7 @@ class MemberControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberService).findAll(any());
+        verify(memberFacade).findAll(any());
     }
 
     @Test
@@ -131,7 +131,7 @@ class MemberControllerTest {
     void findByIds_success() {
         // given
         List<String> ids = List.of(sampleId());
-        given(memberService.findByIds(anyList()))
+        given(memberFacade.findByIds(anyList()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -139,7 +139,7 @@ class MemberControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberService).findByIds(anyList());
+        verify(memberFacade).findByIds(anyList());
     }
 
     private String sampleId() {

@@ -5,7 +5,6 @@ import com.origemite.lib.common.util.CommonResponseUtils;
 import com.origemite.lib.common.web.CommonResponse;
 import com.origemite.lib.model.auth.dto.MemberLoginHistoryReq;
 import com.origemite.lib.model.auth.dto.MemberLoginHistoryRes;
-import com.origemite.lib.model.auth.service.MemberLoginHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

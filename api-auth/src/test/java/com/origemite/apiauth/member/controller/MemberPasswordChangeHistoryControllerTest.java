@@ -2,7 +2,7 @@ package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryReq;
 import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryRes;
-import com.origemite.lib.model.auth.service.MemberPasswordChangeHistoryService;
+import com.origemite.apiauth.member.facade.MemberPasswordChangeHistoryFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ class MemberPasswordChangeHistoryControllerTest {
     MemberPasswordChangeHistoryController memberPasswordChangeHistoryController;
 
     @Mock
-    MemberPasswordChangeHistoryService memberPasswordChangeHistoryService;
+    MemberPasswordChangeHistoryFacade memberPasswordChangeHistoryFacade;
 
     @Test
     @DisplayName("MemberPasswordChangeHistory 목록 조회 성공")
@@ -38,14 +38,14 @@ class MemberPasswordChangeHistoryControllerTest {
         MemberPasswordChangeHistoryReq.Filter filter = sampleFilter();
         Pageable pageable = PageRequest.of(0, 10);
         Page<MemberPasswordChangeHistoryRes.Item> page = new PageImpl<>(List.of(sampleItem()));
-        given(memberPasswordChangeHistoryService.search(any(), any())).willReturn(page);
+        given(memberPasswordChangeHistoryFacade.search(any(), any())).willReturn(page);
 
         // when
         var result = memberPasswordChangeHistoryController.search(filter, pageable);
 
         // then
         assertNotNull(result);
-        verify(memberPasswordChangeHistoryService).search(any(), any());
+        verify(memberPasswordChangeHistoryFacade).search(any(), any());
     }
 
     @Test
@@ -54,14 +54,14 @@ class MemberPasswordChangeHistoryControllerTest {
         // given
         MemberPasswordChangeHistoryReq.Create create = sampleCreate();
         MemberPasswordChangeHistoryRes.Id idRes = sampleIdRes();
-        given(memberPasswordChangeHistoryService.save(any())).willReturn(idRes);
+        given(memberPasswordChangeHistoryFacade.save(any())).willReturn(idRes);
 
         // when
         var result = memberPasswordChangeHistoryController.save(create);
 
         // then
         assertNotNull(result);
-        verify(memberPasswordChangeHistoryService).save(any());
+        verify(memberPasswordChangeHistoryFacade).save(any());
     }
 
     @Test
@@ -69,7 +69,7 @@ class MemberPasswordChangeHistoryControllerTest {
     void findById_success() {
         // given
         MemberPasswordChangeHistoryRes.Item item = sampleItem();
-        given(memberPasswordChangeHistoryService.findById(any())).willReturn(item);
+        given(memberPasswordChangeHistoryFacade.findById(any())).willReturn(item);
         Integer id = sampleId();
 
         // when
@@ -77,7 +77,7 @@ class MemberPasswordChangeHistoryControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberPasswordChangeHistoryService).findById(any());
+        verify(memberPasswordChangeHistoryFacade).findById(any());
     }
 
     @Test
@@ -87,14 +87,14 @@ class MemberPasswordChangeHistoryControllerTest {
         MemberPasswordChangeHistoryReq.Update update = sampleUpdate();
         MemberPasswordChangeHistoryRes.Id idRes = sampleIdRes();
         Integer id = sampleId();
-        given(memberPasswordChangeHistoryService.saveById(any(), any())).willReturn(idRes);
+        given(memberPasswordChangeHistoryFacade.saveById(any(), any())).willReturn(idRes);
 
         // when
         var result = memberPasswordChangeHistoryController.saveById(id, update);
 
         // then
         assertNotNull(result);
-        verify(memberPasswordChangeHistoryService).saveById(any(), any());
+        verify(memberPasswordChangeHistoryFacade).saveById(any(), any());
     }
 
     @Test
@@ -107,7 +107,7 @@ class MemberPasswordChangeHistoryControllerTest {
         memberPasswordChangeHistoryController.deleteById(id);
 
         // then
-        verify(memberPasswordChangeHistoryService).deleteById(any());
+        verify(memberPasswordChangeHistoryFacade).deleteById(any());
     }
 
     @Test
@@ -115,7 +115,7 @@ class MemberPasswordChangeHistoryControllerTest {
     void findAll_success() {
         // given
         MemberPasswordChangeHistoryReq.Filter filter = sampleFilter();
-        given(memberPasswordChangeHistoryService.findAll(any()))
+        given(memberPasswordChangeHistoryFacade.findAll(any()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -123,7 +123,7 @@ class MemberPasswordChangeHistoryControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberPasswordChangeHistoryService).findAll(any());
+        verify(memberPasswordChangeHistoryFacade).findAll(any());
     }
 
     @Test
@@ -131,7 +131,7 @@ class MemberPasswordChangeHistoryControllerTest {
     void findByIds_success() {
         // given
         List<Integer> ids = List.of(sampleId());
-        given(memberPasswordChangeHistoryService.findByIds(anyList()))
+        given(memberPasswordChangeHistoryFacade.findByIds(anyList()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -139,7 +139,7 @@ class MemberPasswordChangeHistoryControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberPasswordChangeHistoryService).findByIds(anyList());
+        verify(memberPasswordChangeHistoryFacade).findByIds(anyList());
     }
 
     private Integer sampleId() {

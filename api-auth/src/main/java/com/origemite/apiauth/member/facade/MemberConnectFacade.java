@@ -1,14 +1,16 @@
 package com.origemite.apiauth.member.facade;
 
+import com.origemite.apiauth.support.display.DisplayNameResolver;
 import com.origemite.lib.model.auth.dto.MemberConnectReq;
 import com.origemite.lib.model.auth.dto.MemberConnectRes;
-import com.origemite.lib.model.auth.service.MemberConnectService;
+import com.origemite.lib.model.auth.persistence.MemberConnectPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Slf4j
@@ -17,49 +19,68 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MemberConnectFacade {
 
-    private final MemberConnectService memberConnectService;
+    private final MemberConnectPort memberConnectPort;
+    private final DisplayNameResolver displayNameResolver;
 
     public Page<MemberConnectRes.Item> search(MemberConnectReq.Filter filter, Pageable pageable) {
-        return memberConnectService.search(filter, pageable);
+        Page<MemberConnectRes.Item> page = memberConnectPort.search(filter, pageable);
+        applyAuditorNames(page.getContent());
+        return page;
     }
 
     @Transactional
     public MemberConnectRes.Id save(MemberConnectReq.Create create) {
-        return memberConnectService.save(create);
+        return memberConnectPort.save(create);
     }
 
     public MemberConnectRes.Item findById(Integer id) {
-        return memberConnectService.findById(id);
+        MemberConnectRes.Item item = memberConnectPort.findById(id);
+        applyAuditorNames(List.of(item));
+        return item;
     }
 
     @Transactional
     public MemberConnectRes.Id saveById(Integer id, MemberConnectReq.Update update) {
-        return memberConnectService.saveById(id, update);
+        return memberConnectPort.saveById(id, update);
     }
 
     @Transactional
     public void deleteById(Integer id) {
-        memberConnectService.deleteById(id);
+        memberConnectPort.deleteById(id);
     }
 
     public List<MemberConnectRes.Item> findAll(MemberConnectReq.Filter filter) {
-        return memberConnectService.findAll(filter);
+        List<MemberConnectRes.Item> items = memberConnectPort.findAll(filter);
+        applyAuditorNames(items);
+        return items;
     }
 
     public List<MemberConnectRes.Item> findByIds(List<Integer> ids) {
-        return memberConnectService.findByIds(ids);
+        List<MemberConnectRes.Item> items = memberConnectPort.findByIds(ids);
+        applyAuditorNames(items);
+        return items;
     }
 
     public Page<MemberConnectRes.Name> searchName(MemberConnectReq.Filter filter, Pageable pageable) {
-        return memberConnectService.searchName(filter, pageable);
+        return memberConnectPort.searchName(filter, pageable);
     }
 
     public List<MemberConnectRes.Name> findAllName(MemberConnectReq.Filter filter) {
-        return memberConnectService.findAllName(filter);
+        return memberConnectPort.findAllName(filter);
     }
 
     @Transactional
     public void deleteByIds(List<Integer> ids) {
-        memberConnectService.deleteByIds(ids);
+        memberConnectPort.deleteByIds(ids);
+    }
+
+    private void applyAuditorNames(List<MemberConnectRes.Item> items) {
+        displayNameResolver.applyAuditorDisplayNames(
+                items,
+                MemberConnectRes.Item::getCreatedBy,
+                MemberConnectRes.Item::setCreatedBy,
+                MemberConnectRes.Item::getUpdatedBy,
+                MemberConnectRes.Item::setUpdatedBy
+        );
     }
 }

@@ -1,12 +1,11 @@
 package com.origemite.apiauth.member.facade;
 
-
-import com.origemite.apiauth.auth.service.VaultService;
+import com.origemite.apiauth.support.display.DisplayNameResolver;
 import com.origemite.lib.common.util.EncUtils;
 import com.origemite.lib.common.util.Salt;
 import com.origemite.lib.model.auth.dto.MemberReq;
 import com.origemite.lib.model.auth.dto.MemberRes;
-import com.origemite.lib.model.auth.service.MemberService;
+import com.origemite.lib.model.auth.persistence.MemberPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,11 +21,13 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MemberFacade {
 
-    private final MemberService memberService;
-    private final VaultService vaultService;
+    private final MemberPort memberPort;
+    private final DisplayNameResolver displayNameResolver;
 
     public Page<MemberRes.Item> search(MemberReq.Filter filter, Pageable pageable) {
-        return memberService.search(filter, pageable);
+        Page<MemberRes.Item> page = memberPort.search(filter, pageable);
+        applyAuditorNames(page.getContent());
+        return page;
     }
 
     @Transactional
@@ -34,58 +35,73 @@ public class MemberFacade {
         String salt = Salt.generate();
         create.setLoginPasswordSaltKey(salt);
         create.setLoginPassword(EncUtils.encSHA512(create.getLoginPassword(), salt));
-        return memberService.save(create);
+        return memberPort.save(create);
     }
 
     public MemberRes.Item findById(String id) {
-        return memberService.findById(id);
+        MemberRes.Item item = memberPort.findById(id);
+        applyAuditorNames(List.of(item));
+        return item;
     }
 
     @Transactional
     public MemberRes.Id saveById(String id, MemberReq.Update update) {
-        return memberService.saveById(id, update);
+        return memberPort.saveById(id, update);
     }
 
     @Transactional
     public void deleteById(String id) {
-        memberService.deleteById(id);
+        memberPort.deleteById(id);
     }
 
     public List<MemberRes.Item> findAll(MemberReq.Filter filter) {
-        return memberService.findAll(filter);
+        List<MemberRes.Item> items = memberPort.findAll(filter);
+        applyAuditorNames(items);
+        return items;
     }
 
     public List<MemberRes.Item> findByIds(List<String> ids) {
-        return memberService.findByIds(ids);
+        List<MemberRes.Item> items = memberPort.findByIds(ids);
+        applyAuditorNames(items);
+        return items;
     }
 
     public Page<MemberRes.Name> searchName(MemberReq.Filter filter, Pageable pageable) {
-        return memberService.searchName(filter, pageable);
+        return memberPort.searchName(filter, pageable);
     }
 
     public List<MemberRes.Name> findAllName(MemberReq.Filter filter) {
-        return memberService.findAllName(filter);
+        return memberPort.findAllName(filter);
     }
 
     @Transactional
     public void deleteByIds(List<String> ids) {
-        memberService.deleteByIds(ids);
+        memberPort.deleteByIds(ids);
     }
 
+    @Transactional
+    public void login() {
+    }
 
     @Transactional
-    public void login(){}
-
-
-    @Transactional
-    public void refreshToken(){}
-
+    public void refreshToken() {
+    }
 
     @Transactional
-    public void create(){}
-
+    public void create() {
+    }
 
     @Transactional
-    public void update(){}
+    public void update() {
+    }
 
+    private void applyAuditorNames(List<MemberRes.Item> items) {
+        displayNameResolver.applyAuditorDisplayNames(
+                items,
+                MemberRes.Item::getCreatedBy,
+                MemberRes.Item::setCreatedBy,
+                MemberRes.Item::getUpdatedBy,
+                MemberRes.Item::setUpdatedBy
+        );
+    }
 }

@@ -2,7 +2,7 @@ package com.origemite.apiauth.member.controller;
 
 import com.origemite.lib.model.auth.dto.MemberConnectReq;
 import com.origemite.lib.model.auth.dto.MemberConnectRes;
-import com.origemite.lib.model.auth.service.MemberConnectService;
+import com.origemite.apiauth.member.facade.MemberConnectFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +30,7 @@ class MemberConnectControllerTest {
     MemberConnectController memberConnectController;
 
     @Mock
-    MemberConnectService memberConnectService;
+    MemberConnectFacade memberConnectFacade;
 
     @Test
     @DisplayName("MemberConnect 목록 조회 성공")
@@ -39,14 +39,14 @@ class MemberConnectControllerTest {
         MemberConnectReq.Filter filter = sampleFilter();
         Pageable pageable = PageRequest.of(0, 10);
         Page<MemberConnectRes.Item> page = new PageImpl<>(List.of(sampleItem()));
-        given(memberConnectService.search(any(), any())).willReturn(page);
+        given(memberConnectFacade.search(any(), any())).willReturn(page);
 
         // when
         var result = memberConnectController.search(filter, pageable);
 
         // then
         assertNotNull(result);
-        verify(memberConnectService).search(any(), any());
+        verify(memberConnectFacade).search(any(), any());
     }
 
     @Test
@@ -55,14 +55,14 @@ class MemberConnectControllerTest {
         // given
         MemberConnectReq.Create create = sampleCreate();
         MemberConnectRes.Id idRes = sampleIdRes();
-        given(memberConnectService.save(any())).willReturn(idRes);
+        given(memberConnectFacade.save(any())).willReturn(idRes);
 
         // when
         var result = memberConnectController.save(create);
 
         // then
         assertNotNull(result);
-        verify(memberConnectService).save(any());
+        verify(memberConnectFacade).save(any());
     }
 
     @Test
@@ -70,7 +70,7 @@ class MemberConnectControllerTest {
     void findById_success() {
         // given
         MemberConnectRes.Item item = sampleItem();
-        given(memberConnectService.findById(any())).willReturn(item);
+        given(memberConnectFacade.findById(any())).willReturn(item);
         Integer id = sampleId();
 
         // when
@@ -78,7 +78,7 @@ class MemberConnectControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberConnectService).findById(any());
+        verify(memberConnectFacade).findById(any());
     }
 
     @Test
@@ -88,14 +88,14 @@ class MemberConnectControllerTest {
         MemberConnectReq.Update update = sampleUpdate();
         MemberConnectRes.Id idRes = sampleIdRes();
         Integer id = sampleId();
-        given(memberConnectService.saveById(any(), any())).willReturn(idRes);
+        given(memberConnectFacade.saveById(any(), any())).willReturn(idRes);
 
         // when
         var result = memberConnectController.saveById(id, update);
 
         // then
         assertNotNull(result);
-        verify(memberConnectService).saveById(any(), any());
+        verify(memberConnectFacade).saveById(any(), any());
     }
 
     @Test
@@ -108,7 +108,7 @@ class MemberConnectControllerTest {
         memberConnectController.deleteById(id);
 
         // then
-        verify(memberConnectService).deleteById(any());
+        verify(memberConnectFacade).deleteById(any());
     }
 
     @Test
@@ -116,7 +116,7 @@ class MemberConnectControllerTest {
     void findAll_success() {
         // given
         MemberConnectReq.Filter filter = sampleFilter();
-        given(memberConnectService.findAll(any()))
+        given(memberConnectFacade.findAll(any()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -124,7 +124,7 @@ class MemberConnectControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberConnectService).findAll(any());
+        verify(memberConnectFacade).findAll(any());
     }
 
     @Test
@@ -132,7 +132,7 @@ class MemberConnectControllerTest {
     void findByIds_success() {
         // given
         List<Integer> ids = List.of(sampleId());
-        given(memberConnectService.findByIds(anyList()))
+        given(memberConnectFacade.findByIds(anyList()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -140,7 +140,7 @@ class MemberConnectControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberConnectService).findByIds(anyList());
+        verify(memberConnectFacade).findByIds(anyList());
     }
 
     private Integer sampleId() {
