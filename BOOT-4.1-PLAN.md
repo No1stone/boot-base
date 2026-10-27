@@ -60,5 +60,11 @@
 
 - [x] `spring-test` 6.1.10 핀·main 의존 제거. `FileUtils`가 `MockMultipartFile` 대신 자체 `BytesMultipartFile` 사용.
 - [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
-- [ ] 기타 3.x deprecated 경고 추가 정리(있으면 이어서).
+- [x] 기타 3.x deprecated 경고: 단계 1에서는 추가 강제 수정 없음(Jackson/starter는 bump 후).
 - 참고: `GatewayApplicationTests` contextLoads는 datasource 없어 실패(기존). 이번 범위 밖.
+
+### 단계 2 진행
+
+- [x] `clean` 후 `@BizEnum` 재생성: `_En*` 35개, QueryDSL `QMember*` 6개 확인. `jakarta.persistence.Converter` 유지.
+- [x] `:lib-model:compileJava` · `:api-auth:compileJava` · lib-common/api-auth 테스트 통과.
+- [x] `BizEnumProcessor` `SupportedSourceVersion` RELEASE_17 고정 제거 → `latestSupported()` (Java 25 경고 해소, 3.5 양립).
