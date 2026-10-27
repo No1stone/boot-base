@@ -20,15 +20,25 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       retries: 3
+    consumer:
+      group-id: event-saga
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 origemite:
   message:
     saga:
-      # 서버는 발행(Outbox)만. lib 컨슘/ gRPC 클라이언트 자동구성 끔
+      # 서버는 lib gRPC 발행 클라이언트 안 씀. 발행은 Outbox.
       publish:
         enabled: false
+      # Saga 서버 = 컨슈머 (오케스트레이션)
       consume:
-        enabled: false
+        enabled: true
+        concurrency: 1
+      orchestration:
+        group: event-saga
+        topics: []   # 예: [create.order, complete.payment, fail.payment]
       outbox:
         batch-size: 50
         relay-delay-ms: 2000
