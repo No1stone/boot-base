@@ -1,4 +1,4 @@
-package com.origemite.apiauth.support.lock;
+package com.origemite.lib.cache.redis;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

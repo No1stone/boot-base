@@ -1,6 +1,6 @@
-package com.origemite.apiauth.support.lock;
+package com.origemite.lib.cache.redis;
 
-import com.origemite.lib.common.lock.LockPort;
+import com.origemite.lib.cache.LockPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;

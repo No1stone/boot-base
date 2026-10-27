@@ -1,4 +1,4 @@
-package com.origemite.lib.common.lock;
+package com.origemite.lib.cache;
 
 import java.time.Duration;
 import java.util.Optional;
