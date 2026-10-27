@@ -4,8 +4,8 @@ import java.time.Duration;
 
 /**
  * 캐시 능력 계약.
- * Redis 구현: {@link com.origemite.lib.cache.redis.RedisCacheAdapter}.
- * 분산 락: {@link LockPort} / {@link com.origemite.lib.cache.redis.RedissonLockAdapter}.
+ * Redis(Lettuce) 구현: {@link com.origemite.lib.cache.redis.RedisCacheAdapter}.
+ * 분산 락은 lib-distributed-lock({@code LockPort} / Redisson)을 쓴다.
  */
 public interface CachePort {
 

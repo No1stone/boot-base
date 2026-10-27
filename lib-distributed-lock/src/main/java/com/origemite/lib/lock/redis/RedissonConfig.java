@@ -1,4 +1,4 @@
-package com.origemite.lib.cache.redis;
+package com.origemite.lib.lock.redis;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

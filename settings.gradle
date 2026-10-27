@@ -1,5 +1,6 @@
 rootProject.name = 'boot-base'
 include 'lib-cache'
+include 'lib-distributed-lock'
 include 'lib-common'
 include 'lib-model'
 include 'lib-proto'
