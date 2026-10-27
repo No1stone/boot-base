@@ -1,7 +1,7 @@
 # Boot 4.1 진행 방안
 
 > 브랜치: `java/boot-4.1` (작업) · `java/boot-3.5` (LTS, 삭제하지 않음)  
-> 목표: 4.1에서 동작하는 정리된 코드가 **3.5로 되돌려도** 정상 동작한다.
+> 목표: `java/boot-4.1`에서 Boot 4.1 기동·단위 테스트 통과. **3.5는 별도 LTS 브랜치**로 유지(동일 소스 양립 포기).
 
 ## 전제
 
@@ -94,9 +94,19 @@
   - 환경 차단: Vault `localhost:8200` connection refused → `Started` 미도달.
   - 경고: p6spy·grpc가 Boot3 autoconfigure 클래스명 참조 (`TypeNotPresentException`).
 - [ ] auth↔gateway HTTP 통합: Redis/MariaDB/Vault 로컬 준비 후 재시도.
-- 다음: 단계 7 3.5 교차 전략 합의.
 
-#### 3.5 양립에 깨지는 변경 (단계 7 게이트)
+### 단계 7 진행
+
+- [x] `java/boot-3.5` LTS: `:lib-common`/`lib-model`/`api-auth`/`gateway` 컴파일 통과. `:lib-common:test` 통과.
+- [x] 교차: `java/boot-4.1` HEAD에 Boot **3.5.16** + Cloud **2025.0.0**만 적용 → `:lib-common:compileJava` **실패**(Jackson 3 `tools.jackson.*` 미존재). 이하 패키지·starter 차이도 동일 소스 양립 불가.
+- [x] 전략 확정: **브랜치 분리**
+  - `java/boot-3.5` = LTS (Boot 3.5.16 / Cloud 2025.0.x). 삭제·강제 머지 금지.
+  - `java/boot-4.1` = 업그레이드 라인 (Boot 4.1.2 / Cloud 2025.1.x).
+  - 공통 개선(예: lib-webflux 제외, 테스트 매처)만 체리픽. Jackson·Boot 패키지·Gateway starter는 브랜치별 유지.
+- [x] 3.5에 Identification `any(Create.class)` 체리픽(테스트 컴파일 복구).
+- 다음: 단계 8 exclude 모듈(추후) · 4.1 푸시는 별도 승인 · Vault 준비 시 단계 6 HTTP 통합 재시도.
+
+#### 3.5 양립에 깨지는 변경 (확정)
 
 | 항목 | 3.5 | 4.1 |
 |------|-----|-----|
@@ -105,7 +115,7 @@
 | JDBC/JPA/Redis 테스트 Import | `boot.autoconfigure.*` | `boot.jdbc` / `boot.hibernate` / `boot.data.redis` |
 | Gateway starter | `spring-cloud-starter-gateway` | `…-gateway-server-webflux` |
 | Cloud BOM | `2025.0.x` | `2025.1.x` |
-| Jackson | 2 (`ObjectMapper`) | 3 (`JsonMapper`) |
+| Jackson | 2 (`ObjectMapper`) | 3 (`JsonMapper` / `tools.jackson`) |
 | spring-grpc OAuth2 AC | 기본 활성 | Boot4에서 exclude 필요(0.11) |
 
-→ 같은 소스로 3.5·4.1 동시 컴파일은 **패키지 import만으로 불가**. 단계 7에서 브랜치별 유지 또는 호환 래퍼 합의 필요.
+→ **동일 소스 동시 컴파일 불가**. 호환 래퍼는 비용 대비 이득 없어 채택하지 않음.
