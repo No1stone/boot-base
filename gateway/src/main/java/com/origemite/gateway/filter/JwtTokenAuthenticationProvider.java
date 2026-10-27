@@ -1,9 +1,7 @@
 package com.origemite.gateway.filter;
 
 import com.origemite.gateway.conf.JwkAtomic;
-import com.origemite.lib.common.cache.CachePort;
-import com.origemite.lib.common.exception.BizErrorException;
-import com.origemite.lib.common.web.ResponseType;
+import com.origemite.gateway.support.InvalidAccessTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -16,6 +14,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -27,11 +26,11 @@ public class JwtTokenAuthenticationProvider {
 
     private final JwtTokenProp jwtTokenProp;
     private final JwkAtomic jwkAtomic;
-    private final CachePort cachePort;
+    private final StringRedisTemplate stringRedisTemplate;
 
     public boolean validateToken(String token) {
         if (token == null) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new InvalidAccessTokenException();
         }
         parse(token);
         return true;
@@ -50,7 +49,7 @@ public class JwtTokenAuthenticationProvider {
                     .build()
                     .parseClaimsJws(token);
         } catch (Exception e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new InvalidAccessTokenException(e);
         }
     }
 
@@ -63,7 +62,7 @@ public class JwtTokenAuthenticationProvider {
                     .getBody();
         } catch (SecurityException | IllegalArgumentException | MalformedJwtException | UnsupportedJwtException |
                  ExpiredJwtException e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new InvalidAccessTokenException(e);
         }
     }
 
@@ -75,7 +74,8 @@ public class JwtTokenAuthenticationProvider {
     }
 
     public boolean existsAccessToken(String accessToken) {
-        return cachePort.exists("access:" + accessToken);
+        Boolean exists = stringRedisTemplate.hasKey("access:" + accessToken);
+        return Boolean.TRUE.equals(exists);
     }
 
     public boolean verifyAccessToken(String token) {

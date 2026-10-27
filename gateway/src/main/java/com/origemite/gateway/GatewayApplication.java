@@ -4,11 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication(scanBasePackages = {
-        "com.origemite.gateway",
-        "com.origemite.lib.common.cache",
-}
-)
+@SpringBootApplication
 public class GatewayApplication {
 
     public static void main(String[] args) {
