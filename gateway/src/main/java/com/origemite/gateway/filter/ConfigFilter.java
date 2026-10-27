@@ -15,18 +15,20 @@ public class ConfigFilter {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-    //https://spring.io/projects/spring-cloud-gateway
+    // https://spring.io/projects/spring-cloud-gateway
+    // Kubernetes DNS: http://api-auth:<port> (same namespace) or FQDN
     @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+    public RouteLocator gatewayRoutes(
+            RouteLocatorBuilder builder,
+            @Value("${app.upstream.api-auth}") String apiAuthUri
+    ) {
         return builder.routes()
                 .route("auth", r -> r.path("/auth/**")
                         .filters(
-                                f   -> f
+                                f -> f
                                         .filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
-//                                        .rewritePath("/auth/(?<segment>.*)", "/${segment}")
                         )
-                        .uri("lb://api-auth"))
+                        .uri(apiAuthUri))
                 .build();
     }
-//                                .rewritePath("/internal/(?<segment>.*)", "/${segment}")
 }

@@ -82,17 +82,6 @@ security:
     access-token-expiration: 3600000
     refresh-token-expiration: 7200000
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://43.202.195.185:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-    ip-address: ${HOST_IP:}
-
-
 logging:
   level:
     ai.mintit.drp.api: INFO

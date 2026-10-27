@@ -18,8 +18,6 @@ spring:
       simple:
         prefetch: 5
 
-eureka:
-  client:
-    serviceUrl:
-#      defaultZone: http://43.202.195.185:8761/eureka/
-      defaultZone: http://10.0.14.108:8761/eureka/
+app:
+  upstream:
+    api-auth: http://api-auth:3031

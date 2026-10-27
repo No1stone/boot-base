@@ -17,11 +17,9 @@ spring:
       simple:
         prefetch: 5
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
+app:
+  upstream:
+    api-auth: http://localhost:3031
 
 management:
   tracing:

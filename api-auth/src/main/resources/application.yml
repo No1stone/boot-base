@@ -29,11 +29,6 @@ server:
       enabled: false
 
 
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
-
-
 jasypt:
   encryptor:
     bean: jasyptEnc

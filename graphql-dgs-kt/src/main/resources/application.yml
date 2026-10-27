@@ -4,6 +4,13 @@ spring:
 server:
   port: 3033
 
+# Kubernetes DNS / local host for api-auth gRPC
+app:
+  grpc:
+    api-auth:
+      host: api-auth
+      port: 9191
+
 dgs:
   graphql:
     path: /graphql   # POST 엔드포인트

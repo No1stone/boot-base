@@ -23,8 +23,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
 // 부트스트랩 vault와.. 약간의 충돌있어서 비활성화
 //    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 //    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'

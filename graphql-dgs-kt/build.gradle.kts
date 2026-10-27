@@ -1,13 +1,13 @@
 plugins {
-	kotlin("jvm") version "2.0.21"
-	kotlin("plugin.spring") version "2.0.21"
+	kotlin("jvm") version "2.3.0"
+	kotlin("plugin.spring") version "2.3.0"
 //	id("org.springframework.boot")
 //	id("io.spring.dependency-management")
 	id("com.netflix.dgs.codegen") version "8.2.1"
 }
 
 kotlin {
-	jvmToolchain(17)
+	jvmToolchain(25)
 }
 
 group = "com.origemite"
@@ -27,7 +27,6 @@ dependencies {
 	implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
 
 
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

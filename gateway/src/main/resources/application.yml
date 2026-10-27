@@ -1,10 +1,10 @@
 server:
   port: 2031
 
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
-
+# Kubernetes DNS / docker compose service name
+app:
+  upstream:
+    api-auth: http://api-auth:3031
 
 logging:
   level:

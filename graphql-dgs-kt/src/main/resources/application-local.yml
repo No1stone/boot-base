@@ -1,0 +1,5 @@
+app:
+  grpc:
+    api-auth:
+      host: localhost
+      port: 9191
