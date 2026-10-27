@@ -69,4 +69,12 @@ class RedisCacheAdapterTest {
         redisCacheAdapter.delete("k");
         verify(redisTemplate).delete("k");
     }
+
+    @Test
+    @DisplayName("deleteByPrefix는 keys 결과를 일괄 삭제한다")
+    void deleteByPrefix() {
+        when(redisTemplate.keys("member::*")).thenReturn(java.util.Set.of("member::a", "member::b"));
+        redisCacheAdapter.deleteByPrefix("member::");
+        verify(redisTemplate).delete(java.util.Set.of("member::a", "member::b"));
+    }
 }

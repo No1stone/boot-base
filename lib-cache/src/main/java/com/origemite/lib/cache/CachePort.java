@@ -20,4 +20,7 @@ public interface CachePort {
     void hashPut(String key, String field, String value);
 
     void delete(String key);
+
+    /** prefix로 시작하는 키를 모두 삭제한다. {@code @CacheEvict(allEntries=true)} 용. */
+    void deleteByPrefix(String prefix);
 }
