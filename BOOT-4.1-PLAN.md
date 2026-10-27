@@ -96,5 +96,7 @@
 | JDBC/JPA/Redis 테스트 Import | `boot.autoconfigure.*` | `boot.jdbc` / `boot.hibernate` / `boot.data.redis` |
 | Gateway starter | `spring-cloud-starter-gateway` | `…-gateway-server-webflux` |
 | Cloud BOM | `2025.0.x` | `2025.1.x` |
+| Jackson | 2 (`ObjectMapper`) | 3 (`JsonMapper`) |
+| spring-grpc OAuth2 AC | 기본 활성 | Boot4에서 exclude 필요(0.11) |
 
 → 같은 소스로 3.5·4.1 동시 컴파일은 **패키지 import만으로 불가**. 단계 7에서 브랜치별 유지 또는 호환 래퍼 합의 필요.
