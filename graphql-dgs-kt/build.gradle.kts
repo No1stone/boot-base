@@ -1,6 +1,6 @@
 plugins {
-	kotlin("jvm") version "2.3.0"
-	kotlin("plugin.spring") version "2.3.0"
+	kotlin("jvm") version "2.0.21"
+	kotlin("plugin.spring") version "2.0.21"
 //	id("org.springframework.boot")
 //	id("io.spring.dependency-management")
 	id("com.netflix.dgs.codegen") version "8.2.1"
