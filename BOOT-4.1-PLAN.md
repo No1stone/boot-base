@@ -92,7 +92,11 @@
 - [x] `api-auth` local `Started` (profile=local). HTTP: `/auth/actuator/health` UP, swagger·api-docs 200.
   - deps: p6spy **2.0.1**, springdoc **3.2.0**, spring-grpc BOM **1.0.1** (0.11 OAuth2 exclude 제거).
   - 로컬 스모크: Vault(:8200 transit `auth-sig`)+MariaDB(:3306)+Redis(:6379).
-- [ ] auth↔gateway HTTP 통합: gateway 기동 후 대표 시나리오(추후).
+- [x] gateway local `Started` (Netty:2031). HTTP: `/actuator/health` UP.
+  - deps: OTEL instrumentation **2.33.1**.
+  - 설정: `web-application-type=reactive`, JDBC/JPA AC exclude, local에서 Rabbit/bus/config off.
+  - JWT 필터: AntPathMatcher + Authorization null 가드.
+- [x] auth↔gateway: `GET /auth/v3/api-docs` via gateway → 200.
 
 ### 단계 7 진행
 
