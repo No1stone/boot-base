@@ -62,4 +62,11 @@ class RedisCacheAdapterTest {
         verify(valueOperations).set("k", "v", 10_000L, TimeUnit.MILLISECONDS);
         verify(hashOperations).put("h", "f", "v");
     }
+
+    @Test
+    @DisplayName("delete는 redisTemplate.delete에 위임한다")
+    void delete() {
+        redisCacheAdapter.delete("k");
+        verify(redisTemplate).delete("k");
+    }
 }

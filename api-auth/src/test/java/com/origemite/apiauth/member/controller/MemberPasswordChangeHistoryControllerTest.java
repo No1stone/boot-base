@@ -1,7 +1,7 @@
 package com.origemite.apiauth.member.controller;
 
-import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryReq;
-import com.origemite.lib.model.auth.dto.MemberPasswordChangeHistoryRes;
+import com.origemite.lib.model.member.dto.MemberPasswordChangeHistoryReq;
+import com.origemite.lib.model.member.dto.MemberPasswordChangeHistoryRes;
 import com.origemite.apiauth.member.facade.MemberPasswordChangeHistoryFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

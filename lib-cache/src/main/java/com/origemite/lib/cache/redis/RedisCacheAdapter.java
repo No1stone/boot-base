@@ -39,4 +39,9 @@ public class RedisCacheAdapter implements CachePort {
     public void hashPut(String key, String field, String value) {
         redisTemplate.opsForHash().put(key, field, value);
     }
+
+    @Override
+    public void delete(String key) {
+        redisTemplate.delete(key);
+    }
 }

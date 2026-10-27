@@ -1,9 +1,9 @@
 package com.origemite.apiauth.member.facade;
 
-import com.origemite.apiauth.support.display.DisplayNameResolver;
-import com.origemite.lib.model.auth.dto.MemberOutReq;
-import com.origemite.lib.model.auth.dto.MemberOutRes;
-import com.origemite.lib.model.auth.persistence.MemberOutPort;
+import com.origemite.lib.model.member.support.display.DisplayNameResolver;
+import com.origemite.lib.model.member.dto.MemberOutReq;
+import com.origemite.lib.model.member.dto.MemberOutRes;
+import com.origemite.lib.model.member.persistence.MemberOutPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -18,4 +18,6 @@ public interface CachePort {
     void set(String key, String value, Duration ttl);
 
     void hashPut(String key, String field, String value);
+
+    void delete(String key);
 }

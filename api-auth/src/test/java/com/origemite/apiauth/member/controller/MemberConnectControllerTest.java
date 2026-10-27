@@ -1,7 +1,7 @@
 package com.origemite.apiauth.member.controller;
 
-import com.origemite.lib.model.auth.dto.MemberConnectReq;
-import com.origemite.lib.model.auth.dto.MemberConnectRes;
+import com.origemite.lib.model.member.dto.MemberConnectReq;
+import com.origemite.lib.model.member.dto.MemberConnectRes;
 import com.origemite.apiauth.member.facade.MemberConnectFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

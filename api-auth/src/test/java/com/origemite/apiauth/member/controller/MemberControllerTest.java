@@ -1,8 +1,8 @@
 package com.origemite.apiauth.member.controller;
 
-import com.origemite.lib.model.auth.dto.MemberReq;
-import com.origemite.lib.model.auth.dto.MemberRes;
-import com.origemite.apiauth.member.facade.MemberFacade;
+import com.origemite.lib.model.member.dto.MemberReq;
+import com.origemite.lib.model.member.dto.MemberRes;
+import com.origemite.apiauth.member.facade.MemberBffFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ class MemberControllerTest {
     MemberController memberController;
 
     @Mock
-    MemberFacade memberFacade;
+    MemberBffFacade memberBffFacade;
 
     @Test
     @DisplayName("Member 목록 조회 성공")
@@ -38,14 +38,14 @@ class MemberControllerTest {
         MemberReq.Filter filter = sampleFilter();
         Pageable pageable = PageRequest.of(0, 10);
         Page<MemberRes.Item> page = new PageImpl<>(List.of(sampleItem()));
-        given(memberFacade.search(any(), any())).willReturn(page);
+        given(memberBffFacade.search(any(), any())).willReturn(page);
 
         // when
         var result = memberController.search(filter, pageable);
 
         // then
         assertNotNull(result);
-        verify(memberFacade).search(any(), any());
+        verify(memberBffFacade).search(any(), any());
     }
 
     @Test
@@ -54,14 +54,14 @@ class MemberControllerTest {
         // given
         MemberReq.Create create = sampleCreate();
         MemberRes.Id idRes = sampleIdRes();
-        given(memberFacade.save(any())).willReturn(idRes);
+        given(memberBffFacade.save(any())).willReturn(idRes);
 
         // when
         var result = memberController.save(create);
 
         // then
         assertNotNull(result);
-        verify(memberFacade).save(any());
+        verify(memberBffFacade).save(any());
     }
 
     @Test
@@ -69,7 +69,7 @@ class MemberControllerTest {
     void findById_success() {
         // given
         MemberRes.Item item = sampleItem();
-        given(memberFacade.findById(any())).willReturn(item);
+        given(memberBffFacade.findById(any())).willReturn(item);
         String id = sampleId();
 
         // when
@@ -77,7 +77,7 @@ class MemberControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberFacade).findById(any());
+        verify(memberBffFacade).findById(any());
     }
 
     @Test
@@ -87,14 +87,14 @@ class MemberControllerTest {
         MemberReq.Update update = sampleUpdate();
         MemberRes.Id idRes = sampleIdRes();
         String id = sampleId();
-        given(memberFacade.saveById(any(), any())).willReturn(idRes);
+        given(memberBffFacade.saveById(any(), any())).willReturn(idRes);
 
         // when
         var result = memberController.saveById(id, update);
 
         // then
         assertNotNull(result);
-        verify(memberFacade).saveById(any(), any());
+        verify(memberBffFacade).saveById(any(), any());
     }
 
     @Test
@@ -107,7 +107,7 @@ class MemberControllerTest {
         memberController.deleteById(id);
 
         // then
-        verify(memberFacade).deleteById(any());
+        verify(memberBffFacade).deleteById(any());
     }
 
     @Test
@@ -115,7 +115,7 @@ class MemberControllerTest {
     void findAll_success() {
         // given
         MemberReq.Filter filter = sampleFilter();
-        given(memberFacade.findAll(any()))
+        given(memberBffFacade.findAll(any()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -123,7 +123,7 @@ class MemberControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberFacade).findAll(any());
+        verify(memberBffFacade).findAll(any());
     }
 
     @Test
@@ -131,7 +131,7 @@ class MemberControllerTest {
     void findByIds_success() {
         // given
         List<String> ids = List.of(sampleId());
-        given(memberFacade.findByIds(anyList()))
+        given(memberBffFacade.findByIds(anyList()))
                 .willReturn(List.of(sampleItem()));
 
         // when
@@ -139,7 +139,7 @@ class MemberControllerTest {
 
         // then
         assertNotNull(result);
-        verify(memberFacade).findByIds(anyList());
+        verify(memberBffFacade).findByIds(anyList());
     }
 
     private String sampleId() {
