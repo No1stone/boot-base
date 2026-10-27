@@ -1,0 +1,8 @@
+apply plugin: 'java-library'
+
+bootJar { enabled = false }
+jar { enabled = true }
+
+dependencies {
+    // 포트 계약만. Spring/Redis 구현은 앱·어댑터 모듈 책임.
+}

@@ -1,9 +1,10 @@
 rootProject.name = 'boot-base'
+include 'lib-cache'
 include 'lib-common'
 include 'lib-model'
 include 'lib-proto'
 include 'lib-legacy'
-//include 'lib-webflux' // GraphQL로 대체 예정. gateway는 lib-common만 사용
+//include 'lib-webflux' // GraphQL로 대체 예정
 include 'api-auth'
 // Eureka removed: service discovery uses Kubernetes DNS
 //include 'api-eureka'
