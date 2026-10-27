@@ -15,12 +15,12 @@ import tools.jackson.databind.json.JsonMapper;
 import java.util.Map;
 
 @GrpcService
-public class SagaGrpcService extends SagaIngressGrpc.SagaIngressImplBase {
+public class SagaGrpc extends SagaIngressGrpc.SagaIngressImplBase {
 
     private final SagaPublishFacade facade;
     private final JsonMapper jsonMapper;
 
-    public SagaGrpcService(SagaPublishFacade facade, JsonMapper sagaJsonMapper) {
+    public SagaGrpc(SagaPublishFacade facade, JsonMapper sagaJsonMapper) {
         this.facade = facade;
         this.jsonMapper = sagaJsonMapper;
     }
