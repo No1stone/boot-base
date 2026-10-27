@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
         scanBasePackages = {
                 "com.origemite.apiauth",
                 "com.origemite.lib.cache",
+                "com.origemite.lib.lock",
                 "com.origemite.lib.common",
                 "com.origemite.lib.model",
                 "com.origemite.lib.proto"

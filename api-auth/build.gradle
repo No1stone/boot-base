@@ -7,6 +7,7 @@ jar { enabled = false }
 
 dependencies {
     implementation project(':lib-cache')
+    implementation project(':lib-distributed-lock')
     implementation project(':lib-common')
     implementation project(':lib-model')
     implementation project(':lib-legacy')
@@ -23,7 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    // redis/redisson은 lib-cache가 제공
+    // redis 캐시=lib-cache(Lettuce), 분산락=lib-distributed-lock(Redisson)
 // 부트스트랩 vault와.. 약간의 충돌있어서 비활성화
 //    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 //    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
