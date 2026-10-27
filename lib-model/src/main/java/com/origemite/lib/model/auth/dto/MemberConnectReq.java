@@ -30,6 +30,12 @@ public class MemberConnectReq {
     public static class Filter {
         @Schema(description = "회원 연결 아이디")
         private Integer id;
+        @Schema(description = "아이디 목록")
+        private List<Integer> ids;
+        @Schema(description = "생성일시 시작")
+        private LocalDateTime startAt;
+        @Schema(description = "생성일시 종료")
+        private LocalDateTime endAt;
         @Schema(description = "회원 아이디")
         private String memberId;
         @Schema(description = "연결 유형 (구글, 네이버, 카카오 등)")

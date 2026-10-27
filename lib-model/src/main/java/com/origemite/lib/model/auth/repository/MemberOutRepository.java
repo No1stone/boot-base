@@ -6,13 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 /**
  * MemberOut Repository
  */
 public interface MemberOutRepository extends JpaRepository<MemberOut, Integer>, MemberOutCustomRepository , JpaSpecificationExecutor<MemberOut>{
-    List<MemberOut> findByIdIn(List<Integer> ids);
 }
 
 @Repository

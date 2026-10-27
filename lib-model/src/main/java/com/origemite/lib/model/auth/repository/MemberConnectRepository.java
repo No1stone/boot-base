@@ -6,13 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 /**
  * MemberConnect Repository
  */
 public interface MemberConnectRepository extends JpaRepository<MemberConnect, Integer>, MemberConnectCustomRepository , JpaSpecificationExecutor<MemberConnect>{
-    List<MemberConnect> findByIdIn(List<Integer> ids);
 }
 
 @Repository

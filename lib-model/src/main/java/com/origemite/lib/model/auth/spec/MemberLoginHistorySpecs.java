@@ -15,14 +15,14 @@ public class MemberLoginHistorySpecs {
             PredicateBuilder predicateBuilder = new PredicateBuilder(builder, root);
 
             predicateBuilder.equal(MemberLoginHistory.Fields.id, filter.getId());
+            predicateBuilder.in(MemberLoginHistory.Fields.id, filter.getIds());
+            predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
+            predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
             predicateBuilder.equal(MemberLoginHistory.Fields.memberId, filter.getMemberId());
             predicateBuilder.equal(MemberLoginHistory.Fields.loginAt, filter.getLoginAt());
             predicateBuilder.equal(MemberLoginHistory.Fields.loginHistoryUserAgent, filter.getLoginHistoryUserAgent());
             predicateBuilder.equal(MemberLoginHistory.Fields.loginHistoryIp, filter.getLoginHistoryIp());
             predicateBuilder.equal(MemberLoginHistory.Fields.loginSuccessYn, filter.getLoginSuccessYn());
-            // predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
-            // predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
-            // predicateBuilder.equal(CreatedEntity.Fields.createdBy, filter.getCreatedBy());
 
             return predicateBuilder.build();
         };

@@ -30,6 +30,12 @@ public class MemberReq {
     public static class Filter {
         @Schema(description = "회원 아이디")
         private String id;
+        @Schema(description = "아이디 목록")
+        private List<String> ids;
+        @Schema(description = "생성일시 시작")
+        private LocalDateTime startAt;
+        @Schema(description = "생성일시 종료")
+        private LocalDateTime endAt;
         @Schema(description = "로그인 아이디 (Portal: 전화번호, 코드샵: 이메일)")
         private String loginId;
         @Schema(description = "로그인 패스워드 (nullable 가능, varchar(255) → varchar(512) 변경)")

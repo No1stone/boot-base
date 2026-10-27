@@ -21,7 +21,8 @@ public class MemberRes {
     @EqualsAndHashCode(callSuper = true)
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Name extends Id {
-        // 변수 없음
+        @Schema(description = "로그인 아이디 (표시명)")
+        private String loginId;
     }
 
     @Schema(description = "MemberRes.Single DTO")

@@ -15,14 +15,13 @@ public class MemberSpecs {
             PredicateBuilder predicateBuilder = new PredicateBuilder(builder, root);
 
             predicateBuilder.equal(Member.Fields.id, filter.getId());
+            predicateBuilder.in(Member.Fields.id, filter.getIds());
+            predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
+            predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
             predicateBuilder.equal(Member.Fields.loginId, filter.getLoginId());
             predicateBuilder.equal(Member.Fields.loginPassword, filter.getLoginPassword());
             predicateBuilder.equal(Member.Fields.loginPasswordSaltKey, filter.getLoginPasswordSaltKey());
             predicateBuilder.equal(Member.Fields.status, filter.getStatus());
-            // predicateBuilder.equal(UpdatedEntity.Fields.updatedBy, filter.getUpdatedBy());
-            // predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
-            // predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
-            // predicateBuilder.equal(CreatedEntity.Fields.createdBy, filter.getCreatedBy());
 
             return predicateBuilder.build();
         };

@@ -30,6 +30,12 @@ public class MemberIdentificationReq {
     public static class Filter {
         @Schema(description = "패스 본인 확인 아이디")
         private Integer id;
+        @Schema(description = "아이디 목록")
+        private List<Integer> ids;
+        @Schema(description = "생성일시 시작")
+        private LocalDateTime startAt;
+        @Schema(description = "생성일시 종료")
+        private LocalDateTime endAt;
         @Schema(description = "(Encrypted) 이름")
         private String name;
         @Schema(description = "(Encrypted) 휴대폰번호")

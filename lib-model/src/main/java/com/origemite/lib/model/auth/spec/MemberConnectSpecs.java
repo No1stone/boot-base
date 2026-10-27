@@ -15,6 +15,9 @@ public class MemberConnectSpecs {
             PredicateBuilder predicateBuilder = new PredicateBuilder(builder, root);
 
             predicateBuilder.equal(MemberConnect.Fields.id, filter.getId());
+            predicateBuilder.in(MemberConnect.Fields.id, filter.getIds());
+            predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
+            predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
             predicateBuilder.equal(MemberConnect.Fields.memberId, filter.getMemberId());
             predicateBuilder.equal(MemberConnect.Fields.connectTypeCode, filter.getConnectTypeCode());
             predicateBuilder.equal(MemberConnect.Fields.connectedId, filter.getConnectedId());
@@ -29,10 +32,6 @@ public class MemberConnectSpecs {
             predicateBuilder.equal(MemberConnect.Fields.locale, filter.getLocale());
             predicateBuilder.equal(MemberConnect.Fields.cipherKeyId, filter.getCipherKeyId());
             predicateBuilder.equal(MemberConnect.Fields.status, filter.getStatus());
-            // predicateBuilder.equal(UpdatedEntity.Fields.updatedBy, filter.getUpdatedBy());
-            // predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
-            // predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
-            // predicateBuilder.equal(CreatedEntity.Fields.createdBy, filter.getCreatedBy());
 
             return predicateBuilder.build();
         };

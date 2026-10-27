@@ -15,15 +15,14 @@ public class MemberPasswordChangeHistorySpecs {
             PredicateBuilder predicateBuilder = new PredicateBuilder(builder, root);
 
             predicateBuilder.equal(MemberPasswordChangeHistory.Fields.id, filter.getId());
+            predicateBuilder.in(MemberPasswordChangeHistory.Fields.id, filter.getIds());
+            predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
+            predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
             predicateBuilder.equal(MemberPasswordChangeHistory.Fields.memberId, filter.getMemberId());
             predicateBuilder.equal(MemberPasswordChangeHistory.Fields.loginPassword, filter.getLoginPassword());
             predicateBuilder.equal(MemberPasswordChangeHistory.Fields.loginPasswordSaltKey, filter.getLoginPasswordSaltKey());
             predicateBuilder.equal(MemberPasswordChangeHistory.Fields.changeAt, filter.getChangeAt());
             predicateBuilder.equal(MemberPasswordChangeHistory.Fields.cipherKeyId, filter.getCipherKeyId());
-            // predicateBuilder.equal(UpdatedEntity.Fields.updatedBy, filter.getUpdatedBy());
-            // predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
-            // predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
-            // predicateBuilder.equal(CreatedEntity.Fields.createdBy, filter.getCreatedBy());
 
             return predicateBuilder.build();
         };

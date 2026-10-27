@@ -15,6 +15,9 @@ public class MemberIdentificationSpecs {
             PredicateBuilder predicateBuilder = new PredicateBuilder(builder, root);
 
             predicateBuilder.equal(MemberIdentification.Fields.id, filter.getId());
+            predicateBuilder.in(MemberIdentification.Fields.id, filter.getIds());
+            predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
+            predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
             predicateBuilder.equal(MemberIdentification.Fields.name, filter.getName());
             predicateBuilder.equal(MemberIdentification.Fields.mobilePhoneNumber, filter.getMobilePhoneNumber());
             predicateBuilder.equal(MemberIdentification.Fields.email, filter.getEmail());
@@ -30,10 +33,6 @@ public class MemberIdentificationSpecs {
             predicateBuilder.equal(MemberIdentification.Fields.mobileCarrierCode, filter.getMobileCarrierCode());
             predicateBuilder.equal(MemberIdentification.Fields.memberId, filter.getMemberId());
             predicateBuilder.equal(MemberIdentification.Fields.status, filter.getStatus());
-            // predicateBuilder.equal(UpdatedEntity.Fields.updatedBy, filter.getUpdatedBy());
-            // predicateBuilder.goe(CreatedEntity.Fields.createdAt, filter.getStartAt());
-            // predicateBuilder.loe(CreatedEntity.Fields.createdAt, filter.getEndAt());
-            // predicateBuilder.equal(CreatedEntity.Fields.createdBy, filter.getCreatedBy());
 
             return predicateBuilder.build();
         };
