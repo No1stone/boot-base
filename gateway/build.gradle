@@ -9,6 +9,9 @@ dependencyManagement {
 }
 dependencies {
 
+    // 캐시 계약만. Redis 어댑터는 gateway 모듈에 둔다.
+    implementation project(':lib-cache')
+
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'

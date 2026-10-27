@@ -2,6 +2,7 @@ package com.origemite.gateway.filter;
 
 import com.origemite.gateway.conf.JwkAtomic;
 import com.origemite.gateway.support.InvalidAccessTokenException;
+import com.origemite.lib.cache.CachePort;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -14,7 +15,6 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -26,7 +26,7 @@ public class JwtTokenAuthenticationProvider {
 
     private final JwtTokenProp jwtTokenProp;
     private final JwkAtomic jwkAtomic;
-    private final StringRedisTemplate stringRedisTemplate;
+    private final CachePort cachePort;
 
     public boolean validateToken(String token) {
         if (token == null) {
@@ -74,8 +74,7 @@ public class JwtTokenAuthenticationProvider {
     }
 
     public boolean existsAccessToken(String accessToken) {
-        Boolean exists = stringRedisTemplate.hasKey("access:" + accessToken);
-        return Boolean.TRUE.equals(exists);
+        return cachePort.exists("access:" + accessToken);
     }
 
     public boolean verifyAccessToken(String token) {
