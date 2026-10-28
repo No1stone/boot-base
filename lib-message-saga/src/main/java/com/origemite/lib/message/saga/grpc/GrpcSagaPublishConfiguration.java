@@ -1,6 +1,7 @@
 package com.origemite.lib.message.saga.grpc;
 
 import com.origemite.lib.message.saga.SagaPublishPort;
+import com.origemite.lib.message.saga.SagaPublishProperties;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -12,12 +13,13 @@ import tools.jackson.databind.json.JsonMapper;
 
 @Configuration
 @ConditionalOnProperty(prefix = "origemite.message.saga.publish", name = "enabled", havingValue = "true", matchIfMissing = true)
-@EnableConfigurationProperties(SagaGrpcPublishProperties.class)
+@ConditionalOnProperty(prefix = "origemite.message.saga.publish", name = "transport", havingValue = "grpc")
+@EnableConfigurationProperties(SagaPublishProperties.class)
 public class GrpcSagaPublishConfiguration {
 
     @Bean(destroyMethod = "shutdown")
     @ConditionalOnMissingBean(name = "sagaPublishChannel")
-    public ManagedChannel sagaPublishChannel(SagaGrpcPublishProperties properties) {
+    public ManagedChannel sagaPublishChannel(SagaPublishProperties properties) {
         String target = properties.getTarget();
         if (target.startsWith("static://")) {
             target = target.substring("static://".length());

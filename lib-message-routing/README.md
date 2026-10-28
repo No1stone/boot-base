@@ -95,18 +95,34 @@ origemite:
 
 ## 사용 패턴
 
+### 권장: 도메인은 Rabbit 없이 (ApplicationEvent → 비동기 → Port)
+
+발행 **호스트만** `lib-message-routing`(AMQP)을 둔다. BFF/도메인 모듈은 Spring 이벤트만.
+
+```text
+Facade.publishEvent(BarrierOpenRequestedEvent)
+        ↓ @Async
+Bridge → MessagePublishPort → Rabbit
+```
+
+예제: `example/async/BarrierOpenRequestedEvent` · `BarrierOpenAsyncBridge`  
+(`@EnableAsync` · Bridge `@Component` 등록. Port 주입은 routing 어댑터 호스트에서.)
+
+### 동기 직접 발행
+
 ```java
-// 발행 (Facade)
 messagePublishPort.publish(
     RoutingKeys.of("parking", "barrier", barrierId, "command"),
     RoutingMessage.builder("BarrierOpenRequested")
         .data(new BarrierOpenRequested(...))
         .expiresAt(Instant.now().plusSeconds(30))
         .build());
-
-// 구독 (기동 시)
-messageSubscribePort.bind("parking.barrier.cmd", "app.topic", "parking.barrier.*.command");
-// MessageHandler 빈이 messageType으로 수신
 ```
 
-코드 예: `example/BarrierCommandPublisherExample` · `BarrierOpenHandlerExample`
+### 구독
+
+```java
+messageSubscribePort.bind("parking.barrier.cmd", "app.topic", "parking.barrier.*.command");
+```
+
+코드 예: `example/BarrierCommandPublisherExample` · `BarrierOpenHandlerExample` · `example/async/*`
