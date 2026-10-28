@@ -16,6 +16,12 @@ public class SagaPublishProperties {
     /** gRPC: host:port */
     private String target = "localhost:9095";
 
+    /** gRPC 연결 타임아웃 (Netty CONNECT_TIMEOUT). REST connect 와 대응. */
+    private java.time.Duration connectTimeout = java.time.Duration.ofSeconds(5);
+
+    /** gRPC 호출 deadline (블로킹 stub). REST read 와 대응. */
+    private java.time.Duration deadline = java.time.Duration.ofSeconds(3);
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -46,5 +52,21 @@ public class SagaPublishProperties {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public java.time.Duration getConnectTimeout() {
+        return connectTimeout;
+    }
+
+    public void setConnectTimeout(java.time.Duration connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
+
+    public java.time.Duration getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(java.time.Duration deadline) {
+        this.deadline = deadline;
     }
 }
