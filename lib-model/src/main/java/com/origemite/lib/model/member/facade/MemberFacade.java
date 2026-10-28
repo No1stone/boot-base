@@ -40,10 +40,15 @@ public class MemberFacade {
     @Transactional
     @CacheEvict(cacheNames = CACHE_NAME, key = "#result.id")
     public MemberRes.Id save(MemberReq.Create create) {
-        String salt = Salt.generate();
-        create.setLoginPasswordSaltKey(salt);
-        create.setLoginPassword(EncUtils.encSHA512(create.getLoginPassword(), salt));
+        hashPassword(create);
         return memberPort.save(create);
+    }
+
+    @Transactional
+    @CacheEvict(cacheNames = CACHE_NAME, allEntries = true)
+    public List<MemberRes.Id> saveAll(List<MemberReq.Create> createList) {
+        createList.forEach(this::hashPassword);
+        return memberPort.saveAll(createList);
     }
 
     @Cacheable(cacheNames = CACHE_NAME, key = "#id")
@@ -106,6 +111,12 @@ public class MemberFacade {
 
     @Transactional
     public void update() {
+    }
+
+    private void hashPassword(MemberReq.Create create) {
+        String salt = Salt.generate();
+        create.setLoginPasswordSaltKey(salt);
+        create.setLoginPassword(EncUtils.encSHA512(create.getLoginPassword(), salt));
     }
 
     private static void stripSecrets(MemberRes.Item item) {

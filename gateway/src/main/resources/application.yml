@@ -21,6 +21,13 @@ management:
     web:
       exposure:
         include: refresh, health, beans, httpexchanges, busrefresh, info, metrics, prometheus
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+    # MSA 디폴트: W3C Trace Context (traceparent). B3는 레거시 연동 시에만.
+    propagation:
+      type: w3c
 
 springdoc:
   swagger-ui:

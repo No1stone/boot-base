@@ -38,6 +38,12 @@ public class MemberController {
         return CommonResponseUtils.responseSuccess(memberBffFacade.save(create));
     }
 
+    @Operation(summary = "일괄 생성")
+    @PostMapping("/save-all")
+    public CommonResponse<List<MemberRes.Id>> saveAll(@RequestBody @Valid List<MemberReq.Create> createList) {
+        return CommonResponseUtils.responseSuccess(memberBffFacade.saveAll(createList));
+    }
+
     @Operation(summary = "단건 조회")
     @GetMapping("/{id}")
     public CommonResponse<MemberRes.Item> findById(@Parameter(description = "ID") @PathVariable(name = "id") String id) {
