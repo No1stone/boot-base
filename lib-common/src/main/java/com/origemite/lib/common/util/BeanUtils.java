@@ -26,11 +26,11 @@ public class BeanUtils {
     public static void map(Object source, Object destination, List<String> ignoreFields, List<String> nullableFields) {
         Set<String> ignoreSet = new HashSet<>(Optional.ofNullable(ignoreFields).orElse(Collections.emptyList()));
 
-        Class<?> sourceClass = source.getClass();
-        Class<?> destinationClass = destination.getClass();
-
-        Field[] sourceFields = sourceClass.getDeclaredFields();
-        Field[] destinationFields = destinationClass.getDeclaredFields();
+        List<Field> sourceFields = declaredFieldsIncludingSuper(source.getClass());
+        Map<String, Field> destinationByName = new HashMap<>();
+        for (Field destinationField : declaredFieldsIncludingSuper(destination.getClass())) {
+            destinationByName.putIfAbsent(destinationField.getName(), destinationField);
+        }
 
         for (Field sourceField : sourceFields) {
 
@@ -42,38 +42,43 @@ public class BeanUtils {
                 continue;
             }
 
-            for (Field destinationField : destinationFields) {
-                if (sourceField.getName().equals(destinationField.getName())) {
-                    sourceField.setAccessible(true);
-                    destinationField.setAccessible(true);
-                    try {
-                        Object value = sourceField.get(source);
+            Field destinationField = destinationByName.get(sourceField.getName());
+            if (destinationField == null) {
+                continue;
+            }
+            if (isAnnotatedWith(destinationField, OneToMany.class) || isAnnotatedWith(destinationField, OneToOne.class)) {
+                continue;
+            }
 
-                        if( !(!CollectionUtils.isEmpty(nullableFields) && nullableFields.contains(sourceField.getName())) && value == null) break;
-                        destinationField.set(destination, value);
-                    } catch (IllegalAccessException ignored) {}
+            sourceField.setAccessible(true);
+            destinationField.setAccessible(true);
+            try {
+                Object value = sourceField.get(source);
+
+                boolean allowNullable = !CollectionUtils.isEmpty(nullableFields) && nullableFields.contains(sourceField.getName());
+                if (!allowNullable && value == null) {
+                    continue;
                 }
+
+                destinationField.set(destination, value);
+            } catch (IllegalAccessException ignored) {
             }
         }
     }
 
-    public static Map<String, Object> diff(Object oldObj, Object newObj)  {
+    public static Map<String, Object> diff(Object oldObj, Object newObj) {
         return diff(oldObj, newObj, false);
     }
 
-    public static Map<String, Object> diff(Object oldObj, Object newObj, boolean nullSkip)  {
+    public static Map<String, Object> diff(Object oldObj, Object newObj, boolean nullSkip) {
         Map<String, Object> diffMap = new HashMap<>();
 
-        // 동일한 클래스 타입인지 확인
         if (!oldObj.getClass().equals(newObj.getClass())) {
             throw new IllegalArgumentException("Objects must be of the same type");
         }
 
-        // 클래스의 모든 필드를 가져옴
-        Field[] fields = oldObj.getClass().getDeclaredFields();
-
         try {
-            for (Field field : fields) {
+            for (Field field : declaredFieldsIncludingSuper(oldObj.getClass())) {
                 field.setAccessible(true);
                 Object oldValue = field.get(oldObj);
                 Object newValue = field.get(newObj);
@@ -95,6 +100,17 @@ public class BeanUtils {
         }
 
         return diffMap;
+    }
+
+    /** Item extends Single 처럼 상위 선언 필드까지 포함한다. Object 는 제외. */
+    private static List<Field> declaredFieldsIncludingSuper(Class<?> type) {
+        List<Field> fields = new ArrayList<>();
+        Class<?> current = type;
+        while (current != null && current != Object.class) {
+            Collections.addAll(fields, current.getDeclaredFields());
+            current = current.getSuperclass();
+        }
+        return fields;
     }
 
     private static boolean isAnnotatedWith(Field field, Class<? extends Annotation> annotationClass) {
