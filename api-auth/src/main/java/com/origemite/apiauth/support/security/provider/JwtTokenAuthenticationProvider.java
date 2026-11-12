@@ -108,7 +108,7 @@ public class JwtTokenAuthenticationProvider implements AuthenticationProvider {
 
     public boolean validateToken(String token) {
         if (token == null)
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN); // TODO. 에러처리 시 refactoring
+            throw new BizErrorException(ResponseType.UNAUTHORIZED); // TODO. 에러처리 시 refactoring
         parse(token);
         return true;
     }
@@ -123,7 +123,7 @@ public class JwtTokenAuthenticationProvider implements AuthenticationProvider {
 
         } catch (SecurityException | IllegalArgumentException | MalformedJwtException | UnsupportedJwtException |
                  ExpiredJwtException e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new BizErrorException(ResponseType.UNAUTHORIZED);
         }
     }
 

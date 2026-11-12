@@ -24,10 +24,10 @@ management:
       exposure:
         include: "health,info"
   tracing:
+    enabled: true
     sampling:
       probability: 1.0
+    # MSA 디폴트: W3C Trace Context (traceparent). B3는 레거시 연동 시에만.
     propagation:
-      consume: b3
-      produce: b3_multi
-    enabled: true
+      type: w3c
 

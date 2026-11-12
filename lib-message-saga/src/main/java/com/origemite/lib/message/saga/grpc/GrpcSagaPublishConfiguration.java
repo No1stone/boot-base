@@ -1,8 +1,10 @@
 package com.origemite.lib.message.saga.grpc;
 
 import com.origemite.lib.message.saga.SagaPublishPort;
+import com.origemite.lib.message.saga.SagaPublishProperties;
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
+import io.grpc.netty.shaded.io.netty.channel.ChannelOption;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,23 +14,31 @@ import tools.jackson.databind.json.JsonMapper;
 
 @Configuration
 @ConditionalOnProperty(prefix = "origemite.message.saga.publish", name = "enabled", havingValue = "true", matchIfMissing = true)
-@EnableConfigurationProperties(SagaGrpcPublishProperties.class)
+@ConditionalOnProperty(prefix = "origemite.message.saga.publish", name = "transport", havingValue = "grpc")
+@EnableConfigurationProperties(SagaPublishProperties.class)
 public class GrpcSagaPublishConfiguration {
 
     @Bean(destroyMethod = "shutdown")
     @ConditionalOnMissingBean(name = "sagaPublishChannel")
-    public ManagedChannel sagaPublishChannel(SagaGrpcPublishProperties properties) {
+    public ManagedChannel sagaPublishChannel(SagaPublishProperties properties) {
         String target = properties.getTarget();
         if (target.startsWith("static://")) {
             target = target.substring("static://".length());
         }
+        int connectMs = (int) Math.min(Integer.MAX_VALUE, properties.getConnectTimeout().toMillis());
         int colon = target.lastIndexOf(':');
+        NettyChannelBuilder builder;
         if (colon > 0) {
             String host = target.substring(0, colon);
             int port = Integer.parseInt(target.substring(colon + 1));
-            return ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+            builder = NettyChannelBuilder.forAddress(host, port);
+        } else {
+            builder = NettyChannelBuilder.forTarget(target);
         }
-        return ManagedChannelBuilder.forTarget(target).usePlaintext().build();
+        return builder
+                .usePlaintext()
+                .withOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, connectMs)
+                .build();
     }
 
     @Bean
@@ -39,10 +49,15 @@ public class GrpcSagaPublishConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(SagaPublishPort.class)
-    public SagaPublishPort sagaPublishPort(ManagedChannel sagaPublishChannel, JsonMapper sagaJsonMapper) {
+    public SagaPublishPort sagaPublishPort(
+            ManagedChannel sagaPublishChannel,
+            JsonMapper sagaJsonMapper,
+            SagaPublishProperties properties
+    ) {
         return new GrpcSagaPublishAdapter(
                 SagaIngressGrpc.newBlockingStub(sagaPublishChannel),
-                sagaJsonMapper
+                sagaJsonMapper,
+                properties.getDeadline()
         );
     }
 }

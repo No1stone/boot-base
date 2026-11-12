@@ -1,6 +1,7 @@
 package com.origemite.lib.common.util;
 
-import com.origemite.lib.common.exception.RequestNotFoundException;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.web.ResponseType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,10 +16,10 @@ public class WebUtils {
     /**
      * 컨텍스트 영역에있는 리퀘스트를 조회
      */
-    public static HttpServletRequest getRequest() throws RequestNotFoundException {
+    public static HttpServletRequest getRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
-            throw new RequestNotFoundException("RequestAttributes is null");
+            throw new BizErrorException(ResponseType.UNKNOWN);
         }
         return ((ServletRequestAttributes) requestAttributes).getRequest();
     }
@@ -26,7 +27,7 @@ public class WebUtils {
     /**
      * 파라미터 값을 가져옴
      */
-    public static <T> T getParameter(String name) throws RequestNotFoundException {
+    public static <T> T getParameter(String name) {
         return getParameter(getRequest(), name);
     }
 
@@ -44,7 +45,7 @@ public class WebUtils {
      *
      * @return 유저에이전트 문자열
      */
-    public static String getUserAgent() throws RequestNotFoundException {
+    public static String getUserAgent() {
         return getRequest().getHeader("user-agent");
     }
 
@@ -53,7 +54,7 @@ public class WebUtils {
      *
      * @return IP
      */
-    public static String getRemoteAddr() throws RequestNotFoundException {
+    public static String getRemoteAddr() {
         return getRemoteAddr(getRequest());
     }
 
@@ -111,7 +112,7 @@ public class WebUtils {
     public static String getChannel() {
         try {
             return getRequest().getHeader("DRP-CHANNEL");
-        } catch (RequestNotFoundException e) {
+        } catch (BizErrorException e) {
             return null;
         }
     }
@@ -124,7 +125,7 @@ public class WebUtils {
     public static String getChannelUrl() {
         try {
             return StringUtils.matchesGet(getRequest().getRequestURI(), "\\/[a-z-]+\\/(api-[a-z-]+)\\/[a-z-/]+", 1);
-        } catch (RequestNotFoundException e) {
+        } catch (BizErrorException e) {
             return null;
         }
     }
@@ -137,7 +138,7 @@ public class WebUtils {
     public static String getServiceId() {
         try {
             return getRequest().getHeader("DRP-SERVICE-ID");
-        } catch (RequestNotFoundException e) {
+        } catch (BizErrorException e) {
             return null;
         }
     }

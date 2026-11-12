@@ -113,7 +113,7 @@ public class VaultJwtTokenProvider {
 
     public boolean validateToken(String token) {
         if (token == null) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new BizErrorException(ResponseType.UNAUTHORIZED);
         }
         parse(token);
         return true;
@@ -134,7 +134,7 @@ public class VaultJwtTokenProvider {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             rsaPublicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
         } catch (Exception e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new BizErrorException(ResponseType.UNAUTHORIZED);
         }
 
         try {
@@ -145,7 +145,7 @@ public class VaultJwtTokenProvider {
                     .getBody();
         } catch (SecurityException | IllegalArgumentException | MalformedJwtException | UnsupportedJwtException |
                  ExpiredJwtException e) {
-            throw new BizErrorException(ResponseType.AD_INVALID_ACCESS_TOKEN);
+            throw new BizErrorException(ResponseType.UNAUTHORIZED);
         }
     }
 

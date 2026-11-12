@@ -29,6 +29,10 @@ public class MemberBffFacade {
         return memberFacade.save(create);
     }
 
+    public List<MemberRes.Id> saveAll(List<MemberReq.Create> createList) {
+        return memberFacade.saveAll(createList);
+    }
+
     public MemberRes.Item findById(String id) {
         return memberFacade.findById(id);
     }

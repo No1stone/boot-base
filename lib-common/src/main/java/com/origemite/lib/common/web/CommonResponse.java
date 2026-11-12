@@ -1,6 +1,6 @@
 package com.origemite.lib.common.web;
 
-import com.origemite.lib.common.exception.DidddaErrorException;
+import com.origemite.lib.common.exception.BizErrorException;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,8 +19,8 @@ public class CommonResponse<T> {
     T data;
 
     public CommonResponse(T t) {
-        message = CommonResponseType.SUCCESS_BEFORE.name();
-        code = CommonResponseType.SUCCESS_BEFORE.getCode();
+        message = ResponseType.SUCCESS.name();
+        code = ResponseType.SUCCESS.getCode();
         data = t;
     }
 
@@ -37,8 +37,8 @@ public class CommonResponse<T> {
     }
 
     public T orElseThrow() {
-        if (!code.equals(CommonResponseType.SUCCESS_BEFORE.getCode())) {
-            throw new DidddaErrorException(SystemServiceModule.DEFAULT, CommonResponseType.EXCEPTION);
+        if (!code.equals(ResponseType.SUCCESS.getCode())) {
+            throw new BizErrorException(ResponseType.UNKNOWN);
         }
         return data;
     }
@@ -48,7 +48,7 @@ public class CommonResponse<T> {
     }
 
     public static <T> CommonResponse<T> ok(T data) {
-        return new CommonResponse<>(CommonResponseType.SUCCESS_BEFORE, CommonResponseType.SUCCESS_BEFORE.name(), data);
+        return new CommonResponse<>(ResponseType.SUCCESS, ResponseType.SUCCESS.name(), data);
     }
 
 }

@@ -23,6 +23,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-restclient'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     // redis 캐시=lib-cache(Lettuce), 분산락=lib-distributed-lock(Redisson)
 // 부트스트랩 vault와.. 약간의 충돌있어서 비활성화

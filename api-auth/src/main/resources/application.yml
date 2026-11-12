@@ -41,16 +41,28 @@ decorator:
       enable-logging: true
 
 
+# MemberController outbound 예 (MemberClientPort). 기본 off.
+# origemite.member.client.enabled: true
+# origemite.member.client.base-url: http://localhost:3031/auth
+# origemite.rest.outbound.connect-timeout: 5s
+# origemite.rest.outbound.read-timeout: 3s
+# origemite.rest.outbound.logging-enabled: true
+
+# 로그에 traceId/spanId (Micrometer Tracing → MDC)
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
 management:
   endpoints:
     web:
       exposure:
         include: "health,info"
   tracing:
+    enabled: true
     sampling:
       probability: 1.0
+    # MSA 디폴트: W3C Trace Context (traceparent). B3는 레거시 연동 시에만.
     propagation:
-      consume: b3
-      produce: b3_multi
-    enabled: true
+      type: w3c
 

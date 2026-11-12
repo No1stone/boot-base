@@ -65,6 +65,18 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("Member 일괄 생성 성공")
+    void saveAll_success() {
+        MemberReq.Create create = sampleCreate();
+        given(memberBffFacade.saveAll(any())).willReturn(List.of(sampleIdRes()));
+
+        var result = memberController.saveAll(List.of(create));
+
+        assertNotNull(result);
+        verify(memberBffFacade).saveAll(any());
+    }
+
+    @Test
     @DisplayName("Member 단건 조회 성공")
     void findById_success() {
         // given

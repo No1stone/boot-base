@@ -1,19 +1,40 @@
 package com.origemite.lib.common.exception;
 
-import com.origemite.lib.common.web.ResponseType;
+import com.origemite.lib.common.web.ResponseTypeInterface;
+import com.origemite.lib.common.web.SystemServiceModule;
 
 public class BizWarnException extends BizException {
 
-    public BizWarnException(String message) {
-        super(message);
+    public BizWarnException(ResponseTypeInterface responseType) {
+        super(responseType);
     }
 
-    public BizWarnException(ResponseType errorCodeType) {
-        super(errorCodeType);
+    public BizWarnException(ResponseTypeInterface responseType, Object... args) {
+        super(responseType, args);
     }
 
-    public BizWarnException(ResponseType errorCodeType, Object... args) {
-        super(errorCodeType, args);
+    public BizWarnException(ResponseTypeInterface responseType, Throwable cause) {
+        super(responseType, cause);
+    }
+
+    public BizWarnException(ResponseTypeInterface responseType, Throwable cause, Object... args) {
+        super(responseType, cause, args);
+    }
+
+    public BizWarnException(SystemServiceModule systemServiceModule, ResponseTypeInterface responseType) {
+        super(systemServiceModule, responseType);
+    }
+
+    public BizWarnException(SystemServiceModule systemServiceModule, ResponseTypeInterface responseType, Throwable cause) {
+        super(systemServiceModule, responseType, cause);
+    }
+
+    public BizWarnException(SystemServiceModule systemServiceModule, ResponseTypeInterface responseType, Object... args) {
+        super(systemServiceModule, responseType, args);
+    }
+
+    public BizWarnException(SystemServiceModule systemServiceModule, ResponseTypeInterface responseType, Throwable cause, Object... args) {
+        super(systemServiceModule, responseType, cause, args);
     }
 
 }

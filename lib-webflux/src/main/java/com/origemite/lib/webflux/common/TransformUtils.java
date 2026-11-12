@@ -11,7 +11,7 @@ import com.origemite.lib.webflux.common.serializer.CustomLocalDateDeserializer;
 import com.origemite.lib.webflux.common.serializer.CustomLocalDateSerializer;
 import com.origemite.lib.webflux.common.serializer.CustomLocalDateTimeDeserializer;
 import com.origemite.lib.webflux.common.serializer.CustomLocalDateTimeSerializer;
-import com.origemite.lib.webflux.exception.JsonParseException;
+import com.origemite.lib.webflux.exception.BizErrorException;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
@@ -66,7 +66,7 @@ public class TransformUtils {
         try {
             return mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException("An error occurred while parsing the object.");
         }
     }
 
@@ -76,7 +76,7 @@ public class TransformUtils {
         try {
             return mapper.readValue(jsonString, clazz);
         } catch (JsonProcessingException e) {
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException("An error occurred while parsing the object.");
         }
     }
 
@@ -88,7 +88,7 @@ public class TransformUtils {
         try {
             return mapper.readValue(jsonString, clazz);
         } catch (JsonProcessingException e) {
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException("An error occurred while parsing the object.");
         }
     }
 
@@ -106,7 +106,7 @@ public class TransformUtils {
         try {
            return new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(clazz);
         }catch (JsonProcessingException e){
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException("An error occurred while parsing the object.");
         }
     }
 }
