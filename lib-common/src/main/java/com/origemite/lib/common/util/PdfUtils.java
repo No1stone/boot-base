@@ -1,6 +1,5 @@
 package com.origemite.lib.common.util;
 
-import com.origemite.lib.common.client.AbstractRestClient;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.io.font.PdfEncodings;
@@ -23,7 +22,7 @@ import java.util.Map;
 
 
 @Slf4j
-public class PdfUtils extends AbstractRestClient {
+public class PdfUtils {
 
     private static String fontPath = "https://static.drp.mintit.ai/fonts/SUIT-Regular.woff2";
     private static Integer yDeviceInfo = 612;
