@@ -12,6 +12,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 
+import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,13 +74,83 @@ class CommonRestClientTest {
         server.verify();
     }
 
+    @Test
+    @DisplayName("기본 타임아웃·리트라이·로깅 옵션 값이 있다")
+    void defaultTimeoutAndRetry() {
+        CommonRestClientProperties properties = new CommonRestClientProperties();
+        assertThat(properties.getConnectTimeout().getSeconds()).isEqualTo(1);
+        assertThat(properties.getReadTimeout().getSeconds()).isEqualTo(1);
+        assertThat(properties.isRetryEnabled()).isTrue();
+        assertThat(properties.getRetryMaxAttempts()).isEqualTo(2);
+        assertThat(properties.getRetryWait().toMillis()).isEqualTo(200);
+        assertThat(properties.isLoggingBodyEnabled()).isFalse();
+        assertThat(properties.isLoggingHeadersEnabled()).isFalse();
+        assertThat(properties.isBufferContent()).isTrue();
+        assertThat(properties.isRetryOnServerError()).isFalse();
+        assertThat(properties.getRetryStatusCodes()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("retryOnServerError 이면 5xx 후 재시도한다")
+    void retriesServerErrorWhenEnabled() {
+        RestClient.Builder builder = RestClient.builder().baseUrl("http://localhost");
+        CommonRestClientProperties properties = new CommonRestClientProperties();
+        properties.setLoggingEnabled(false);
+        properties.setRetryEnabled(true);
+        properties.setRetryMaxAttempts(2);
+        properties.setRetryWait(Duration.ofMillis(10));
+        properties.setRetryOnServerError(true);
+        new CommonRestClientCustomizer(properties).customize(builder);
+        MockRestServiceServer server = MockRestServiceServer.bindTo(builder).build();
+        CommonRestClient client = new CommonRestClient(builder.build(), properties);
+
+        server.expect(requestTo("http://localhost/flaky"))
+                .andRespond(withStatus(HttpStatus.SERVICE_UNAVAILABLE));
+        server.expect(requestTo("http://localhost/flaky"))
+                .andRespond(withSuccess("{\"ok\":true}", MediaType.APPLICATION_JSON));
+
+        @SuppressWarnings("rawtypes")
+        CommonRestResponse<Map> response = client.get("/flaky", null, null, Map.class);
+
+        assertThat(response.is2xxSuccessful()).isTrue();
+        assertThat(response.getBody()).containsEntry("ok", true);
+        server.verify();
+    }
+
+    @Test
+    @DisplayName("retryStatusCodes 에 넣은 코드만 재시도한다")
+    void retriesConfiguredStatusCodes() {
+        RestClient.Builder builder = RestClient.builder().baseUrl("http://localhost");
+        CommonRestClientProperties properties = new CommonRestClientProperties();
+        properties.setLoggingEnabled(false);
+        properties.setRetryEnabled(true);
+        properties.setRetryMaxAttempts(2);
+        properties.setRetryWait(Duration.ofMillis(10));
+        properties.setRetryStatusCodes(List.of(429));
+        new CommonRestClientCustomizer(properties).customize(builder);
+        MockRestServiceServer server = MockRestServiceServer.bindTo(builder).build();
+        CommonRestClient client = new CommonRestClient(builder.build(), properties);
+
+        server.expect(requestTo("http://localhost/limited"))
+                .andRespond(withStatus(HttpStatus.TOO_MANY_REQUESTS));
+        server.expect(requestTo("http://localhost/limited"))
+                .andRespond(withSuccess("{\"ok\":true}", MediaType.APPLICATION_JSON));
+
+        @SuppressWarnings("rawtypes")
+        CommonRestResponse<Map> response = client.get("/limited", null, null, Map.class);
+
+        assertThat(response.is2xxSuccessful()).isTrue();
+        server.verify();
+    }
+
     /** Mock 서버가 requestFactory를 소유하도록, 커스터마이즈 후 bind 한다. */
     private CommonRestClient clientWithMock() {
         RestClient.Builder builder = RestClient.builder().baseUrl("http://localhost");
         CommonRestClientProperties properties = new CommonRestClientProperties();
         properties.setLoggingEnabled(false);
+        properties.setRetryEnabled(false);
         new CommonRestClientCustomizer(properties).customize(builder);
         lastServer = MockRestServiceServer.bindTo(builder).build();
-        return new CommonRestClient(builder.build());
+        return new CommonRestClient(builder.build(), properties);
     }
 }
