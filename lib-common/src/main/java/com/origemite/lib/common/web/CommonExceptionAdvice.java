@@ -156,26 +156,28 @@ public class CommonExceptionAdvice {
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
     public CommonResponse<?> handleMaxUploadSizeExceededException(HttpServletRequest request, MaxUploadSizeExceededException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         return CommonResponseUtils.response(ResponseType.UPLOAD_FILE_SIZE_EXCEEDED);
     }
 
     @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public CommonResponse<?> handleObjectOptimisticLockingFailureException(HttpServletRequest request, ObjectOptimisticLockingFailureException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         return CommonResponseUtils.response(ResponseType.OBJECT_LOCKED);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public CommonResponse<?> handleNoHandlerFoundException(HttpServletRequest request, NoHandlerFoundException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         return CommonResponseUtils.response(ResponseType.NOT_FOUND_RESOURCE);
     }
 
     @ExceptionHandler(RetryableException.class)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
     public CommonResponse<?> handleRetryableException(HttpServletRequest request, RetryableException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         return CommonResponseUtils.response(ResponseType.MICRO_SERVICE_CONNECTION_FAILED);
