@@ -6,6 +6,7 @@ import org.springframework.web.client.RestClient;
 
 /**
  * RestClient.Builder에 타임아웃·버퍼링·로깅을 붙인다.
+ * 리트라이는 {@link CommonRestClient} 호출부에서 적용한다.
  * Boot가 만든 Builder를 넘기면 트레이스 전파를 유지할 수 있다.
  */
 public class CommonRestClientCustomizer {
@@ -14,7 +15,7 @@ public class CommonRestClientCustomizer {
     private final CommonRestClientLoggingInterceptor loggingInterceptor;
 
     public CommonRestClientCustomizer(CommonRestClientProperties properties) {
-        this(properties, new CommonRestClientLoggingInterceptor());
+        this(properties, null);
     }
 
     public CommonRestClientCustomizer(
@@ -22,7 +23,9 @@ public class CommonRestClientCustomizer {
             @Nullable CommonRestClientLoggingInterceptor loggingInterceptor
     ) {
         this.properties = properties == null ? new CommonRestClientProperties() : properties;
-        this.loggingInterceptor = loggingInterceptor;
+        this.loggingInterceptor = loggingInterceptor != null
+                ? loggingInterceptor
+                : new CommonRestClientLoggingInterceptor(this.properties);
     }
 
     public void customize(RestClient.Builder builder) {
@@ -30,8 +33,10 @@ public class CommonRestClientCustomizer {
         factory.setConnectTimeout(properties.getConnectTimeout());
         factory.setReadTimeout(properties.getReadTimeout());
         builder.requestFactory(factory);
-        builder.bufferContent((uri, method) -> true);
-        if (properties.isLoggingEnabled() && loggingInterceptor != null) {
+        if (properties.isBufferContent() || properties.isLoggingBodyEnabled()) {
+            builder.bufferContent((uri, method) -> true);
+        }
+        if (properties.isLoggingEnabled()) {
             builder.requestInterceptor(loggingInterceptor);
         }
     }
