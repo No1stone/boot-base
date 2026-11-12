@@ -56,7 +56,7 @@ public class BaseEntityListener {
 //        String cipherKeyId = EntityContextHolder.getCiperKey();
 //
 //        if (StringUtils.isEmpty(cipherKeyId)) {
-//            throw new DidddaErrorException("cipherKeyId is null");
+//            throw new BizErrorException(ResponseType.UNKNOWN);
 //        }
 //
 //        Field[] fields = obj.getClass().getDeclaredFields();

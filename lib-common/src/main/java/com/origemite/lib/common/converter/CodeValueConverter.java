@@ -1,8 +1,7 @@
 package com.origemite.lib.common.converter;
 
-import com.origemite.lib.common.exception.DidddaErrorException;
-import com.origemite.lib.common.web.CommonResponseType;
-import com.origemite.lib.common.web.SystemServiceModule;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.web.ResponseType;
 import jakarta.persistence.AttributeConverter;
 import com.origemite.lib.common.enums.CodeValue;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,6 @@ public abstract class CodeValueConverter<E extends Enum<E> & CodeValue> implemen
         return EnumSet.allOf(support()).stream()
                 .filter(e->e.getCode().equals(dbData))
                 .findAny()
-                .orElseThrow(()-> new DidddaErrorException(SystemServiceModule.DEFAULT, CommonResponseType.INVALID_ENUM_VALUE));
+                .orElseThrow(()-> new BizErrorException(ResponseType.INVALID_ENUM_VALUE));
     }
 }

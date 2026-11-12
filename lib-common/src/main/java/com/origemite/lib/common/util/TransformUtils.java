@@ -2,7 +2,8 @@ package com.origemite.lib.common.util;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.origemite.lib.common.exception.JsonParseException;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.web.ResponseType;
 import com.origemite.lib.common.serializer.CustomLocalDateDeserializer;
 import com.origemite.lib.common.serializer.CustomLocalDateSerializer;
 import com.origemite.lib.common.serializer.CustomLocalDateTimeDeserializer;
@@ -112,7 +113,7 @@ public class TransformUtils {
         try {
             return mapper.writeValueAsString(object);
         } catch (JacksonException e) {
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException(ResponseType.UNKNOWN);
         }
     }
 
@@ -122,7 +123,7 @@ public class TransformUtils {
         try {
             return mapper.readValue(jsonString, clazz);
         } catch (JacksonException e) {
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException(ResponseType.UNKNOWN);
         }
     }
 
@@ -134,7 +135,7 @@ public class TransformUtils {
         try {
             return mapper.readValue(jsonString, clazz);
         } catch (JacksonException e) {
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException(ResponseType.UNKNOWN);
         }
     }
 
@@ -152,7 +153,7 @@ public class TransformUtils {
         try {
             return mapper.writeValueAsString(clazz);
         } catch (JacksonException e) {
-            throw new JsonParseException("An error occurred while parsing the object.");
+            throw new BizErrorException(ResponseType.UNKNOWN);
         }
     }
 }

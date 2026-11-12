@@ -2,7 +2,7 @@ package com.origemite.lib.common.util;
 
 
 import com.origemite.lib.common.web.CommonResponse;
-import com.origemite.lib.common.web.CommonResponseType;
+import com.origemite.lib.common.web.ResponseType;
 import com.origemite.lib.common.web.SystemServiceModule;
 import com.origemite.lib.common.web.ResponseTypeInterface;
 import lombok.AccessLevel;
@@ -16,15 +16,15 @@ import java.util.List;
 public class CommonResponseUtils {
 
     public static <T> CommonResponse<T> responseSuccess() {
-        return response(SystemServiceModule.DEFAULT, CommonResponseType.SUCCESS_BEFORE, getMessage(CommonResponseType.SUCCESS_BEFORE), null);
+        return response(SystemServiceModule.DEFAULT, ResponseType.SUCCESS, getMessage(ResponseType.SUCCESS), null);
     }
 
     public static <T> CommonResponse<T> responseSuccess(T data) {
-        return response(SystemServiceModule.DEFAULT, CommonResponseType.SUCCESS_BEFORE, getMessage(CommonResponseType.SUCCESS_BEFORE), data);
+        return response(SystemServiceModule.DEFAULT, ResponseType.SUCCESS, getMessage(ResponseType.SUCCESS), data);
     }
 
     public static <T> CommonResponse<T> responseSuccess(SystemServiceModule systemServiceModule, T data) {
-        return response(systemServiceModule, CommonResponseType.SUCCESS, getMessage(CommonResponseType.SUCCESS), data);
+        return response(systemServiceModule, ResponseType.SUCCESS, getMessage(ResponseType.SUCCESS), data);
     }
 
     public static <T> CommonResponse<T> response(ResponseTypeInterface responseTypeInterface) {
@@ -53,10 +53,10 @@ public class CommonResponseUtils {
     }
 
     public static <T> CommonResponse<T> response(SystemServiceModule systemServiceModule, ResponseTypeInterface responseTypeInterface, String message, T data) {
-        if(responseTypeInterface.getClass() == CommonResponseType.class) {
+        if (responseTypeInterface.getClass() == ResponseType.class) {
             return CommonResponse.<T>builder().code(systemServiceModule.getPrefix() + responseTypeInterface.getCode()).message(message).data(data).build();
         }
-        return  CommonResponse.<T>builder().code(responseTypeInterface.getCode()).message(message).data(data).build();
+        return CommonResponse.<T>builder().code(responseTypeInterface.getCode()).message(message).data(data).build();
     }
 
     private static String getMessage(ResponseTypeInterface responseTypeInterface) {

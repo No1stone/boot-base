@@ -1,7 +1,7 @@
 package com.origemite.lib.common.filter;
 
-import com.origemite.lib.common.exception.DidddaErrorException;
-import com.origemite.lib.common.exception.DidddaWarnException;
+import com.origemite.lib.common.exception.BizErrorException;
+import com.origemite.lib.common.exception.BizWarnException;
 import com.origemite.lib.common.web.CommonResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,9 +23,9 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             filterChain.doFilter(request, response);
-        } catch (DidddaErrorException e) {
+        } catch (BizErrorException e) {
             handleException(request, response, e);
-        } catch (DidddaWarnException e) {
+        } catch (BizWarnException e) {
             handleException(request, response, e);
         }
     }
@@ -40,18 +40,17 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         }
     }
 
-    private void handleException(HttpServletRequest request, HttpServletResponse response, DidddaErrorException e) {
+    private void handleException(HttpServletRequest request, HttpServletResponse response, BizErrorException e) {
         response.setStatus(e.getHttpStatus().value());
         log.error(e.getErrorMessage(), e);
-        write(CommonResponseUtils.response(e.getResponseTypeInterface()), response);
+        write(CommonResponseUtils.response(e.getSystemServiceModule(), e.getResponseType(), e.getErrorMessage()), response);
     }
 
-    private void handleException(HttpServletRequest request, HttpServletResponse response, DidddaWarnException e) {
+    private void handleException(HttpServletRequest request, HttpServletResponse response, BizWarnException e) {
         response.setStatus(e.getHttpStatus().value());
         log.warn(e.getErrorMessage(), e);
-        write(CommonResponseUtils.response(e.getResponseTypeInterface()), response);
+        write(CommonResponseUtils.response(e.getSystemServiceModule(), e.getResponseType(), e.getErrorMessage()), response);
     }
 
 
 }
-
