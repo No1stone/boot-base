@@ -1,5 +1,5 @@
 # ==== Build stage ====
-FROM amazoncorretto:17-alpine AS build
+FROM amazoncorretto:25.0.5-alpine AS build
 WORKDIR /app
 
 # 루트 전체를 컨텍스트로 복사 (루트 gradlew/설정/모듈 전부 포함)
@@ -9,7 +9,7 @@ COPY . .
 RUN chmod +x ./gradlew && ./gradlew :gateway:clean :gateway:bootJar -x test
 
 # ==== Runtime stage ====
-FROM amazoncorretto:17-alpine
+FROM amazoncorretto:25.0.5-alpine
 WORKDIR /app
 
 # 모듈 산출물 경로에서 JAR만 복사

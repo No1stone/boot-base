@@ -27,7 +27,34 @@ subprojects {
 
     java {
         toolchain {
+            // Java4Shell CVE-2026-114938: runtime must be >= 25.0.5.1 (Corretto 25.0.5.1.2).
             languageVersion = JavaLanguageVersion.of(25)
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        doFirst {
+            def home = javaCompiler.get().metadata.installationPath.asFile
+            def proc = new ProcessBuilder("${home}/bin/java", "-version")
+                    .redirectErrorStream(true)
+                    .start()
+            def out = proc.inputStream.text
+            proc.waitFor()
+            def matcher = (out =~ /version \"([^\"]+)\"/)
+            if (!matcher.find()) {
+                throw new GradleException("Java4Shell check: cannot read java -version from ${home}")
+            }
+            def ver = matcher.group(1)
+            def parts = ver.split('\\+')[0].split('\\.').collect { it as int }
+            def major = parts.size() > 0 ? parts[0] : 0
+            def minor = parts.size() > 1 ? parts[1] : 0
+            def update = parts.size() > 2 ? parts[2] : 0
+            def patch = parts.size() > 3 ? parts[3] : 0
+            def patched = major > 25 || (major == 25 && (minor > 0 || update > 5 || (update == 5 && patch >= 1)))
+            if (!patched) {
+                throw new GradleException(
+                        "Java4Shell (CVE-2026-114938): JDK ${ver} is not safe. Use >= 25.0.5.1 (Corretto 25.0.5.1.2). Home=${home}")
+            }
         }
     }
     configurations {

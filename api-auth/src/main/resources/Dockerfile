@@ -1,4 +1,4 @@
-FROM openjdk:17-slim
+FROM amazoncorretto:25.0.5
 LABEL authors="wonseok"
 VOLUME /tmp
 #ARG DB_URL

@@ -72,6 +72,7 @@
 ### 단계 3 진행
 
 - [x] Boot **4.1.2** + Cloud **2025.1.4**. 활성 모듈 컴파일 통과.
+- [x] Java4Shell (CVE-2026-114938): 런타임 **Corretto ≥ 25.0.5.1.2**, Docker `amazoncorretto:25.0.5-alpine`.
 - [x] `:lib-common:test` · `:api-auth:test` · gateway filter 단위 테스트 통과.
 - [x] `lib-webflux` settings exclude. gateway → `lib-common` (`BizErrorException`/`ResponseType`). 소스는 보관.
 ### 단계 4 진행
